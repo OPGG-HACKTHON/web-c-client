@@ -1,0 +1,143 @@
+.LoadingWrapper {
+  & > .ant-spin-blur {
+    opacity: 0;
+    background-color: white;
+  }
+}
+
+.Loading {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  max-height: none !important;
+
+  &.no-children {
+    min-height: r(320px);
+  }
+
+  .LoadingIndicator {
+    $spinner-size: 32px;
+    $dot-size: 6px;
+    $duration: 3s;
+    $delay: 50ms;
+    $delay6: 300ms;
+    $delay12: 600ms;
+
+    height: 100px;
+
+    @keyframes loading-rotate {
+      from {
+        transform: translateX(0) translateY(0);
+      }
+
+      5% {
+        transform: translateX(0) translateY($spinner-size) translateY(-$dot-size);
+      }
+
+      25% {
+        transform: translateX(0) translateY($spinner-size) translateY(-$dot-size);
+      }
+
+      30% {
+        transform: translateX($spinner-size) translateX(-$dot-size) translateY($spinner-size) translateY(-$dot-size);
+      }
+
+      50% {
+        transform: translateX($spinner-size) translateX(-$dot-size) translateY($spinner-size) translateY(-$dot-size);
+      }
+
+      55% {
+        transform: translateX($spinner-size) translateX(-$dot-size) translateY(0);
+      }
+
+      75% {
+        transform: translateX($spinner-size) translateX(-$dot-size) translateY(0);
+      }
+
+      80% {
+        transform: translateX(0) translateY(0);
+      }
+    }
+
+    .container {
+      .spinner {
+        position: relative;
+        width: $spinner-size;
+        height: $spinner-size;
+        margin: 0 auto;
+        margin-bottom: 1.5rem;
+
+        .dot-holder {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          filter: url('#loading-filter');
+
+          & > * {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: $dot-size;
+            height: $dot-size;
+            border-radius: 50%;
+            animation: loading-rotate $duration linear infinite;
+          }
+
+          .body {
+            background: #1890ff;
+          }
+
+          .shadow {
+            background: rgba(44, 203, 195, 0.4);
+          }
+
+          &.dot1 {
+            .shadow {
+              animation-delay: $delay;
+            }
+          }
+
+          &.dot2 {
+            transform: rotate(90deg);
+
+            .body {
+              animation-delay: $delay6;
+            }
+
+            .shadow {
+              animation-delay: $delay6 + $delay;
+            }
+          }
+
+          &.dot3 {
+            transform: rotate(180deg);
+
+            .body {
+              animation-delay: $delay12;
+            }
+
+            .shadow {
+              animation-delay: $delay12 + $delay;
+            }
+          }
+        }
+      }
+
+      .text {
+        margin: 0;
+        font-size: 13px;
+        color: rgba(0, 0, 0, 0.5);
+        text-align: center;
+      }
+    }
+
+    .spinner-svg {
+      flex: 0;
+      width: 0;
+      height: 0;
+    }
+  }
+}

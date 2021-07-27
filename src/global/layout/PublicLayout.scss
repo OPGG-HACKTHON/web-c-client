@@ -1,0 +1,17 @@
+.PublicLayout {
+  $topbar-height-pc: r(72px);
+  $topbar-height-mobile: r(50px);
+
+  #app-body {
+    margin-top: $topbar-height-pc;
+
+    @include bp-down(md) {
+      margin-top: $topbar-height-mobile;
+    }
+
+    #app-body-content {
+      max-width: map-get($grid-breakpoints, xl);
+      margin: 0 auto;
+    }
+  }
+}

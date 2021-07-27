@@ -1,0 +1,35 @@
+$pixelBase: 16;
+$px-only: true;
+
+@function parseint($n) {
+  @return $n / ($n * 0 + 1);
+}
+
+@function r($values) {
+  $list: ();
+
+  @each $value in $values {
+    @if (type-of($value) == "number") and ($value != 0) {
+      $unit : unit($value);
+      $val  : parseint($value);
+
+      @if ($px-only) and ($unit == 'rem') {
+        $list: append($list, ($val * $pixelBase) + px);
+      }
+
+      @else if($unit == 'px') or ($unit == 'rem') {
+        $list: append($list, $value);
+      }
+
+      @else {
+        @warn 'There is no unit conversion for "#{$unit}"';
+      }
+    }
+
+    @else {
+      $list: append($list, $value);
+    }
+  }
+
+  @return $list();
+}

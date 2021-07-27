@@ -1,0 +1,6 @@
+// working greater than ie10
+@mixin ie-only() {
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    @content;
+  }
+}

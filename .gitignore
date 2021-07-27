@@ -1,0 +1,9 @@
+# Modules
+node_modules/
+package-lock.json
+
+# build
+dist/
+
+# VScode local history
+.history/

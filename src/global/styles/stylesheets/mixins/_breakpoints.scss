@@ -1,0 +1,68 @@
+@function bp-min($name, $breakpoints: $grid-breakpoints) {
+  $min: $name;
+
+  @if (type-of($name) != "number") {
+    $min: map-get($breakpoints, $name);
+  }
+
+  @return if($min != 0, $min, null);
+}
+
+// 본래 next가 존재했으나 너무 헷갈려 next를 지움. 딱 들어온 선의 위아래로만 작동
+@function bp-max($name, $breakpoints: $grid-breakpoints) {
+  @return if($name, bp-min($name, $breakpoints) - 0.02px, null);
+}
+
+// 들어온 breakpoint 이상에서 작동
+@mixin bp-up($name, $breakpoints: $grid-breakpoints) {
+  $min: bp-min($name, $breakpoints);
+
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  }
+
+  @else {
+    @content;
+  }
+}
+
+// 들어온 breakpoint 미만에서 작동
+@mixin bp-down($name, $breakpoints: $grid-breakpoints) {
+  $max: bp-max($name, $breakpoints);
+
+  @if $max {
+    @media (max-width: $max) {
+      @content;
+    }
+  }
+
+  @else {
+    @content;
+  }
+}
+
+// between (테스트 필요)
+@mixin bp-between($lower, $upper, $breakpoints: $grid-breakpoints) {
+  $min: bp-min($lower, $breakpoints);
+  $max: bp-max($upper, $breakpoints);
+
+  @if $min != null and $max != null {
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  }
+
+  @else if $max == null {
+    @include bp-up($lower, $breakpoints) {
+      @content;
+    }
+  }
+
+  @else if $min == null {
+    @include bp-down($upper, $breakpoints) {
+      @content;
+    }
+  }
+}

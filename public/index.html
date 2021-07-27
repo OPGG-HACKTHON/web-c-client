@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#1890ff">
+
+    <meta property="og:url" content="url">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="title">
+    <meta property="og:image" content="imagelink">
+    <meta property="og:description" content="description">
+    <meta name="author" content="">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="description">
+    <meta name="keywords" content="a,b,c">
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="title" />
+    <meta name="twitter:description" content="description" />
+    <meta name="twitter:image" content="imagelink" />
+
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/static/manifest.json">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="%PUBLIC_URL%/static/favicon/faviconUrl">
+    <link rel="mask-icon" href="%PUBLIC_URL%/static/favicon/faviconUrl" color="#2972ff">
+    <link rel="apple-touch-icon-precomposed" href="%PUBLIC_URL%/static/favicon/faviconUrl">
+    <!-- End favicon -->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet" type="text/css">
+
+    <title>웹C</title>
+
+    <script src="https://unpkg.com/core-js-bundle@3.9.0/index.js"></script>
+    <script src="https://unpkg.com/regenerator-runtime@0.13.7/runtime.js"></script>
+
+    <style>
+  html,
+  body {
+    height: 0 !important;
+
+    /* IE에서 가로 스크롤바 방지를 위해 */
+
+    /* -ms-overflow-style: none; */
+  }
+
+  body {
+    overflow-y: auto;
+  }
+
+  body::-webkit-scrollbar-thumb {
+    height: 56px;
+    border: 4px solid transparent;
+    border-radius: 8px;
+    background-color: rgb(160, 160, 160);
+    background-clip: content-box;
+  }
+
+  body::-webkit-scrollbar {
+    width: 16px;
+    background-color: rgb(249, 249, 249);
+  }
+
+  #root {
+    min-height: calc(100vh - 54px);
+  }
+    </style>
+  </head>
+  <body id="app-scroll-container">
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+  </body>
+</html>

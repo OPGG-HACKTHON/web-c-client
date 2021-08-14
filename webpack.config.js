@@ -92,6 +92,12 @@ module.exports = async (outSideEnv = {}) => {
         },
 
         {
+          test: /\.(ts|tsx)$/,
+          exclude: /node_modules/,
+          use: 'ts-loader',
+        },
+
+        {
           test: /\.(png|jpe?g|gif)$/i,
           loader: require.resolve('url-loader'),
           options: {

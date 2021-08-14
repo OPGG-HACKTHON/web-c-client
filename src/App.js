@@ -20,6 +20,7 @@ import BrowserWarning from '@/global/layout/components/BrowserWarning';
 import PublicRoute from '@/global/routes/PublicRoute';
 
 const mainLanding = React.lazy(() => import('@/pages/Landing'));
+const search = React.lazy(() => import('@/pages/Search'));
 
 const App = () => {
   const session = sessionHook();
@@ -30,6 +31,7 @@ const App = () => {
         <Router history={history}>
           <Switch>
             <PublicRoute exact path="/" component={mainLanding} />
+            <PublicRoute exact path="/search" component={search} />
             <Redirect path="*" to="/" />
           </Switch>
         </Router>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Checkbox, Button } from 'antd';
 import { detect } from 'detect-browser';
 
-import { setLocalStorageWithoutCheck, getLocalStorage } from '@/common/methods/localStorageHandler';
+import { setLocalStorageWithoutCheck, getLocalStorage } from '@/common/utils/localStorageHandler';
 
 const BrowserWarning = () => {
   const [visible, setVisible] = useState(false);

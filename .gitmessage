@@ -1,0 +1,47 @@
+######## 본문은 한 줄에 최대 72 글자까지만 입력 ########################### -> |
+# Feat : :zap:️ 기능 (새로운 기능) #이슈번호
+# Fix : :fire: 버그 (버그 수정) #이슈번호
+# Refactor: :rainbow: 리팩토링:`: #이슈번호
+# Style : :high_heel:스타일 (코드 형식, 세미콜론 추가: 비즈니스 로직에 변경 없음) #이슈번호
+# Docs : :books: 문서 (문서 추가, 수정, 삭제) #이슈번호
+# Test : :joystick:  테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음) #이슈번호
+# Chore : :package: 기타 변경사항 (빌드 스크립트 수정 등) #이슈번호
+# Deploy : :airplane:  배포 관련 #이슈번호
+# —————————
+#     제목은 명령문 영어로 적자.
+#     제목 끝에 마침표(.) 금지
+#     제목과 본문을 한 줄 띄워 분리하기
+#     본문은 한글로 적는다.
+#     본문은 "어떻게" 보다 "무엇을", "왜"를 설명한다.
+# ————————— 
+# 변경 사항에 대한 커밋 메시지를 입력하십시오. '#' 문자로 시작하는
+# 줄은 무시되고, 메시지를 입력하지 않으면 커밋이 중지됩니다.
+#
+# 현재 브랜치 feature/MainPage
+# 브랜치가 'origin/feature/MainPage'에 맞게 업데이트된 상태입니다.
+#
+# 커밋할 변경 사항:
+#	수정함:        .eslintrc.js
+#	수정함:        src/assets/construction/message.ts
+#	새 파일:       src/components/atoms/Devider/Devider.tsx
+#	새 파일:       src/components/atoms/Devider/index.ts
+#	수정함:        src/components/atoms/TextInput/TextInput.tsx
+#	새 파일:       src/components/molecules/EditorButtons/EditorButtons.tsx
+#	새 파일:       src/components/molecules/EditorButtons/index.ts
+#	새 파일:       src/components/molecules/ProcessBar/ProcessBar.tsx
+#	새 파일:       src/components/molecules/ProcessBar/index.ts
+#	새 파일:       src/components/molecules/TableModal/Block.tsx
+#	수정함:        src/components/molecules/TableModal/TableModal.tsx
+#	수정함:        src/components/organisms/Editor/TagArea/EditorTagArea.tsx
+#	수정함:        src/components/organisms/Editor/WritingArea/EditorWritingArea.tsx
+#	수정함:        src/components/organisms/MarkdownEditor/MarkdownEditor.tsx
+#	삭제함:        src/components/organisms/PostEditor/PostEditor.tsx
+#	수정함:        src/components/pages/Post.tsx
+#	새 파일:       src/components/templates/PostEditor/PostEditor.tsx
+#	이름 바꿈:     src/components/organisms/PostEditor/index.ts -> src/components/templates/PostEditor/index.ts
+#	새 파일:       src/hooks/useCursorPoint.tsx
+#	새 파일:       src/hooks/useUploadingImg.tsx
+#	수정함:        src/interfaces/Editor.ts
+#	수정함:        src/interfaces/Types/index.ts
+#	새 파일:       src/utils/getImgByDrag.ts
+#

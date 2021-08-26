@@ -19,8 +19,9 @@ import BrowserWarning from '@/global/layout/components/BrowserWarning';
 
 import PublicRoute from '@/global/routes/PublicRoute';
 
-const mainLanding = React.lazy(() => import('@/pages/Landing'));
-const search = React.lazy(() => import('@/pages/Search'));
+const Search = React.lazy(() => import('@/pages/Search'));
+const Room = React.lazy(() => import('@/pages/Room'));
+const Game = React.lazy(() => import('@/pages/Game'));
 
 const App = () => {
   const session = sessionHook();
@@ -30,8 +31,9 @@ const App = () => {
       <SessionContext.Provider value={session || {}}>
         <Router history={history}>
           <Switch>
-            <PublicRoute exact path="/" component={mainLanding} />
-            <PublicRoute exact path="/search" component={search} />
+            <PublicRoute exact path="/" component={Search} />
+            <PublicRoute exact path="/room/:summonerName" component={Room} />
+            <PublicRoute exact path="/game/:gameId/:teamId" component={Game} />
             <Redirect path="*" to="/" />
           </Switch>
         </Router>

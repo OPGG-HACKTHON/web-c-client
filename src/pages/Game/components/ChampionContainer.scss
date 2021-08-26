@@ -1,0 +1,27 @@
+.ChampionContainer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #25232c;
+
+  .top-container {
+    padding: r(18px) r(12px);
+    background-color: #1f1d25;
+  }
+
+  .bottom-container {
+    padding: r(18px 12px 30px 12px);
+
+    .items {
+      height: 80px;
+      margin-bottom: r(18px);
+      border-radius: r(8px);
+      background-color: rgb(145, 145, 145);
+    }
+
+    .spells {
+      height: 80px;
+      margin-bottom: r(16px);
+      border-radius: r(16px);
+      background-color: #312e3a;
+    }
+  }
+}

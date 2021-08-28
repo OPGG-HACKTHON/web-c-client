@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-
 import { message } from 'antd';
+import GameProvider from './models/provider/GameProvider';
 
 import ChampionContainer from './components/ChampionContainer';
 
@@ -23,11 +23,13 @@ const InGame = ({ match } : RouteComponentProps) => {
   }, [gameId, teamId]);
 
   return (
-    <div>
-      {[1, 2, 3, 4, 5].map((championId) => (
-        <ChampionContainer championId={championId} />
-      ))}
-    </div>
+    <GameProvider matchTeamCode={gameId}>
+      <div>
+        {[1, 2, 3, 4, 5].map((championId) => (
+          <ChampionContainer championId={championId} />
+        ))}
+      </div>
+    </GameProvider>
   );
 };
 

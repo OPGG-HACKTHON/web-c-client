@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import Champion from './Champion';
+import ChampionItem from './ChampionItem';
 
 import './ChampionContainer.scss';
 
@@ -10,10 +11,7 @@ interface ChampionComponentProps {
   onClick?: Function;
 }
 
-const ChampionContainer = ({
-  onClick,
-  championId,
-}: ChampionComponentProps) => {
+const ChampionContainer = ({ onClick, championId }: ChampionComponentProps) => {
   useEffect(() => {
     //
   }, []);
@@ -25,9 +23,9 @@ const ChampionContainer = ({
       </div>
       <div className="bottom-container">
         <div className="items" />
-        <div className="spells" />
-        <div className="spells" />
-        <div className="spells" />
+        <ChampionItem type="ultimate" />
+        <ChampionItem type="spell" />
+        <ChampionItem type="spell" />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useReducer, ReactElement } from 'react';
+import React, { useReducer, ReactElement, useRef } from 'react';
 import axios from 'axios';
 import { reducer, createDispatcher, initState } from './reducer';
 import GameContext from '../context/GameContext';
@@ -14,6 +14,7 @@ interface GameProviderProps {
 function GameProvider({ matchTeamCode, children } : GameProviderProps) {
   const [dataState, dispatch] = useReducer(reducer, initState);
   const dispatcher = createDispatcher(dispatch);
+  const spellTimer = useRef([]);
 
   const getChampsInitData = async () => {
     try {
@@ -22,7 +23,7 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
       const champsData : ChampData[] = await new Promise((res) => {
         setTimeout(() => res(exampleData), 500);
       });
-      console.log(champsData);
+
       dispatcher.success(champsData);
     } catch (err) {
       dispatcher.error(err);
@@ -69,6 +70,24 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
     }
   };
 
+  const countSpellTime = (summonerName: string, spellKey:SpellKey) => {
+    if (spellTimer.current.includes(summonerName + spellKey)) return;
+    spellTimer.current.push(summonerName + spellKey);
+
+    const timer = setInterval(() => {
+      const champData = getData(summonerName);
+      const spellData = champData.spells[spellKey];
+      if (spellData.time === 0) {
+        clearInterval(timer);
+        spellData.time = null;
+        dispatcher.render();
+        return;
+      }
+      spellData.time -= 1;
+      dispatcher.render();
+    }, 1000);
+  };
+
   const onUseSpell = async (summonerName:string, spellType: SpellKey) => {
     try {
       dispatcher.loading();
@@ -81,6 +100,7 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
 
       const userData = getData(summonerName);
       gameDataManager.useSpell(userData, spellType, second);
+      countSpellTime(summonerName, spellType);
       dispatcher.render();
     } catch (err) {
       dispatcher.error(err);

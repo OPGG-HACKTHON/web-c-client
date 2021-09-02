@@ -96,6 +96,14 @@ const gameDataManager = {
     if (ultData.level === 0) userData.spells.R = { ...ultData, isOn: true, level };
     else userData.spells.R = { ...ultData, level };
   },
+
+  countTime(userData: ChampData) {
+    Object.keys(userData.spells).forEach((spellKey:SpellKey) => {
+      const spellTime = userData.spells[spellKey].time;
+      if (spellTime === 0) userData.spells[spellKey].time = null;
+      else if (spellTime) userData.spells[spellKey].time -= 1;
+    });
+  },
 };
 
 export default gameDataManager;

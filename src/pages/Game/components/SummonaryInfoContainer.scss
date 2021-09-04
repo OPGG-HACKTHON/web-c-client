@@ -5,4 +5,8 @@
   height: 140px;
   padding-top: r(13px);
   background-color: #1a181e;
+
+  @media (min-width: 720px) {
+    height: fit-content;
+  }
 }

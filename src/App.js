@@ -33,7 +33,7 @@ const App = () => {
           <Switch>
             <PublicRoute exact path="/" component={Search} />
             <PublicRoute exact path="/room/:summonerName" component={Room} />
-            <PublicRoute exact path="/game/:gameId/:teamId" component={Game} />
+            <PublicRoute exact path="/game/:matchTeamCode" component={Game} />
             <Redirect path="*" to="/" />
           </Switch>
         </Router>

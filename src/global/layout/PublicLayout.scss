@@ -3,10 +3,12 @@
   $topbar-height-mobile: r(50px);
 
   #app-body {
-    margin-top: $topbar-height-pc;
+    // margin-top: $topbar-height-pc;
+    margin-top: 0; //강현구 수정
 
     @include bp-down(md) {
-      margin-top: $topbar-height-mobile;
+      // margin-top: $topbar-height-mobile;
+      margin-top: 0; //강현구 수정
     }
 
     #app-body-content {

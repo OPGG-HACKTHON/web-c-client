@@ -2,8 +2,17 @@
   display: flex;
   flex-direction: column;
 
+  @media (min-width: 720px) {
+    flex-direction: row;
+  }
+
   .summonary-top-container {
     margin-bottom: r(13px);
+
+    @media (min-width: 720px) {
+      margin-right: r(16px);
+      margin-bottom: r(20px);
+    }
   }
 
   .summonary-bottom-container {
@@ -13,8 +22,8 @@
       padding: 0 6px 7px 4px;
 
       img {
-        width: 20px;
-        height: 20px;
+        width: r(20px);
+        height: r(20px);
         margin-right: 7px;
       }
 

@@ -8,24 +8,24 @@ import Header from './components/Header';
 import SummonaryInfoContainer from './components/SummonaryInfoContainer';
 
 const InGame = ({ match } : RouteComponentProps) => {
-  const { gameId, teamId } = match.params;
+  const { matchTeamCode } = match.params;
 
   const getGameInfo = useCallback(async () => {
-    if (!gameId || !teamId) {
+    if (!matchTeamCode) {
       message.error('게임 아이디가 없습니다.');
       // TODO: redirect
       return;
     }
 
-    console.log(gameId);
-  }, [gameId, teamId]);
+    console.log(matchTeamCode);
+  }, [matchTeamCode]);
 
   useEffect(() => {
     getGameInfo();
-  }, [gameId, teamId]);
+  }, [matchTeamCode]);
 
   return (
-    <GameProvider matchTeamCode={gameId}>
+    <GameProvider matchTeamCode={matchTeamCode}>
       <div>
         <Header />
         <SummonaryInfoContainer />

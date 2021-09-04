@@ -8,8 +8,9 @@ import {
 const gameDataManager = {
   async getChampsInitData():Promise<ChampData[]> {
     try {
-      const { data }: { data :ServerData[] } = await axios.get('http://3.34.111.116:8070/v1/match/data/hipotato');
-      const champsData = gameDataManager.createChampsData(data);
+      const { data } = await axios.get('http://3.34.111.116:8070/v1/match/data/이현경사랑해');
+      const serverChampsData : ServerData[] = data.data;
+      const champsData = gameDataManager.createChampsData(serverChampsData);
       return champsData;
     } catch (err) {
       throw err;

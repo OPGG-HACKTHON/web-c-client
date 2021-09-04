@@ -8,7 +8,7 @@ import {
 const gameDataManager = {
   async getChampsInitData():Promise<ChampData[]> {
     try {
-      const { data }: { data :ServerData[] } = await axios.get('url');
+      const { data }: { data :ServerData[] } = await axios.get('http://3.34.111.116:8070/v1/match/data/hipotato');
       const champsData = gameDataManager.createChampsData(data);
       return champsData;
     } catch (err) {

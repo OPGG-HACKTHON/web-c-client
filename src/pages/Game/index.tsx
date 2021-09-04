@@ -4,6 +4,8 @@ import { message } from 'antd';
 import GameProvider from './models/provider/GameProvider';
 
 import ChampionContainer from './components/ChampionContainer';
+import Header from './components/Header';
+import SummonaryInfoContainer from './components/SummonaryInfoContainer';
 
 const InGame = ({ match } : RouteComponentProps) => {
   const { gameId, teamId } = match.params;
@@ -25,7 +27,9 @@ const InGame = ({ match } : RouteComponentProps) => {
   return (
     <GameProvider matchTeamCode={gameId}>
       <div>
-        {[1, 2, 3, 4, 5].map((championId) => (
+        <Header />
+        <SummonaryInfoContainer />
+        {['1', '2', '3', '4', '5'].map((championId) => (
           <ChampionContainer championId={championId} />
         ))}
       </div>

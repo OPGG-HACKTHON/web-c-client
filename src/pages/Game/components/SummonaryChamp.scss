@@ -1,0 +1,41 @@
+.summonary-info {
+  display: flex;
+  flex-direction: column;
+
+  .summonary-top-container {
+    margin-bottom: r(13px);
+  }
+
+  .summonary-bottom-container {
+    .summonary-spell-container {
+      display: flex;
+      align-items: center;
+      padding: 0 6px 7px 4px;
+
+      img {
+        width: 20px;
+        height: 20px;
+        margin-right: 7px;
+      }
+
+      span {
+        opacity: 80%;
+        font-weight: 500;
+        font-size: 12px;
+        color: #fff;
+      }
+    }
+
+    .spell-off {
+      img {
+        -webkit-filter: grayscale(100%);
+        filter: gray;
+      }
+
+      span {
+        opacity: 50%;
+        color: #fff;
+      }
+    }
+  }
+}

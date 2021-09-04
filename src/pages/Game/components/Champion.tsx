@@ -7,7 +7,7 @@ import useInterval from '@/common/hooks/useInterval';
 
 // TODO: Context 따라 수정
 interface ChampionComponentProps {
-  championId: number;
+  championId: string;
   onClick?: Function;
 }
 

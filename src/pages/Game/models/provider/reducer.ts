@@ -1,5 +1,6 @@
 import React from 'react';
 import { ChampData } from '../type';
+import exampleData from './example';
 
 enum Action {
   LOADING,
@@ -21,7 +22,7 @@ interface IAction {
 }
 
 export const initState:FetchState = {
-  champsData: null,
+  champsData: exampleData,
   loading: false,
   error: null,
 };

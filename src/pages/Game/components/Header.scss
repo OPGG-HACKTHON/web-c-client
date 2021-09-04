@@ -1,0 +1,29 @@
+.Header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  background: #1a181e;
+
+  .logo-image {
+    width: 108px;
+    height: 20px;
+  }
+
+  .info-image,
+  .share-image {
+    position: absolute;
+    right: 0;
+    width: 22px;
+    height: 22px;
+  }
+
+  .info-image {
+    right: r(54px);
+  }
+
+  .share-image {
+    right: r(16px);
+  }
+}

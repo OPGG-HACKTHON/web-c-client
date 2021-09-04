@@ -7,7 +7,7 @@ import './ChampionContainer.scss';
 
 // TODO: Context 따라 수정
 interface ChampionComponentProps {
-  championId: number;
+  championId: string;
   onClick?: Function;
 }
 

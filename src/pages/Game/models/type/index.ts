@@ -1,5 +1,17 @@
 export type SpellKey = 'D' | 'F' | 'R';
 
+export interface ContextType {
+  gameData: ChampData[];
+  loadingState: {
+    loading: boolean;
+    error: Error;
+  };
+  buyItems: (summonerName: string, items: string[]) => Promise<void>;
+  cancleItem: (summonerName: string, itemName: string) => Promise<void>;
+  onUseSpell: (summonerName: string, spellType: SpellKey) => Promise<void>;
+  resetSpell: (summonerName: string, spellType: SpellKey) => Promise<void>;
+}
+
 export interface ChampData {
   champName: string,
   summonerName: string,

@@ -52,19 +52,19 @@ const exampleData:ChampData[] = [{
   spells: {
     D: {
       spellType: 'D',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: true,
       time: null,
     },
     F: {
       spellType: 'F',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: true,
       time: null,
     },
     R: {
       spellType: 'R',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: false,
       time: null,
       level: 0,
@@ -122,19 +122,19 @@ const exampleData:ChampData[] = [{
   spells: {
     D: {
       spellType: 'D',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: true,
       time: null,
     },
     F: {
       spellType: 'F',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: true,
       time: null,
     },
     R: {
       spellType: 'R',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: false,
       time: null,
       level: 0,
@@ -143,7 +143,7 @@ const exampleData:ChampData[] = [{
 }, {
   champName: '가렌3',
   summonerName: '3',
-  src: 'url',
+  src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
   frequentItems: [
     {
       name: '점화석',
@@ -192,19 +192,19 @@ const exampleData:ChampData[] = [{
   spells: {
     D: {
       spellType: 'D',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: true,
       time: null,
     },
     F: {
       spellType: 'F',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: true,
       time: null,
     },
     R: {
       spellType: 'R',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: false,
       time: null,
       level: 0,
@@ -262,19 +262,19 @@ const exampleData:ChampData[] = [{
   spells: {
     D: {
       spellType: 'D',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: true,
       time: null,
     },
     F: {
       spellType: 'F',
-      src: 'url',
-      isOn: true,
-      time: null,
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
+      isOn: false,
+      time: 200,
     },
     R: {
       spellType: 'R',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: false,
       time: null,
       level: 0,
@@ -332,19 +332,19 @@ const exampleData:ChampData[] = [{
   spells: {
     D: {
       spellType: 'D',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: true,
       time: null,
     },
     F: {
       spellType: 'F',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: true,
       time: null,
     },
     R: {
       spellType: 'R',
-      src: 'url',
+      src: 'http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/SummonerFlash.png',
       isOn: false,
       time: null,
       level: 0,

@@ -7,10 +7,22 @@ import './SummonaryChamp.scss';
 interface SummonaryChampProps {
   championId: string
   champData: ChampData
+  order: number
 }
 
-const SummonaryChamp = ({ championId, champData }:SummonaryChampProps) => {
-  const onClickChampion = () => {};
+const SummonaryChamp = ({ championId, champData, order }:SummonaryChampProps) => {
+  const findChampElemsPos = () => {
+    const topElem = document.querySelector('.Top-Container') as HTMLElement;
+    const defaultHeight = topElem.offsetHeight;
+    const champElems = document.querySelectorAll('.ChampionContainer');
+    const champsScrollPos = Array.from(champElems).map((elem : HTMLElement) => elem.offsetTop - defaultHeight);
+    return champsScrollPos;
+  };
+
+  const onClickChampion = () => {
+    const champsScrollPos = findChampElemsPos();
+    window.scrollTo({ top: champsScrollPos[order], behavior: 'smooth' });
+  };
 
   const { spells } = champData;
   return (

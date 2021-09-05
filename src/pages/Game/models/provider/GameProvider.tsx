@@ -25,7 +25,8 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
   const getChampsInitData = async () => {
     try {
       dispatcher.loading();
-      // const champsData = await gameDataManager.getChampsInitData();
+      // const champsData = await gameDataManager.getChampsInitData(matchTeamCode);
+
       const champsData : ChampData[] = await new Promise((res) => {
         setTimeout(() => res(exampleData), 500);
       });

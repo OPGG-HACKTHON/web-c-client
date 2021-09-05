@@ -6,9 +6,9 @@ import {
 } from '../type';
 
 const gameDataManager = {
-  async getChampsInitData():Promise<ChampData[]> {
+  async getChampsInitData(matchTeamCode:string):Promise<ChampData[]> {
     try {
-      const { data } = await axios.get('http://3.34.111.116:8070/v1/match/data/비비드');
+      const { data } = await axios.get(`http://3.34.111.116:8070/v1/match/data/matchTeamCode/${matchTeamCode}`);
       const serverChampsData : ServerData[] = data.data;
       const champsData = gameDataManager.createChampsData(serverChampsData);
       return champsData;

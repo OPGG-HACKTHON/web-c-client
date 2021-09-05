@@ -4,9 +4,20 @@ import axios from 'axios';
 const Search = () => {
   const [searchValue, setValue] = useState<string>('');
 
-  const onClickSearchBtn = () => {
-    // const { data } = axios.get(`http://3.34.111.116:8070/v1/summoner/${searchValue}`);
-    // const { summonerName, summonerId } = data.data;
+  const getMatchTeamCode = async () => {
+    const { data } = await axios.get(`http://3.34.111.116:8070/v1/match/status/${searchValue}`);
+    const { matchTeamCode } = data.data;
+    return matchTeamCode;
+  };
+
+  const onClickSearchBtn = async () => {
+    const { data } = await axios.get(`http://3.34.111.116:8070/v1/match/${searchValue}`);
+    if (data.data.matchStatus === false) {
+      alert('게임 시작 안함');
+    } else {
+      const matchTeamCode = await getMatchTeamCode();
+      window.location.href = `/game/${matchTeamCode}`;
+    }
   };
 
   return (

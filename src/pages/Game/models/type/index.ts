@@ -1,5 +1,13 @@
 export type SpellKey = 'D' | 'F' | 'R';
 
+export interface SocketSpellData {
+  summonerName: string,
+  ultTime: number,
+  fspellTime: number,
+  dspellTime: number,
+  type: 'SPELL' | 'ITEM'
+}
+
 export interface ContextType {
   gameData: ChampData[];
   loadingState: {

@@ -20,8 +20,8 @@ const SummonaryChamp = ({ championId, champData }:SummonaryChampProps) => {
       </div>
       <div className="summonary-bottom-container">
         {
-            Object.keys(spells).map((spellKey) => {
-              if (spellKey === 'D') return null;
+            ['D', 'F'].map((spellKey) => {
+              if (spellKey === 'R') return null;
               const spellData : SpellData = spells[spellKey];
               const isSpellOff = spellData.time === null;
               const spellTime: number | string = spellData.time ?? '-';

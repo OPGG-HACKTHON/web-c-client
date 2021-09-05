@@ -1,9 +1,13 @@
-import React, { useReducer, ReactElement, useRef } from 'react';
+import React, {
+  useReducer, ReactElement, useRef, useEffect,
+} from 'react';
 import axios from 'axios';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
 import { reducer, createDispatcher, initState } from './reducer';
 import GameContext from '../context/GameContext';
 import gameDataManager from '../managers/gameDataManager';
-import { ChampData, SpellKey } from '../type';
+import { ChampData, SocketSpellData, SpellKey } from '../type';
 import exampleData from './example';
 
 interface GameProviderProps {
@@ -15,6 +19,8 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
   const [dataState, dispatch] = useReducer(reducer, initState);
   const dispatcher = createDispatcher(dispatch);
   const spellTimer = useRef([]);
+  const socket = useRef(null);
+  const stomp = useRef(null);
 
   const getChampsInitData = async () => {
     try {
@@ -77,8 +83,13 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
     const timer = setInterval(() => {
       const champData = getData(summonerName);
       const spellData = champData.spells[spellKey];
-      if (spellData.time === 0) {
+
+      if (!spellData.time || spellData.time < 0) {
         clearInterval(timer);
+        const idx = spellTimer.current.indexOf(summonerName + spellKey);
+
+        spellTimer.current.splice(idx, 1);
+
         spellData.time = null;
         dispatcher.render();
         return;
@@ -96,10 +107,21 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
 
       // if (!data.success) throw new Error();
       // const { second } = data.data;
-      const second = 200;
-
+      const second = 5;
       const userData = getData(summonerName);
+
       gameDataManager.useSpell(userData, spellType, second);
+
+      const socketData:SocketSpellData = {
+        summonerName,
+        dspellTime: userData.spells.D.time,
+        fspellTime: userData.spells.F.time,
+        ultTime: userData.spells.R.time,
+        type: 'SPELL',
+      };
+
+      stomp.current.send(`/pub/comm/message/${matchTeamCode}`, {}, JSON.stringify(socketData));
+
       countSpellTime(summonerName, spellType);
       dispatcher.render();
     } catch (err) {
@@ -165,6 +187,39 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
     updateTimeUsed,
     updateUltLevel,
   };
+
+  const openSocket = () => {
+    if (socket.current) return;
+    socket.current = new SockJS('http://3.34.111.116:8070/ws-swoomi');
+    stomp.current = Stomp.over(socket.current);
+
+    stomp.current.connect(
+      {}, () => {
+        stomp.current.subscribe(
+          `/sub/comm/room/${matchTeamCode}`,
+          (msg) => {
+            const data:SocketSpellData = JSON.parse(msg.body);
+            dispatcher.update(data);
+          },
+        );
+      },
+    );
+  };
+
+  useEffect(() => {
+    if (socket.current) return;
+    openSocket();
+  }, []);
+
+  // useEffect(() => { // 소켓 테스트용
+  //   const onClick = () => {
+  //     const champData = dataState.champsData[0].summonerName;
+  //     onUseSpell(champData, 'D');
+  //   };
+  //   document.addEventListener('click', onClick);
+
+  //   return () => document.removeEventListener('click', onClick);
+  // }, [dataState.champsData]);
 
   return (
     <GameContext.Provider value={providerValue}>{children}

@@ -1,9 +1,9 @@
 import { ChampData } from '../type';
 
 const exampleData:ChampData[] = [{
-  champName: '가렌1',
+  champName: '가렌',
   summonerName: '1',
-  src: 'url',
+  src: 'https://opgg-static.akamaized.net/images/lol/champion/Ahri.png',
   frequentItems: [
     {
       name: '점화석',
@@ -73,7 +73,7 @@ const exampleData:ChampData[] = [{
 }, {
   champName: '가렌2',
   summonerName: '2',
-  src: 'url',
+  src: 'https://opgg-static.akamaized.net/images/lol/champion/Ahri.png',
   frequentItems: [
     {
       name: '점화석',
@@ -213,7 +213,7 @@ const exampleData:ChampData[] = [{
 }, {
   champName: '가렌4',
   summonerName: '4',
-  src: 'url',
+  src: 'https://opgg-static.akamaized.net/images/lol/champion/Ahri.png',
   frequentItems: [
     {
       name: '점화석',
@@ -283,7 +283,7 @@ const exampleData:ChampData[] = [{
 }, {
   champName: '가렌5',
   summonerName: '5',
-  src: 'url',
+  src: 'https://opgg-static.akamaized.net/images/lol/champion/Ahri.png',
   frequentItems: [
     {
       name: '점화석',

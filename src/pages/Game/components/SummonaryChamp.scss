@@ -1,6 +1,7 @@
 .summonary-info {
   display: flex;
   flex-direction: column;
+  width: 50px;
 
   @media (min-width: 720px) {
     flex-direction: row;

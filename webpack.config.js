@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const axios = require('axios');
 const readline = require('readline');
 const path = require('path');
 
@@ -10,18 +9,15 @@ const svgToMiniDataURI = require('mini-svg-data-uri');
 
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
+const getAjeGag = require('./config/getAjeGag');
 const aliasResolver = require('./aliasResolver.config');
 
 const buildStartAndArzeGag = async () => {
   try {
-    const res = await axios({
-      url: 'http://aje.teamwv.ml/api/json',
-      timeout: 1000,
-    });
-    const { que, answer } = res.data;
+    const { quiz, answer } = getAjeGag();
 
     console.info('빌드를 시작합니다.');
-    console.info(que);
+    console.info(quiz);
     console.info('');
 
     return answer;
@@ -106,6 +102,16 @@ module.exports = async (outSideEnv = {}) => {
           },
         },
         {
+          test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+          include: path.resolve(__dirname, './src/global/fonts'),
+          exclude: /node_modules/,
+          loader: require.resolve('file-loader'),
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'fonts/',
+          },
+        },
+        {
           test: /\.svg$/i,
           use: [{
             loader: 'url-loader',
@@ -124,6 +130,7 @@ module.exports = async (outSideEnv = {}) => {
           use: [
             'style-loader',
             'css-loader',
+            'resolve-url-loader',
             {
               loader: require.resolve('sass-loader'),
               options: {
@@ -156,7 +163,6 @@ module.exports = async (outSideEnv = {}) => {
                     'green-color': '#28a745',
                     'yellow-color': '#ffc107',
                     'cyan-color': '#1890ff',
-                    'font-family': 'Spoqa Han Sans',
                   },
                   javascriptEnabled: true,
                 },

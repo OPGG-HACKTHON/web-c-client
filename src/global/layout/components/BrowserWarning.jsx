@@ -10,7 +10,7 @@ const BrowserWarning = () => {
   const browser = detect();
 
   useEffect(() => {
-    if (!browser || !['edge', 'ie'].includes(browser.name) || getLocalStorage('jober-api-browser-warning')) {
+    if (!browser || !['edge', 'ie'].includes(browser.name) || getLocalStorage('swoomi-browser-warning')) {
       return;
     }
 
@@ -30,7 +30,7 @@ const BrowserWarning = () => {
               type="primary"
               onClick={() => {
                 if (checked) {
-                  setLocalStorageWithoutCheck('jober-api-browser-warning', 'on');
+                  setLocalStorageWithoutCheck('swoomi-browser-warning', 'on');
                 }
                 setVisible(false);
               }}

@@ -64,7 +64,7 @@ const axiosHook = (props = {}) => {
     } catch (err) {
       setLoading(false);
 
-      const undefinedErrorMessage = '알 수 없는 문제가 발생하였습니다. 문제가 지속되면 contact@jober.io 로 문의바랍니다.';
+      const undefinedErrorMessage = '알 수 없는 문제가 발생하였습니다. 문제가 지속되면 moonyoungyoung@gmail.com 으로 문의바랍니다.';
       const errorMessage = err.message || undefinedErrorMessage;
       setError(errorMessage);
 

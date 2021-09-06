@@ -101,7 +101,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     }, 1000);
   };
 
-  const onUseSpell = async (summonerName: string, spellType: SpellKey) => {
+  const onUseSpell = async (summonerName: string, spellType: SpellKey, timeGap: number) => {
     try {
       dispatcher.loading();
       // const body = { matchTeamCode, summonerName, spellType };
@@ -112,7 +112,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       const second = 5;
       const userData = getData(summonerName);
 
-      gameDataManager.useSpell(userData, spellType, second);
+      gameDataManager.useSpell(userData, spellType, second + timeGap);
 
       const socketData: SocketSpellData = {
         summonerName,
@@ -216,16 +216,6 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     if (socket.current) return;
     openSocket();
   }, []);
-
-  // useEffect(() => { // 소켓 테스트용
-  //   const onClick = () => {
-  //     const champData = dataState.champsData[0].summonerName;
-  //     onUseSpell(champData, 'D');
-  //   };
-  //   document.addEventListener('click', onClick);
-
-  //   return () => document.removeEventListener('click', onClick);
-  // }, [dataState.champsData]);
 
   return (
     <GameContext.Provider value={providerValue}>

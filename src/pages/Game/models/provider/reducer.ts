@@ -12,29 +12,29 @@ enum Action {
 }
 
 export interface FetchState {
-  champsData : ChampData[] | null,
-  loading : boolean,
-  error : Error | null,
+  champsData: ChampData[] | null,
+  loading: boolean,
+  error: Error | null,
 }
 
 interface IAction {
   type: Action,
-  champsData? : ChampData[],
-  error? : Error
-  data? : SocketSpellData
+  champsData?: ChampData[],
+  error?: Error
+  data?: SocketSpellData
 }
 
-export const initState:FetchState = {
+export const initState: FetchState = {
   champsData: exampleData,
   loading: false,
   error: null,
 };
 
-const setFecthState = (champsData: ChampData[], loading : boolean, error : Error):FetchState => {
+const setFecthState = (champsData: ChampData[], loading: boolean, error: Error): FetchState => {
   return { champsData, loading, error };
 };
 
-export function reducer(state:FetchState, action:IAction) {
+export function reducer(state: FetchState, action: IAction) {
   switch (action.type) {
     case Action.LOADING:
       return setFecthState(state.champsData, true, null);
@@ -77,7 +77,7 @@ export const createDispatcher = (dispatch: React.Dispatch<IAction>) => {
       dispatch({ type: Action.LOADING });
     },
 
-    success(champsData:ChampData[]) {
+    success(champsData: ChampData[]) {
       dispatch({ type: Action.SUCCESS, champsData });
     },
 
@@ -85,11 +85,11 @@ export const createDispatcher = (dispatch: React.Dispatch<IAction>) => {
       dispatch({ type: Action.RENDER });
     },
 
-    update(data:SocketSpellData) {
+    update(data: SocketSpellData) {
       dispatch({ type: Action.UPDATE, data });
     },
 
-    error(error:Error) {
+    error(error: Error) {
       dispatch({ type: Action.ERROR, error });
     },
   };

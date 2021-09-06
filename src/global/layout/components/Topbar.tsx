@@ -7,11 +7,11 @@ import info from '@/common/images/info.png';
 import share from '@/common/images/share.png';
 
 interface TopbarComponentProps {
-  onClickInfoBtn?: () => void;
-  onClickShareBtn?: () => void;
+  onClickInfoBtn?: ()=> void;
+  onClickShareBtn?: ()=> void;
 }
 
-const Topbar = ({ onClickInfoBtn, onClickShareBtn }:TopbarComponentProps) => {
+const Topbar = ({ onClickInfoBtn, onClickShareBtn }: TopbarComponentProps) => {
   return (
     <div
       id="Topbar"

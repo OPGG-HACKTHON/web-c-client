@@ -6,10 +6,10 @@ import {
 } from '../type';
 
 const gameDataManager = {
-  async getChampsInitData(matchTeamCode:string):Promise<ChampData[]> {
+  async getChampsInitData(matchTeamCode: string): Promise<ChampData[]> {
     try {
       const { data } = await axios.get(`http://3.34.111.116:8070/v1/match/data/matchTeamCode/${matchTeamCode}`);
-      const serverChampsData : ServerData[] = data.data;
+      const serverChampsData: ServerData[] = data.data;
       const champsData = gameDataManager.createChampsData(serverChampsData);
       return champsData;
     } catch (err) {
@@ -17,7 +17,7 @@ const gameDataManager = {
     }
   },
 
-  createChampsData(champsServerData:ServerData[]):ChampData[] {
+  createChampsData(champsServerData: ServerData[]): ChampData[] {
     return champsServerData.map((data) => {
       return {
         champName: data.championName,
@@ -50,7 +50,7 @@ const gameDataManager = {
     });
   },
 
-  buyItems(purchaserData : ChampData, items : string[]) {
+  buyItems(purchaserData: ChampData, items: string[]) {
     const preItemsPurchased = purchaserData.itemsPurchased ?? [];
     const initItemMap = { itemsPurchased: [...preItemsPurchased], itemsNotPurchased: [] };
     const itemMap = purchaserData.frequentItems.reduce((acc, itemData) => {
@@ -64,7 +64,7 @@ const gameDataManager = {
     purchaserData.itemsPurchased = [...itemsPurchased];
   },
 
-  canceItem(purchaserData : ChampData, itemName : string) {
+  canceItem(purchaserData: ChampData, itemName: string) {
     const initItemMap = { itemsPurchased: [], itemToCancle: null };
     const itemMap = purchaserData.itemsPurchased.reduce((acc, itemData) => {
       if (itemName === itemData.name) acc.itemToCancle = itemData;
@@ -77,29 +77,29 @@ const gameDataManager = {
     purchaserData.frequentItems = [...purchaserData.frequentItems, itemToCancle];
   },
 
-  useSpell(userData : ChampData, spellType: SpellKey, second: number) {
+  useSpell(userData: ChampData, spellType: SpellKey, second: number) {
     const spellData = userData.spells[spellType] as SpellData;
     userData.spells[spellType] = { ...spellData, time: second, isOn: false };
   },
 
-  resetSpell(userData : ChampData, spellType: SpellKey) {
+  resetSpell(userData: ChampData, spellType: SpellKey) {
     const spellData = userData.spells[spellType] as SpellData;
     userData.spells[spellType] = { ...spellData, time: null, isOn: true };
   },
 
-  updateSpellTime(userData : ChampData, spellType: SpellKey, changedTime: number) {
+  updateSpellTime(userData: ChampData, spellType: SpellKey, changedTime: number) {
     const spellData = userData.spells[spellType] as SpellData;
     userData.spells[spellType] = { ...spellData, time: changedTime, isOn: false };
   },
 
-  updateUltLevel(userData : ChampData, level: number) {
+  updateUltLevel(userData: ChampData, level: number) {
     const ultData = userData.spells.R;
     if (ultData.level === 0) userData.spells.R = { ...ultData, isOn: true, level };
     else userData.spells.R = { ...ultData, level };
   },
 
   countTime(userData: ChampData) {
-    Object.keys(userData.spells).forEach((spellKey:SpellKey) => {
+    Object.keys(userData.spells).forEach((spellKey: SpellKey) => {
       const spellTime = userData.spells[spellKey].time;
       if (spellTime === 0) userData.spells[spellKey].time = null;
       else if (spellTime) userData.spells[spellKey].time -= 1;

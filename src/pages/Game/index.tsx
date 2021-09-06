@@ -7,7 +7,7 @@ import GameProvider from './models/provider/GameProvider';
 import SummonaryInfoContainer from './components/SummonaryInfoContainer';
 import ChampionContainer from './components/ChampionContainer';
 
-const InGame = ({ match } : RouteComponentProps) => {
+const InGame = ({ match }: RouteComponentProps) => {
   const { matchTeamCode } = match.params;
 
   return (

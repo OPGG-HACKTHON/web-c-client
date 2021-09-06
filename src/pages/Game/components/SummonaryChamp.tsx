@@ -11,13 +11,13 @@ interface SummonaryChampProps {
   order: number
 }
 
-const SummonaryChamp = ({ champData, order }:SummonaryChampProps) => {
+const SummonaryChamp = ({ champData, order }: SummonaryChampProps) => {
   const findChampElemsPos = () => {
     const topbarElem = document.querySelector('#Topbar') as HTMLElement;
     const summonaryInfoContainerElem = document.querySelector('#SummonaryInfoContainer') as HTMLElement;
     const defaultHeight = topbarElem.offsetHeight + summonaryInfoContainerElem.offsetHeight;
     const champElems = document.querySelectorAll('.ChampionContainer');
-    const champsScrollPos = Array.from(champElems).map((elem : HTMLElement) => elem.offsetTop - defaultHeight);
+    const champsScrollPos = Array.from(champElems).map((elem: HTMLElement) => elem.offsetTop - defaultHeight);
     return champsScrollPos;
   };
 
@@ -35,7 +35,7 @@ const SummonaryChamp = ({ champData, order }:SummonaryChampProps) => {
       <div className="summonary-bottom-container">
         {
             ['D', 'F'].map((spellKey) => {
-              const spellData : SpellData = spells[spellKey];
+              const spellData: SpellData = spells[spellKey];
               const spellTime: number | string = spellData.time ?? '-';
 
               return (

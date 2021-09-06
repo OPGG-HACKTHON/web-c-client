@@ -1,6 +1,6 @@
 import { ChampData } from '../type';
 
-const exampleData:ChampData[] = [{
+const exampleData: ChampData[] = [{
   champName: '가렌',
   summonerName: '1',
   src: 'https://opgg-static.akamaized.net/images/lol/champion/Ahri.png',

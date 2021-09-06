@@ -11,11 +11,11 @@ import { ChampData, SocketSpellData, SpellKey } from '../type';
 import exampleData from './example';
 
 interface GameProviderProps {
-  matchTeamCode : string,
-  children : ReactElement
+  matchTeamCode: string,
+  children: ReactElement
 }
 
-function GameProvider({ matchTeamCode, children } : GameProviderProps) {
+function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const [dataState, dispatch] = useReducer(reducer, initState);
   const dispatcher = createDispatcher(dispatch);
   const spellTimer = useRef([]);
@@ -27,7 +27,7 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
       dispatcher.loading();
       // const champsData = await gameDataManager.getChampsInitData(matchTeamCode);
 
-      const champsData : ChampData[] = await new Promise((res) => {
+      const champsData: ChampData[] = await new Promise((res) => {
         setTimeout(() => res(exampleData), 500);
       });
 
@@ -41,11 +41,11 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
     getChampsInitData();
   }, []);
 
-  const getData = (summonerName : string):ChampData => {
+  const getData = (summonerName: string): ChampData => {
     return dataState.champsData.filter((data) => data.summonerName === summonerName)[0];
   };
 
-  const buyItems = async (summonerName : string, items : string[]) => {
+  const buyItems = async (summonerName: string, items: string[]) => {
     try {
       dispatcher.loading();
       // const body = { matchTeamCode, summonerName, items };
@@ -61,7 +61,7 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
     }
   };
 
-  const canceItem = async (summonerName:string, itemName:string) => {
+  const canceItem = async (summonerName: string, itemName: string) => {
     try {
       dispatcher.loading();
       // const body = { matchTeamCode, summonerName, itemName };
@@ -77,7 +77,7 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
     }
   };
 
-  const countSpellTime = (summonerName: string, spellKey:SpellKey) => {
+  const countSpellTime = (summonerName: string, spellKey: SpellKey) => {
     if (spellTimer.current.includes(summonerName + spellKey)) return;
     spellTimer.current.push(summonerName + spellKey);
 
@@ -100,7 +100,7 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
     }, 1000);
   };
 
-  const onUseSpell = async (summonerName:string, spellType: SpellKey) => {
+  const onUseSpell = async (summonerName: string, spellType: SpellKey) => {
     try {
       dispatcher.loading();
       // const body = { matchTeamCode, summonerName, spellType };
@@ -113,7 +113,7 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
 
       gameDataManager.useSpell(userData, spellType, second);
 
-      const socketData:SocketSpellData = {
+      const socketData: SocketSpellData = {
         summonerName,
         dspellTime: userData.spells.D.time,
         fspellTime: userData.spells.F.time,
@@ -130,7 +130,7 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
     }
   };
 
-  const resetSpell = async (summonerName:string, spellType: SpellKey) => {
+  const resetSpell = async (summonerName: string, spellType: SpellKey) => {
     try {
       // dispatcher.loading();
       // const body = { matchTeamCode, summonerName, spellType };
@@ -146,7 +146,7 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
     }
   };
 
-  const updateTimeUsed = async (summonerName:string, spellType: SpellKey, changedTime : number) => {
+  const updateTimeUsed = async (summonerName: string, spellType: SpellKey, changedTime: number) => {
     try {
       // dispatcher.loading();
       // const body = { matchTeamCode, summonerName, spellType };
@@ -162,7 +162,7 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
     }
   };
 
-  const updateUltLevel = async (summonerName:string, level:number) => {
+  const updateUltLevel = async (summonerName: string, level: number) => {
     try {
       // dispatcher.loading();
       // const body = { matchTeamCode, summonerName, spellType };
@@ -199,7 +199,7 @@ function GameProvider({ matchTeamCode, children } : GameProviderProps) {
         stomp.current.subscribe(
           `/sub/comm/room/${matchTeamCode}`,
           (msg) => {
-            const data:SocketSpellData = JSON.parse(msg.body);
+            const data: SocketSpellData = JSON.parse(msg.body);
             dispatcher.update(data);
           },
         );

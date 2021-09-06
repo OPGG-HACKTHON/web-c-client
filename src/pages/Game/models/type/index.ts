@@ -1,15 +1,23 @@
 export type SpellKey = 'D' | 'F' | 'R';
 
+export interface SocketSpellData {
+  summonerName: string,
+  ultTime: number,
+  fspellTime: number,
+  dspellTime: number,
+  type: 'SPELL' | 'ITEM'
+}
+
 export interface ContextType {
   gameData: ChampData[];
   loadingState: {
     loading: boolean;
     error: Error;
   };
-  buyItems: (summonerName: string, items: string[]) => Promise<void>;
-  cancleItem: (summonerName: string, itemName: string) => Promise<void>;
-  onUseSpell: (summonerName: string, spellType: SpellKey) => Promise<void>;
-  resetSpell: (summonerName: string, spellType: SpellKey) => Promise<void>;
+  buyItems: (summonerName: string, items: string[])=> Promise<void>;
+  cancelItem: (summonerName: string, itemName: string)=> Promise<void>;
+  onUseSpell: (summonerName: string, spellType: SpellKey)=> Promise<void>;
+  resetSpell: (summonerName: string, spellType: SpellKey)=> Promise<void>;
 }
 
 export interface ChampData {
@@ -19,9 +27,9 @@ export interface ChampData {
   frequentItems: ItemData[],
   itemsPurchased: ItemData[] | null,
   spells: {
-    D : SpellData,
-    F : SpellData,
-    R : SpellData,
+    D: SpellData,
+    F: SpellData,
+    R: SpellData,
   },
 }
 
@@ -41,11 +49,11 @@ export interface ItemData {
 }
 
 export interface ServerData {
-  summonerName : string,
-  championName : string,
-  championImgUrl : string,
-  ultImgUrl : string,
-  spellDImgUrl : string,
-  spellFImgUrl : string,
-  frequentItems : ItemData[]
+  summonerName: string,
+  championName: string,
+  championImgUrl: string,
+  ultImgUrl: string,
+  spellDImgUrl: string,
+  spellFImgUrl: string,
+  frequentItems: ItemData[]
 }

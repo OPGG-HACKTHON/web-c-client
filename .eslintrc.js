@@ -103,7 +103,14 @@ module.exports = {
       plugins: [
         '@typescript-eslint/eslint-plugin',
       ],
-      rules,
+      rules: {
+        ...rules,
+
+        '@typescript-eslint/type-annotation-spacing': [2, {
+          before: false,
+          after: true,
+        }],
+      },
     },
   ],
 };

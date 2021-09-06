@@ -1,43 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import cs from 'classnames';
 
 import './Champion.scss';
 
-import useInterval from '@/common/hooks/useInterval';
+import { ChampData } from '../models/type';
 
-// TODO: Context 따라 수정
 interface ChampionComponentProps {
-  championId: string;
+  champData: ChampData;
   onClick?: Function;
+  isUsingName?: Boolean;
 }
 
 const Champion = ({
+  champData,
   onClick,
-  championId,
+  isUsingName = false,
 }: ChampionComponentProps) => {
-  // TODO: Context 개발 후 Context 로 대체
-  const [count, setCount] = useState(3);
-
-  const hasUltimate = count < 1;
-
-  useEffect(() => {
-    // TODO: champion image 정해지면 수정
-    console.log('championId', championId);
-  }, []);
-
-  useInterval(() => {
-    setCount(count - 1);
-  }, count > 0 && 1000);
+  const { time, isOn } = champData.spells.R;
 
   return (
-    <div className={cs('Champion', { 'has-ultimate': hasUltimate })} onClick={() => onClick()}>
-      <img
-        className="image"
-        alt="챔피언 초상화"
-        src="https://opgg-static.akamaized.net/images/lol/champion/Ahri.png"
-      />
-      { !hasUltimate && (<h4 className="counter">{count}</h4>) }
-      <div className="ultimate-light" />
+    <div className={cs('Champion', { 'has-ultimate': isOn })} onClick={() => onClick()}>
+      <div className="image-container">
+        <div className="image-holder">
+          <img
+            className="image"
+            alt="챔피언 초상화"
+            src={champData.src}
+          />
+        </div>
+        { !isOn && (<h4 className="counter">{time}</h4>) }
+        <div className="ultimate-light" />
+      </div>
+      { isUsingName && (
+        <div className="name-container">
+          <h4 className="champ-name">{champData.champName}</h4>
+          <span className="summoner-name">{champData.summonerName}</span>
+        </div>
+      )}
     </div>
   );
 };

@@ -18,6 +18,7 @@ import SessionContext from '@/common/context/SessionContext';
 import BrowserWarning from '@/global/layout/components/BrowserWarning';
 
 import PublicRoute from '@/global/routes/PublicRoute';
+import PrivateRoute from '@/global/routes/PrivateRoute';
 
 const Search = React.lazy(() => import('@/pages/Search'));
 const Room = React.lazy(() => import('@/pages/Room'));
@@ -33,7 +34,7 @@ const App = () => {
           <Switch>
             <PublicRoute exact path="/" component={Search} />
             <PublicRoute exact path="/room/:summonerName" component={Room} />
-            <PublicRoute exact path="/game/:matchTeamCode" component={Game} />
+            <PrivateRoute exact path="/game/:matchTeamCode" component={Game} />
             <Redirect path="*" to="/" />
           </Switch>
         </Router>

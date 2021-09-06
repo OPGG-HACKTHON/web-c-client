@@ -20,6 +20,10 @@
     width: 75%;
   }
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   .panel-item {
     display: flex;
     align-items: center;

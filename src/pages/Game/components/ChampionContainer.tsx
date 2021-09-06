@@ -1,37 +1,37 @@
-import React, { useEffect } from 'react';
+import React from "react";
 
-import Champion from './Champion';
-import ChampionItem from './ChampionItem';
-import useGameData from '../hooks/useGameData';
+import resizeHook from "@/common/hooks/resize";
+import Breakpoints from "@/global/styles/breakPoints";
 
-import './ChampionContainer.scss';
+import { ChampData } from "../models/type";
 
-// TODO: Context 따라 수정
+import Champion from "./Champion";
+import ChampionItem from "./ChampionItem";
+import useGameData from "../hooks/useGameData";
+
+import "./ChampionContainer.scss";
+
 interface ChampionComponentProps {
-  championId: string;
+  champData: ChampData;
   onClick?: Function;
 }
 
-const ChampionContainer = ({ onClick, championId }: ChampionComponentProps) => {
-  const { gameData } = useGameData();
-
-  useEffect(() => {
-    //
-  }, []);
+const ChampionContainer = ({ champData, onClick }: ChampionComponentProps) => {
+  const width = resizeHook();
+  const isMobile = width < Breakpoints.md;
 
   return (
-    <div className="ChampionContainer">
-      <div className="top-container">
-        <Champion onClick={onClick} championId={championId} />
+    <div className='ChampionContainer'>
+      <div className='top-container'>
+        <Champion champData={champData} onClick={onClick} isUsingName />
+        {!isMobile && <div className='items' />}
       </div>
-      <div className="bottom-container">
-        <div className="items" />
-        {['R', 'D', 'F'].map((spell) => {
+      <div className='bottom-container'>
+        {isMobile && <div className='items' />}
+        <div className='items' />
+        {["R", "D", "F"].map((spell) => {
           return (
-            <ChampionItem
-              key={spell}
-              spellData={gameData[championId].spells[spell]}
-            />
+            <ChampionItem key={spell} spellData={champData.spells[spell]} />
           );
         })}
       </div>

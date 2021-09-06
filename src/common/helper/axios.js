@@ -6,7 +6,7 @@ import axios from 'axios';
 // axios.defaults.baseURL = process.env.API_BASE_URL;
 // axios.defaults.withCredentials = true;
 export const clientAxiosConfig = (config) => {
-  let customHeaders = config.customHeaders || {};
+  const customHeaders = config.customHeaders || {};
 
   return {
     headers: {

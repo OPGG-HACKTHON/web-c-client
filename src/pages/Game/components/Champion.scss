@@ -1,49 +1,107 @@
+$champion-default-size: r(54px);
+
 .Champion {
-  position: relative;
-  width: r(50px);
-  height: r(50px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 
   &.has-ultimate {
-    .image,
+    .image-holder,
     .ultimate-light {
-      border-color: #6675ff;
+      border-color: #6675ff !important;
     }
 
     .ultimate-light {
-      background-color: #38e79d;
+      background-color: #38e79d !important;
     }
   }
 
-  .image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  &:not(.has-ultimate) {
+    .image-container::after {
+      content: "1";
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      bottom: 2px;
+      left: 2px;
+      display: inline-block;
+      border-radius: 50%;
+      opacity: 0.3;
+      background-color: black;
+    }
   }
 
-  .counter {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    font-weight: 700;
-    font-size: 18px;
-    color: #fff;
-    line-height: r(50px);
-    text-align: center;
+  .image-container {
+    position: relative;
+    display: inline-block;
+    width: $champion-default-size;
+    height: $champion-default-size;
+
+    .image-holder {
+      position: absolute;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+
+    .image {
+      position: absolute;
+      width: calc(100% + 8px);
+      height: calc(100% + 8px);
+      margin: -4px;
+    }
+
+    .counter {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      width: 100%;
+      margin-top: 2px;
+      font-weight: 700;
+      font-size: 18px;
+      color: #fff;
+      line-height: calc(#{$champion-default-size} - 2px);
+      text-align: center;
+    }
+
+    .ultimate-light {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: 100;
+      width: r(16px);
+      height: r(16px);
+      background-color: #7d7d7d;
+    }
+
+    .image-holder,
+    .ultimate-light {
+      border: 2px solid #373737;
+      border-radius: 50%;
+    }
   }
 
-  .ultimate-light {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: r(16px);
-    height: r(16px);
-    background-color: #7d7d7d;
+  .image-container + .name-container {
+    margin-left: r(12px);
   }
 
-  .image,
-  .ultimate-light {
-    border: 2px solid #373737;
-    border-radius: 50%;
+  .name-container {
+    display: inline-block;
+    padding-top: r(4px);
+
+    .champ-name {
+      margin-bottom: r(3px);
+      font-weight: 700;
+      font-size: r(15px);
+      color: #38e79d;
+      line-height: r(18px);
+    }
+
+    .summoner-name {
+      font-size: r(13px);
+      color: #fff;
+      line-height: r(16px);
+    }
   }
 }

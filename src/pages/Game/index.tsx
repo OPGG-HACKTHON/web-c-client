@@ -1,37 +1,29 @@
-import React, { useEffect, useCallback } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
-import { message } from 'antd';
-import GameProvider from './models/provider/GameProvider';
+import React from "react";
+import { RouteComponentProps } from "react-router-dom";
 
-import ChampionContainer from './components/ChampionContainer';
-import Header from './components/Header';
-import SummonaryInfoContainer from './components/SummonaryInfoContainer';
+import GameContext from "./models/context/GameContext";
+import GameProvider from "./models/provider/GameProvider";
+
+import SummonaryInfoContainer from "./components/SummonaryInfoContainer";
+import ChampionContainer from "./components/ChampionContainer";
 
 const InGame = ({ match }: RouteComponentProps) => {
   const { matchTeamCode } = match.params;
 
-  const getGameInfo = useCallback(async () => {
-    if (!matchTeamCode) {
-      message.error('게임 아이디가 없습니다.');
-      // TODO: redirect
-      return;
-    }
-
-    console.log(matchTeamCode);
-  }, [matchTeamCode]);
-
-  useEffect(() => {
-    getGameInfo();
-  }, [matchTeamCode]);
-
   return (
     <GameProvider matchTeamCode={matchTeamCode}>
       <div>
-        <Header />
         <SummonaryInfoContainer />
-        {['0', '1', '2', '3', '4'].map((championId) => (
-          <ChampionContainer championId={championId} />
-        ))}
+        <GameContext.Consumer>
+          {({ gameData }) =>
+            gameData.map((champData) => (
+              <ChampionContainer
+                key={champData.summonerName}
+                champData={champData}
+              />
+            ))
+          }
+        </GameContext.Consumer>
       </div>
     </GameProvider>
   );

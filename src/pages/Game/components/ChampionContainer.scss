@@ -3,12 +3,30 @@
   background-color: #25232c;
 
   .top-container {
-    padding: r(18px) r(12px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: r(16px);
+    padding-bottom: r(16px);
     background-color: #1f1d25;
+
+    @include bp-up(md) {
+      padding-top: r(12px);
+      padding-bottom: r(12px);
+    }
+
+    .items {
+      flex: 1;
+      max-width: 500px;
+      height: 80px;
+      border-radius: r(8px);
+      background-color: rgb(145, 145, 145);
+    }
   }
 
   .bottom-container {
-    padding: r(18px 12px 30px 12px);
+    padding-top: r(16px);
+    padding-bottom: r(30px);
 
     .items {
       height: 80px;
@@ -22,6 +40,17 @@
       margin-bottom: r(16px);
       border-radius: r(16px);
       background-color: #312e3a;
+    }
+  }
+
+  .top-container,
+  .bottom-container {
+    padding-right: $game-page-horizontal-padding-mobile;
+    padding-left: $game-page-horizontal-padding-mobile;
+
+    @include bp-up(md) {
+      padding-right: $game-page-horizontal-padding-pc;
+      padding-left: $game-page-horizontal-padding-pc;
     }
   }
 }

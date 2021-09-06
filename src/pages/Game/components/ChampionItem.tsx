@@ -36,7 +36,8 @@ const ChampionItem = ({ champData, spellType }) => {
     }, 5000);
   };
 
-  const onResetSpellTime = () => {
+  const onResetSpellTime = (e) => {
+    e.stopPropagation();
     createCurtain();
     resetSpell(summonerName, spellType);
   };
@@ -47,7 +48,13 @@ const ChampionItem = ({ champData, spellType }) => {
     onUseSpell(summonerName, spellType, beforeSec);
   };
 
-  if (status === 'default') {
+  const changeToModityMode = (e) => {
+    e.stopPropagation();
+    createCurtain();
+    setStatus('modify');
+  };
+
+  if (status === 'default' || !time) {
     if (spellType === 'R') {
       return (
         <div className="ChampionItem">
@@ -113,7 +120,7 @@ const ChampionItem = ({ champData, spellType }) => {
   }
   if (status === 'modify') {
     return (
-      <div className="ChampionItem panel panel-clicked">
+      <div className="ChampionItem panel panel-clicked" onClick={changeToModityMode}>
         <div className="item-left">
           <SpellIconInItem
             spellType={spellType}
@@ -146,8 +153,9 @@ const ChampionItem = ({ champData, spellType }) => {
       </div>
     );
   }
+
   return (
-    <div className="ChampionItem panel panel-wait" onClick={handleClickTime}>
+    <div className="ChampionItem panel panel-wait" onClick={changeToModityMode}>
       <div className="item-left">
         <SpellIconInItem
           spellType={spellType}

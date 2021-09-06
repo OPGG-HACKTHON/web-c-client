@@ -4,7 +4,7 @@ import './index.scss';
 
 const RefreshIcon = ({ onResetSpellTime }) => {
   return (
-    <div className="RefreshIcon" onClick={() => onResetSpellTime()}>
+    <div className="RefreshIcon" onClick={onResetSpellTime}>
       <svg
         width="17"
         height="17"

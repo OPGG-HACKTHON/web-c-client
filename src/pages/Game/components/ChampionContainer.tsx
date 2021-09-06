@@ -36,7 +36,7 @@ const ChampionContainer = ({
       </div>
       <div className="bottom-container">
         {isMobile && <ChamptionItemContainer champData={champData} />}
-        {Object.keys(champData.spells).map((spell) => {
+        {['R', 'D', 'F'].map((spell) => {
           return (
             <ChampionItem key={spell} champData={champData} spellType={spell} />
           );

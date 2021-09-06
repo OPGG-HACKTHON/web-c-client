@@ -30,11 +30,11 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const getChampsInitData = async () => {
     try {
       dispatcher.loading();
-      // const champsData = await gameDataManager.getChampsInitData(matchTeamCode);
+      const champsData = await gameDataManager.getChampsInitData(matchTeamCode);
 
-      const champsData: ChampData[] = await new Promise((res) => {
-        setTimeout(() => res(exampleData), 500);
-      });
+      // const champsData: ChampData[] = await new Promise((res) => {
+      //   setTimeout(() => res(exampleData), 500);
+      // });
 
       dispatcher.success(champsData);
     } catch (err) {
@@ -115,10 +115,11 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     try {
       dispatcher.loading();
       // const body = { matchTeamCode, summonerName, spellType };
-      // const { data } = await axios.post('url', body);
+      // const { data } = await axios.get(`http://3.34.111.116:8070/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=1`);
 
       // if (!data.success) throw new Error();
-      // const { second } = data.data;
+      // console.log(data);
+      // const { cooltimeD } = data.data;
       const second = 60;
       const userData = getData(summonerName);
 

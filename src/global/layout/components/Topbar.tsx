@@ -18,8 +18,10 @@ const Topbar = ({ onClickInfoBtn, onClickShareBtn }: TopbarComponentProps) => {
       className="Topbar"
     >
       <img src={logo} alt="스우미 로고" className="logo-imgage" />
-      <img src={info} alt="스우미 정보 버튼" className="info-image" onClick={() => onClickInfoBtn()} />
-      <img src={share} alt="링크 공유 버튼" className="share-image" onClick={() => onClickShareBtn()} />
+      <div className="Topbar-PrivateLayout">
+        <img src={info} alt="스우미 정보 버튼" className="info-image" onClick={() => onClickInfoBtn()} />
+        <img src={share} alt="링크 공유 버튼" className="share-image" onClick={() => onClickShareBtn()} />
+      </div>
     </div>
   );
 };

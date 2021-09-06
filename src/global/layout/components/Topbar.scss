@@ -1,4 +1,5 @@
-.Topbar {
+.Topbar,
+.Topbar-PrivateLayout {
   position: fixed;
   top: 0;
   z-index: 1000;
@@ -15,19 +16,25 @@
     height: 20px;
   }
 
-  .info-image,
-  .share-image {
-    position: absolute;
-    right: 0;
-    width: 22px;
-    height: 22px;
-  }
+  .Topbar-PrivateLayout {
+    z-index: -1;
+    width: 100%;
+    max-width: map-get($grid-breakpoints, lg);
 
-  .info-image {
-    right: r(54px);
-  }
+    .info-image,
+    .share-image {
+      position: absolute;
+      right: 0;
+      width: 22px;
+      height: 22px;
+    }
 
-  .share-image {
-    right: r(16px);
+    .info-image {
+      right: r(54px);
+    }
+
+    .share-image {
+      right: r(16px);
+    }
   }
 }

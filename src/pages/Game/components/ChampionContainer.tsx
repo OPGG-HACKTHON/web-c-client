@@ -29,9 +29,9 @@ const ChampionContainer = ({ champData, onClick }: ChampionComponentProps) => {
       <div className="bottom-container">
         {isMobile && <div className="items" />}
         <div className="items" />
-        {['R', 'D', 'F'].map((spell) => {
+        {Object.keys(champData.spells).map((spell) => {
           return (
-            <ChampionItem key={spell} spellData={champData.spells[spell]} />
+            <ChampionItem key={spell} champData={champData} spellType={spell} />
           );
         })}
       </div>

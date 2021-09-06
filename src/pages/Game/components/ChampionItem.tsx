@@ -1,31 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import TimeButton from '@/common/components/TimeButton';
 import RefreshIcon from '@/common/components/RefreshIcon';
 import SpellIconInItem from './SpellIconInItem';
 
+import GameContext from '../models/context/GameContext';
+
 import './ChampionItem.scss';
 
-interface ChampionItemProps {
-  spellData: {
-    isOn: boolean;
-    spellType: string;
-    src: string;
-    time: number;
-    level: number;
-  };
-  handleClick?: (event: React.MouseEvent<HTMLDivElement>)=> void;
-}
-
-const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
+const ChampionItem = ({ champData, spellType }) => {
   const [counter, setCounter] = useState(0);
   const [status, setStatus] = useState('default');
 
   const {
-    spellType, src, time, level,
-  } = spellData;
+    useSpell, resetSpell, updateTimeUsed, updateUltLevel,
+  } = useContext(
+    GameContext,
+  );
+  const { src, time, level } = champData.spells[spellType];
+  const { summonerName } = champData;
 
   const handleClickIcon = () => {
-    // handleClick();
+    // updateUltLevel();
   };
 
   useEffect(() => {
@@ -35,7 +30,7 @@ const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
       }, 1000);
       return () => clearTimeout(timer);
     }
-    setStatus('wait');
+    setStatus('modify');
   }, [counter]);
 
   const resetCounter = () => {
@@ -45,6 +40,7 @@ const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
   const handleClickTime = () => {
     resetCounter();
     setStatus('modify');
+    // useSpell(summonerName, spellType);
   };
 
   if (status === 'default') {
@@ -126,11 +122,27 @@ const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
         </div>
         <div className="item-right">
           <div className="timeButtons">
-            <TimeButton time="+10" handleClick={handleClickTime} />
-            <TimeButton time="-10" handleClick={handleClickTime} />
+            <TimeButton
+              time="+10"
+              leftTime={time}
+              summonerName={summonerName}
+              spellType={spellType}
+              updateTimeUsed={updateTimeUsed}
+            />
+            <TimeButton
+              time="-10"
+              leftTime={time}
+              summonerName={summonerName}
+              spellType={spellType}
+              updateTimeUsed={updateTimeUsed}
+            />
           </div>
         </div>
-        <RefreshIcon />
+        <RefreshIcon
+          resetSpell={resetSpell}
+          summonerName={summonerName}
+          spellType={spellType}
+        />
       </div>
     );
   }

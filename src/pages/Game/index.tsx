@@ -7,7 +7,7 @@ import ChampionContainer from './components/ChampionContainer';
 import Header from './components/Header';
 import SummonaryInfoContainer from './components/SummonaryInfoContainer';
 
-const InGame = ({ match } : RouteComponentProps) => {
+const InGame = ({ match }: RouteComponentProps) => {
   const { matchTeamCode } = match.params;
 
   const getGameInfo = useCallback(async () => {
@@ -29,7 +29,7 @@ const InGame = ({ match } : RouteComponentProps) => {
       <div>
         <Header />
         <SummonaryInfoContainer />
-        {['1', '2', '3', '4', '5'].map((championId) => (
+        {['0', '1', '2', '3', '4'].map((championId) => (
           <ChampionContainer championId={championId} />
         ))}
       </div>

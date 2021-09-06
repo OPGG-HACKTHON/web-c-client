@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import Champion from './Champion';
 import ChampionItem from './ChampionItem';
+import useGameData from '../hooks/useGameData';
 
 import './ChampionContainer.scss';
 
@@ -12,6 +13,8 @@ interface ChampionComponentProps {
 }
 
 const ChampionContainer = ({ onClick, championId }: ChampionComponentProps) => {
+  const { gameData } = useGameData();
+
   useEffect(() => {
     //
   }, []);
@@ -23,9 +26,14 @@ const ChampionContainer = ({ onClick, championId }: ChampionComponentProps) => {
       </div>
       <div className="bottom-container">
         <div className="items" />
-        <ChampionItem type="ultimate" />
-        <ChampionItem type="spell" />
-        <ChampionItem type="spell" />
+        {['R', 'D', 'F'].map((spell) => {
+          return (
+            <ChampionItem
+              key={spell}
+              spellData={gameData[championId].spells[spell]}
+            />
+          );
+        })}
       </div>
     </div>
   );

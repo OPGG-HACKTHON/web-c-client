@@ -1,4 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+
+import resizeHook from '@/common/hooks/resize';
+import Breakpoints from '@/global/styles/breakPoints';
 
 import { ChampData } from '../models/type';
 
@@ -16,17 +19,21 @@ const ChampionContainer = ({
   champData,
   onClick,
 }: ChampionComponentProps) => {
-  useEffect(() => {
-    //
-  }, []);
+  const width = resizeHook();
+  const isMobile = width < Breakpoints.md;
 
   return (
     <div className="ChampionContainer">
       <div className="top-container">
-        <Champion champData={champData} onClick={onClick} />
+        <Champion
+          champData={champData}
+          onClick={onClick}
+          isUsingName
+        />
+        {!isMobile && <div className="items" />}
       </div>
       <div className="bottom-container">
-        <div className="items" />
+        {isMobile && <div className="items" />}
         <ChampionItem type="ultimate" />
         <ChampionItem type="spell" />
         <ChampionItem type="spell" />

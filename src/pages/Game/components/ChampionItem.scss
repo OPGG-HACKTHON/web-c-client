@@ -5,12 +5,16 @@
   align-items: center;
   justify-content: center;
   height: 80px;
-  margin-bottom: r(18px);
+  margin-bottom: r(16px);
   border-radius: r(15px);
   cursor: pointer;
   background: #312e3a;
   color: white;
   text-align: center;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   .panel-item {
     display: flex;

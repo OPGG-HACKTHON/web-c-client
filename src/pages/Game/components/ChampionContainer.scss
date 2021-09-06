@@ -15,12 +15,8 @@
       padding-bottom: r(12px);
     }
 
-    .items {
-      flex: 1;
-      max-width: 500px;
-      height: 80px;
-      border-radius: r(8px);
-      background-color: rgb(145, 145, 145);
+    .ChamptionItemContainer {
+      max-width: r(376px);
     }
   }
 
@@ -28,11 +24,8 @@
     padding-top: r(16px);
     padding-bottom: r(30px);
 
-    .items {
-      height: 80px;
+    .ChamptionItemContainer {
       margin-bottom: r(18px);
-      border-radius: r(8px);
-      background-color: rgb(145, 145, 145);
     }
 
     .spells {

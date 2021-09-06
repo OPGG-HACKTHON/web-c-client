@@ -1,0 +1,111 @@
+$horizontal-padding: r(24px);
+$bottom-container-padding: r(12px);
+
+.ItemSelector {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(30px);
+
+  .top-container {
+    .back-btn {
+      padding: r(16px);
+      border: none;
+      background: none;
+
+      img {
+        width: r(7.5px);
+        height: r(15px);
+      }
+    }
+  }
+
+  .search-container {
+    position: relative;
+    margin-bottom: r(24px);
+    padding: r(8px $horizontal-padding);
+
+    .search-input {
+      width: 100%;
+      padding: r(8px 0);
+      border: none;
+      border-bottom: 1px solid #fff;
+      background-color: transparent !important;
+      outline: none;
+      font-weight: 600;
+      font-size: r(14px);
+      color: white;
+      line-height: r(18px);
+    }
+
+    .search-icon {
+      position: absolute;
+      right: r(calc(#{$horizontal-padding} + 4px));
+      bottom: r(8px + 8px);
+      width: r(20px);
+      height: r(20px);
+    }
+  }
+
+  .item-list-container {
+    padding: r(8px $horizontal-padding);
+
+    .title {
+      margin-bottom: r(16px);
+      font-weight: 600;
+      font-size: r(14px);
+      color: white;
+      line-height: r(17px);
+    }
+
+    .no-result-text {
+      margin-bottom: r(16px);
+      font-size: r(14px);
+      color: white;
+      line-height: r(18px);
+    }
+
+    .item-list {
+      .Item {
+        margin-right: r(8px);
+        margin-bottom: r(8px);
+      }
+    }
+  }
+
+  .bottom-container {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: $bottom-container-padding;
+
+    .item-list-container {
+      margin-right: calc(#{$horizontal-padding} - #{$bottom-container-padding});
+      margin-bottom: r(12px);
+      margin-left: calc(#{$horizontal-padding} - #{$bottom-container-padding});
+      padding: 0;
+    }
+
+    .complete-btn {
+      width: 100%;
+      height: r(48px);
+      border: none;
+      border-radius: 10px;
+      background-color: #4f4f4f;
+      font-size: r(14px);
+      color: white;
+      line-height: r(18px);
+
+      &:disabled {
+        border: 1px solid #b8b8b8;
+        background-color: transparent;
+        color: #b8b8b8;
+      }
+    }
+  }
+}

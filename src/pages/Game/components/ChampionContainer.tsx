@@ -6,6 +6,7 @@ import Breakpoints from '@/global/styles/breakPoints';
 import { ChampData } from '../models/type';
 
 import Champion from './Champion';
+import ChamptionItemContainer from './ChamptionItemContainer';
 import ChampionItem from './ChampionItem';
 import useGameData from '../hooks/useGameData';
 
@@ -16,19 +17,25 @@ interface ChampionComponentProps {
   onClick?: Function;
 }
 
-const ChampionContainer = ({ champData, onClick }: ChampionComponentProps) => {
+const ChampionContainer = ({
+  champData,
+  onClick = () => {},
+}: ChampionComponentProps) => {
   const width = resizeHook();
   const isMobile = width < Breakpoints.md;
 
   return (
     <div className="ChampionContainer">
       <div className="top-container">
-        <Champion champData={champData} onClick={onClick} isUsingName />
-        {!isMobile && <div className="items" />}
+        <Champion
+          champData={champData}
+          onClick={onClick}
+          isUsingName
+        />
+        {!isMobile && <ChamptionItemContainer champData={champData} />}
       </div>
       <div className="bottom-container">
-        {isMobile && <div className="items" />}
-        <div className="items" />
+        {isMobile && <ChamptionItemContainer champData={champData} />}
         {Object.keys(champData.spells).map((spell) => {
           return (
             <ChampionItem key={spell} champData={champData} spellType={spell} />

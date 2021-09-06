@@ -17,13 +17,13 @@ $champion-default-size: r(54px);
   }
 
   &:not(.has-ultimate) {
-    .image-container::after {
-      content: "1";
+    .image-holder::after {
+      content: " ";
       position: absolute;
-      top: 2px;
-      right: 2px;
-      bottom: 2px;
-      left: 2px;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
       display: inline-block;
       border-radius: 50%;
       opacity: 0.3;

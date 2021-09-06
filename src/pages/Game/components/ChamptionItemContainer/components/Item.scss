@@ -1,0 +1,24 @@
+.Item {
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  width: r(36px);
+  min-width: r(36px);
+  max-width: r(36px);
+  height: r(36px);
+  border: 2px solid #312e3a;
+  border-radius: r(5px);
+  cursor: pointer;
+
+  &.disabled {
+    .image {
+      filter: grayscale(100%);
+    }
+  }
+
+  .image {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
+}

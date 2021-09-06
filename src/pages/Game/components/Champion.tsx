@@ -13,7 +13,7 @@ interface ChampionComponentProps {
 
 const Champion = ({
   champData,
-  onClick,
+  onClick = () => {},
   isUsingName = false,
 }: ChampionComponentProps) => {
   const { time, isOn } = champData.spells.R;

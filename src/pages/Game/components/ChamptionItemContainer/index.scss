@@ -1,0 +1,53 @@
+.ChamptionItemContainer {
+  display: flex;
+  justify-content: space-between;
+  height: r(80px);
+
+  @include bp-down(md) {
+    width: 100%;
+  }
+
+  .left-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: auto;
+    height: r(80px);
+    margin-right: r(16px);
+
+    .item-container {
+      display: flex;
+      width: 100%;
+      height: r(36px);
+
+      &:not(:last-child) {
+        margin-bottom: r(8px);
+      }
+
+      & > * {
+        flex: 1 0;
+
+        &:not(:last-child) {
+          margin-right: r(8px);
+        }
+      }
+    }
+  }
+
+  .search-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: r(45px);
+    min-width: r(45px);
+    height: r(80px);
+    border: none;
+    border-radius: r(10px);
+    background-color: #312e3a;
+
+    & > * {
+      width: r(20px);
+      height: r(20px);
+    }
+  }
+}

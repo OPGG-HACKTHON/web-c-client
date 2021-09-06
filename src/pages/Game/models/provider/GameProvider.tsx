@@ -1,5 +1,5 @@
 import React, {
-  useReducer, ReactElement, useRef, useEffect,
+  useReducer, ReactElement, useRef, useEffect, useState,
 } from 'react';
 import axios from 'axios';
 import SockJS from 'sockjs-client';
@@ -21,6 +21,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const spellTimer = useRef([]);
   const socket = useRef(null);
   const stomp = useRef(null);
+  const [itemSelectingSummonerName, setItemSelectingSummonerName] = useState();
 
   const getChampsInitData = async () => {
     try {
@@ -187,6 +188,10 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     resetSpell,
     updateTimeUsed,
     updateUltLevel,
+
+    isItemSelectorVisible: !!itemSelectingSummonerName,
+    itemSelectingSummonerName,
+    setItemSelectingSummonerName,
   };
 
   const openSocket = () => {

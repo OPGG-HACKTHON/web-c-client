@@ -15,7 +15,7 @@ export interface ContextType {
     error: Error;
   };
   buyItems: (summonerName: string, items: string[])=> Promise<void>;
-  canceItem: (summonerName: string, itemName: string)=> Promise<void>;
+  cancelItem: (summonerName: string, itemName: string)=> Promise<void>;
   onUseSpell: (summonerName: string, spellType: SpellKey)=> Promise<void>;
   resetSpell: (summonerName: string, spellType: SpellKey)=> Promise<void>;
 }

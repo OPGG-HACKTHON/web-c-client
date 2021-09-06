@@ -61,7 +61,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     }
   };
 
-  const canceItem = async (summonerName: string, itemName: string) => {
+  const cancelItem = async (summonerName: string, itemName: string) => {
     try {
       dispatcher.loading();
       // const body = { matchTeamCode, summonerName, itemName };
@@ -70,7 +70,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       // if (!data.success) throw new Error();
 
       const purchaserData = getData(summonerName);
-      gameDataManager.canceItem(purchaserData, itemName);
+      gameDataManager.cancelItem(purchaserData, itemName);
       dispatcher.render();
     } catch (err) {
       dispatcher.error(err);
@@ -182,7 +182,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     gameData: dataState.champsData,
     loadingState: { loading: dataState.loading, error: dataState.error },
     buyItems,
-    canceItem,
+    cancelItem,
     onUseSpell,
     resetSpell,
     updateTimeUsed,

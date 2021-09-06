@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TimeButton from "@/common/components/TimeButton";
 import RefreshIcon from "@/common/components/RefreshIcon";
+import SpellIconInItem from "./SpellIconInItem";
 
 import "./ChampionItem.scss";
 
@@ -12,7 +13,7 @@ interface ChampionItemProps {
     time: number;
     level: number;
   };
-  handleClick?: Function;
+  handleClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
@@ -23,7 +24,6 @@ const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
 
   const handleClickIcon = () => {
     // handleClick();
-    console.log(spellData);
   };
 
   useEffect(() => {
@@ -50,9 +50,13 @@ const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
       return (
         <div className='ChampionItem'>
           <div className='panel panel-ultimate'>
-            <div className='panel-item ultimate' onClick={handleClickIcon}>
-              <div className='ultimate-level'>Lv.{level}</div>
-              <img src={src} />
+            <div className='panel-item'>
+              <SpellIconInItem
+                spellType={spellType}
+                handleClick={handleClickIcon}
+                src={src}
+                level={level}
+              />
             </div>
             <div className='line' />
             <div className='panel-item' onClick={handleClickTime}>
@@ -72,8 +76,13 @@ const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
     } else {
       return (
         <div className='ChampionItem'>
-          <div className='panel-item icon spell' onClick={handleClickIcon}>
-            <img src={src} />
+          <div className='panel-item spell'>
+            <SpellIconInItem
+              spellType={spellType}
+              handleClick={handleClickIcon}
+              src={src}
+              level={level}
+            />
           </div>
           <div className='panel panel-spell'>
             <div
@@ -103,11 +112,15 @@ const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
   }
   if (status === "modify") {
     return (
-      <div className='ChampionItem panel-clicked'>
+      <div className='ChampionItem panel panel-clicked'>
         <div className='item-left'>
-          <div className='icon' onClick={handleClickIcon}>
-            <img src={src} />
-          </div>
+          <SpellIconInItem
+            spellType={spellType}
+            handleClick={handleClickIcon}
+            src={src}
+            level={level}
+          />
+
           <span className='leftTime'>{time || 300}s</span>
         </div>
         <div className='item-right'>
@@ -121,11 +134,14 @@ const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
     );
   }
   return (
-    <div className='ChampionItem panel-wait' onClick={handleClickTime}>
+    <div className='ChampionItem panel panel-wait' onClick={handleClickTime}>
       <div className='item-left'>
-        <div className='icon' onClick={handleClickIcon}>
-          <img src={src} />
-        </div>
+        <SpellIconInItem
+          spellType={spellType}
+          handleClick={handleClickIcon}
+          src={src}
+          level={level}
+        />
         <span className='leftTime'>{time || 300}s</span>
       </div>
       <div className='item-right'>

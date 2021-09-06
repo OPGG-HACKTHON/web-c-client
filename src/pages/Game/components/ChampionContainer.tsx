@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import resizeHook from "@/common/hooks/resize";
-import Breakpoints from "@/global/styles/breakPoints";
+import resizeHook from '@/common/hooks/resize';
+import Breakpoints from '@/global/styles/breakPoints';
 
-import { ChampData } from "../models/type";
+import { ChampData } from '../models/type';
 
-import Champion from "./Champion";
-import ChampionItem from "./ChampionItem";
-import useGameData from "../hooks/useGameData";
+import Champion from './Champion';
+import ChampionItem from './ChampionItem';
+import useGameData from '../hooks/useGameData';
 
-import "./ChampionContainer.scss";
+import './ChampionContainer.scss';
 
 interface ChampionComponentProps {
   champData: ChampData;
@@ -21,15 +21,15 @@ const ChampionContainer = ({ champData, onClick }: ChampionComponentProps) => {
   const isMobile = width < Breakpoints.md;
 
   return (
-    <div className='ChampionContainer'>
-      <div className='top-container'>
+    <div className="ChampionContainer">
+      <div className="top-container">
         <Champion champData={champData} onClick={onClick} isUsingName />
-        {!isMobile && <div className='items' />}
+        {!isMobile && <div className="items" />}
       </div>
-      <div className='bottom-container'>
-        {isMobile && <div className='items' />}
-        <div className='items' />
-        {["R", "D", "F"].map((spell) => {
+      <div className="bottom-container">
+        {isMobile && <div className="items" />}
+        <div className="items" />
+        {['R', 'D', 'F'].map((spell) => {
           return (
             <ChampionItem key={spell} spellData={champData.spells[spell]} />
           );

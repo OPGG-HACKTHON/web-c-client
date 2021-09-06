@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 interface SpellIconInItemProps {
   spellType: string;
-  handleClick: (event: React.MouseEvent<HTMLDivElement>) => void;
+  handleClick: (event: React.MouseEvent<HTMLDivElement>)=> void;
   src: string;
   level?: number;
 }
@@ -13,13 +13,13 @@ const SpellIconInItem = ({
   src,
   level,
 }: SpellIconInItemProps) => {
-  return spellType === "R" ? (
-    <div className='ultimate' onClick={handleClick}>
-      <div className='ultimate-level'>Lv.{level}</div>
+  return spellType === 'R' ? (
+    <div className="ultimate" onClick={handleClick}>
+      <div className="ultimate-level">Lv.{level}</div>
       <img src={src} />
     </div>
   ) : (
-    <div className='icon' onClick={handleClick}>
+    <div className="icon" onClick={handleClick}>
       <img src={src} />
     </div>
   );

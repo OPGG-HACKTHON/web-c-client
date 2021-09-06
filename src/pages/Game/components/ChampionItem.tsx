@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import TimeButton from "@/common/components/TimeButton";
-import RefreshIcon from "@/common/components/RefreshIcon";
-import SpellIconInItem from "./SpellIconInItem";
+import React, { useState, useEffect } from 'react';
+import TimeButton from '@/common/components/TimeButton';
+import RefreshIcon from '@/common/components/RefreshIcon';
+import SpellIconInItem from './SpellIconInItem';
 
-import "./ChampionItem.scss";
+import './ChampionItem.scss';
 
 interface ChampionItemProps {
   spellData: {
@@ -13,14 +13,16 @@ interface ChampionItemProps {
     time: number;
     level: number;
   };
-  handleClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  handleClick?: (event: React.MouseEvent<HTMLDivElement>)=> void;
 }
 
 const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
   const [counter, setCounter] = useState(0);
-  const [status, setStatus] = useState("default");
+  const [status, setStatus] = useState('default');
 
-  const { spellType, src, time, level } = spellData;
+  const {
+    spellType, src, time, level,
+  } = spellData;
 
   const handleClickIcon = () => {
     // handleClick();
@@ -33,7 +35,7 @@ const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
       }, 1000);
       return () => clearTimeout(timer);
     }
-    setStatus("wait");
+    setStatus('wait');
   }, [counter]);
 
   const resetCounter = () => {
@@ -42,15 +44,15 @@ const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
 
   const handleClickTime = () => {
     resetCounter();
-    setStatus("modify");
+    setStatus('modify');
   };
 
-  if (status === "default") {
-    if (spellType === "R") {
+  if (status === 'default') {
+    if (spellType === 'R') {
       return (
-        <div className='ChampionItem'>
-          <div className='panel panel-ultimate'>
-            <div className='panel-item'>
+        <div className="ChampionItem">
+          <div className="panel panel-ultimate">
+            <div className="panel-item">
               <SpellIconInItem
                 spellType={spellType}
                 handleClick={handleClickIcon}
@@ -58,62 +60,61 @@ const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
                 level={level}
               />
             </div>
-            <div className='line' />
-            <div className='panel-item' onClick={handleClickTime}>
+            <div className="line" />
+            <div className="panel-item" onClick={handleClickTime}>
               0s전
             </div>
-            <div className='line' />
-            <div className='panel-item' onClick={handleClickTime}>
+            <div className="line" />
+            <div className="panel-item" onClick={handleClickTime}>
               15s전
             </div>
-            <div className='line' />
-            <div className='panel-item' onClick={handleClickTime}>
-              30s전
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className='ChampionItem'>
-          <div className='panel-item spell'>
-            <SpellIconInItem
-              spellType={spellType}
-              handleClick={handleClickIcon}
-              src={src}
-              level={level}
-            />
-          </div>
-          <div className='panel panel-spell'>
-            <div
-              className='panel-item panel-spell-item'
-              onClick={handleClickTime}
-            >
-              0s전
-            </div>
-            <div className='line' />
-            <div
-              className='panel-item panel-spell-item'
-              onClick={handleClickTime}
-            >
-              15s전
-            </div>
-            <div className='line' />
-            <div
-              className='panel-item panel-spell-item'
-              onClick={handleClickTime}
-            >
+            <div className="line" />
+            <div className="panel-item" onClick={handleClickTime}>
               30s전
             </div>
           </div>
         </div>
       );
     }
-  }
-  if (status === "modify") {
     return (
-      <div className='ChampionItem panel panel-clicked'>
-        <div className='item-left'>
+      <div className="ChampionItem">
+        <div className="panel-item spell">
+          <SpellIconInItem
+            spellType={spellType}
+            handleClick={handleClickIcon}
+            src={src}
+            level={level}
+          />
+        </div>
+        <div className="panel panel-spell">
+          <div
+            className="panel-item panel-spell-item"
+            onClick={handleClickTime}
+          >
+            0s전
+          </div>
+          <div className="line" />
+          <div
+            className="panel-item panel-spell-item"
+            onClick={handleClickTime}
+          >
+            15s전
+          </div>
+          <div className="line" />
+          <div
+            className="panel-item panel-spell-item"
+            onClick={handleClickTime}
+          >
+            30s전
+          </div>
+        </div>
+      </div>
+    );
+  }
+  if (status === 'modify') {
+    return (
+      <div className="ChampionItem panel panel-clicked">
+        <div className="item-left">
           <SpellIconInItem
             spellType={spellType}
             handleClick={handleClickIcon}
@@ -121,12 +122,12 @@ const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
             level={level}
           />
 
-          <span className='leftTime'>{time || 300}s</span>
+          <span className="leftTime">{time || 300}s</span>
         </div>
-        <div className='item-right'>
-          <div className='timeButtons'>
-            <TimeButton time='+10' handleClick={handleClickTime} />
-            <TimeButton time='-10' handleClick={handleClickTime} />
+        <div className="item-right">
+          <div className="timeButtons">
+            <TimeButton time="+10" handleClick={handleClickTime} />
+            <TimeButton time="-10" handleClick={handleClickTime} />
           </div>
         </div>
         <RefreshIcon />
@@ -134,18 +135,18 @@ const ChampionItem = ({ spellData, handleClick }: ChampionItemProps) => {
     );
   }
   return (
-    <div className='ChampionItem panel panel-wait' onClick={handleClickTime}>
-      <div className='item-left'>
+    <div className="ChampionItem panel panel-wait" onClick={handleClickTime}>
+      <div className="item-left">
         <SpellIconInItem
           spellType={spellType}
           handleClick={handleClickIcon}
           src={src}
           level={level}
         />
-        <span className='leftTime'>{time || 300}s</span>
+        <span className="leftTime">{time || 300}s</span>
       </div>
-      <div className='item-right'>
-        <span className='modify-button'>눌러서 수정하기</span>
+      <div className="item-right">
+        <span className="modify-button">눌러서 수정하기</span>
       </div>
     </div>
   );

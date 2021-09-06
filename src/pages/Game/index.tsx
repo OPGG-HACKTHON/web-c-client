@@ -1,11 +1,11 @@
-import React from "react";
-import { RouteComponentProps } from "react-router-dom";
+import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 
-import GameContext from "./models/context/GameContext";
-import GameProvider from "./models/provider/GameProvider";
+import GameContext from './models/context/GameContext';
+import GameProvider from './models/provider/GameProvider';
 
-import SummonaryInfoContainer from "./components/SummonaryInfoContainer";
-import ChampionContainer from "./components/ChampionContainer";
+import SummonaryInfoContainer from './components/SummonaryInfoContainer';
+import ChampionContainer from './components/ChampionContainer';
 
 const InGame = ({ match }: RouteComponentProps) => {
   const { matchTeamCode } = match.params;
@@ -15,14 +15,12 @@ const InGame = ({ match }: RouteComponentProps) => {
       <div>
         <SummonaryInfoContainer />
         <GameContext.Consumer>
-          {({ gameData }) =>
-            gameData.map((champData) => (
-              <ChampionContainer
-                key={champData.summonerName}
-                champData={champData}
-              />
-            ))
-          }
+          {({ gameData }) => gameData.map((champData) => (
+            <ChampionContainer
+              key={champData.summonerName}
+              champData={champData}
+            />
+          ))}
         </GameContext.Consumer>
       </div>
     </GameProvider>

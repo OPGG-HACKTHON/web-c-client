@@ -1,7 +1,9 @@
+$champion-default-size: r(54px);
+
 .Champion {
   position: relative;
-  width: r(50px);
-  height: r(50px);
+  width: $champion-default-size;
+  height: $champion-default-size;
 
   &.has-ultimate {
     .image,
@@ -28,7 +30,7 @@
     font-weight: 700;
     font-size: 18px;
     color: #fff;
-    line-height: r(50px);
+    line-height: $champion-default-size;
     text-align: center;
   }
 

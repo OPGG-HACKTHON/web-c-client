@@ -42,8 +42,8 @@ const BrowserWarning = () => {
       )}
     >
       <p>
-        자버 인사솔루션은 크롬 브라우저에 최적화되어 있습니다. <br />
-        원활한 서비스 이용을 위해 크롬 브라우저를 이용해주시기 바랍니다.
+        스우미는 크롬 브라우저에 최적화되어 있습니다. <br />
+        원활한 서비스 이용을 위해 크롬 브라우저 이용을 추천드립니다.
       </p>
       <a href="https://www.google.com/intl/ko/chrome/" target="_blank" rel="noopener noreferrer">크롬 브라우저 다운로드</a>
     </Modal>

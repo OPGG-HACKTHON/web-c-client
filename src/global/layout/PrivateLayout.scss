@@ -1,7 +1,13 @@
-.PublicLayout {
+.PrivateLayout {
   background-color: #1a181e;
 
   #app-body {
+    margin-top: $topbar-height;
+
+    @include bp-down(md) {
+      margin-top: $topbar-height;
+    }
+
     #app-body-content {
       max-width: map-get($grid-breakpoints, lg);
       margin: 0 auto;

@@ -9,10 +9,21 @@ const SummonaryInfoContainer = () => {
   const { gameData } = useGameData();
 
   return (
-    <div className="summonary-container">
-      {
-      gameData.map((champData, idx) => <SummonaryChamp championId={champData.summonerName} champData={champData} order={idx} />)
-    }
+    <div
+      id="SummonaryInfoContainer"
+      className="SummonaryInfoContainer"
+    >
+      <div className="summonary-info-fixed-holder">
+        {
+          gameData.map((champData, idx) => (
+            <SummonaryChamp
+              key={champData.summonerName}
+              champData={champData}
+              order={idx}
+            />
+          ))
+        }
+      </div>
     </div>
   );
 };

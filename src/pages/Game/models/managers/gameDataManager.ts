@@ -64,7 +64,7 @@ const gameDataManager = {
     purchaserData.itemsPurchased = [...itemsPurchased];
   },
 
-  cancleItem(purchaserData : ChampData, itemName : string) {
+  canceItem(purchaserData : ChampData, itemName : string) {
     const initItemMap = { itemsPurchased: [], itemToCancle: null };
     const itemMap = purchaserData.itemsPurchased.reduce((acc, itemData) => {
       if (itemName === itemData.name) acc.itemToCancle = itemData;

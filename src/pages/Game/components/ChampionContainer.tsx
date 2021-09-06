@@ -1,17 +1,21 @@
 import React, { useEffect } from 'react';
 
+import { ChampData } from '../models/type';
+
 import Champion from './Champion';
 import ChampionItem from './ChampionItem';
 
 import './ChampionContainer.scss';
 
-// TODO: Context 따라 수정
 interface ChampionComponentProps {
-  championId: string;
+  champData: ChampData;
   onClick?: Function;
 }
 
-const ChampionContainer = ({ onClick, championId }: ChampionComponentProps) => {
+const ChampionContainer = ({
+  champData,
+  onClick,
+}: ChampionComponentProps) => {
   useEffect(() => {
     //
   }, []);
@@ -19,7 +23,7 @@ const ChampionContainer = ({ onClick, championId }: ChampionComponentProps) => {
   return (
     <div className="ChampionContainer">
       <div className="top-container">
-        <Champion onClick={onClick} championId={championId} />
+        <Champion champData={champData} onClick={onClick} />
       </div>
       <div className="bottom-container">
         <div className="items" />

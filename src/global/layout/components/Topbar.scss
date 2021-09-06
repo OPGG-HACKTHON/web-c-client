@@ -1,10 +1,14 @@
-.Header {
-  position: relative;
+.Topbar {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  min-width: 320px;
   height: 64px;
-  background: #1a181e;
+  background-color: #1a181e;
 
   .logo-image {
     width: 108px;

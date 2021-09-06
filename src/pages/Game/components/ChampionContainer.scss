@@ -3,12 +3,11 @@
   background-color: #25232c;
 
   .top-container {
-    padding: r(18px) r(12px);
     background-color: #1f1d25;
   }
 
   .bottom-container {
-    padding: r(18px 12px 30px 12px);
+    padding-bottom: r(30px);
 
     .items {
       height: 80px;
@@ -22,6 +21,16 @@
       margin-bottom: r(16px);
       border-radius: r(16px);
       background-color: #312e3a;
+    }
+  }
+
+  .top-container,
+  .bottom-container {
+    padding: r(18px) $game-page-horizontal-padding-mobile;
+
+    @include bp-up(md) {
+      padding-right: $game-page-horizontal-padding-pc;
+      padding-left: $game-page-horizontal-padding-pc;
     }
   }
 }

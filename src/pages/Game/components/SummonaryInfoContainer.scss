@@ -1,12 +1,37 @@
-.summonary-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  height: 140px;
-  padding-top: r(13px);
-  background-color: #1a181e;
+.SummonaryInfoContainer {
+  z-index: 1000;
+  width: 100%;
+  max-width: map-get($grid-breakpoints, lg);
+  height: 82px;
 
-  @media (min-width: 720px) {
-    height: fit-content;
+  @include bp-down(md) {
+    height: 142px;
+  }
+
+  .summonary-info-fixed-holder {
+    position: fixed;
+    top: $topbar-height;
+    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    max-width: map-get($grid-breakpoints, lg);
+    padding: r(12px $game-page-horizontal-padding-mobile 16px $game-page-horizontal-padding-mobile);
+    background-color: #1a181e;
+
+    @include bp-up(md) {
+      padding-right: $game-page-horizontal-padding-pc;
+      padding-left: $game-page-horizontal-padding-pc;
+    }
+
+    & > * {
+      flex: 0 1;
+      flex-basis: r(54px);
+
+      @include bp-up(md) {
+        flex-basis: r(120px);
+      }
+    }
   }
 }

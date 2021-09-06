@@ -9,7 +9,11 @@ const TimeButton = ({
   updateTimeUsed,
 }) => {
   const handleClick = () => {
-    updateTimeUsed(summonerName, spellType, leftTime + parseInt(time));
+    updateTimeUsed(
+      summonerName,
+      spellType,
+      leftTime + parseInt(time) >= 0 ? leftTime + parseInt(time) : 0,
+    );
   };
 
   return (

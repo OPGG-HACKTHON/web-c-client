@@ -2,13 +2,9 @@ import React from 'react';
 
 import './index.scss';
 
-const RefreshIcon = ({ resetSpell, spellType, summonerName }) => {
-  const handleClick = () => {
-    resetSpell(summonerName, spellType);
-  };
-
+const RefreshIcon = ({ onResetSpellTime }) => {
   return (
-    <div className="RefreshIcon" onClick={handleClick}>
+    <div className="RefreshIcon" onClick={() => onResetSpellTime()}>
       <svg
         width="17"
         height="17"

@@ -1,5 +1,9 @@
 import React, {
-  useReducer, ReactElement, useRef, useEffect, useState,
+  useReducer,
+  ReactElement,
+  useRef,
+  useEffect,
+  useState,
 } from 'react';
 import axios from 'axios';
 import SockJS from 'sockjs-client';
@@ -11,8 +15,8 @@ import { ChampData, SocketSpellData, SpellKey } from '../type';
 import exampleData from './example';
 
 interface GameProviderProps {
-  matchTeamCode: string,
-  children: ReactElement
+  matchTeamCode: string;
+  children: ReactElement;
 }
 
 function GameProvider({ matchTeamCode, children }: GameProviderProps) {
@@ -43,7 +47,9 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   }, []);
 
   const getData = (summonerName: string): ChampData => {
-    return dataState.champsData.filter((data) => data.summonerName === summonerName)[0];
+    return dataState.champsData.filter(
+      (data) => data.summonerName === summonerName,
+    )[0];
   };
 
   const buyItems = async (summonerName: string, items: string[]) => {
@@ -101,7 +107,11 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     }, 1000);
   };
 
-  const onUseSpell = async (summonerName: string, spellType: SpellKey, timeGap: number) => {
+  const onUseSpell = async (
+    summonerName: string,
+    spellType: SpellKey,
+    timeGap: number,
+  ) => {
     try {
       dispatcher.loading();
       // const body = { matchTeamCode, summonerName, spellType };
@@ -109,10 +119,10 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       // if (!data.success) throw new Error();
       // const { second } = data.data;
-      const second = 5;
+      const second = 60;
       const userData = getData(summonerName);
 
-      gameDataManager.useSpell(userData, spellType, second + timeGap);
+      gameDataManager.useSpell(userData, spellType, second - timeGap);
 
       const socketData: SocketSpellData = {
         summonerName,
@@ -122,7 +132,11 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
         type: 'SPELL',
       };
 
-      stomp.current.send(`/pub/comm/message/${matchTeamCode}`, {}, JSON.stringify(socketData));
+      stomp.current.send(
+        `/pub/comm/message/${matchTeamCode}`,
+        {},
+        JSON.stringify(socketData),
+      );
 
       countSpellTime(summonerName, spellType);
       dispatcher.render();
@@ -147,7 +161,11 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     }
   };
 
-  const updateTimeUsed = async (summonerName: string, spellType: SpellKey, changedTime: number) => {
+  const updateTimeUsed = async (
+    summonerName: string,
+    spellType: SpellKey,
+    changedTime: number,
+  ) => {
     try {
       // dispatcher.loading();
       // const body = { matchTeamCode, summonerName, spellType };
@@ -199,17 +217,12 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     socket.current = new SockJS('http://3.34.111.116:8070/ws-swoomi');
     stomp.current = Stomp.over(socket.current);
 
-    stomp.current.connect(
-      {}, () => {
-        stomp.current.subscribe(
-          `/sub/comm/room/${matchTeamCode}`,
-          (msg) => {
-            const data: SocketSpellData = JSON.parse(msg.body);
-            dispatcher.update(data);
-          },
-        );
-      },
-    );
+    stomp.current.connect({}, () => {
+      stomp.current.subscribe(`/sub/comm/room/${matchTeamCode}`, (msg) => {
+        const data: SocketSpellData = JSON.parse(msg.body);
+        dispatcher.update(data);
+      });
+    });
   };
 
   useEffect(() => {

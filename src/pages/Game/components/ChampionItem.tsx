@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {
+  useState, useEffect, useContext, useRef,
+} from 'react';
 import TimeButton from '@/common/components/TimeButton';
 import RefreshIcon from '@/common/components/RefreshIcon';
 import SpellIconInItem from './SpellIconInItem';
@@ -10,9 +12,10 @@ import './ChampionItem.scss';
 const ChampionItem = ({ champData, spellType }) => {
   const [counter, setCounter] = useState(0);
   const [status, setStatus] = useState('default');
+  const curtainTimer = useRef(null);
 
   const {
-    useSpell, resetSpell, updateTimeUsed, updateUltLevel,
+    onUseSpell, resetSpell, updateTimeUsed, updateUltLevel,
   } = useContext(
     GameContext,
   );
@@ -23,24 +26,25 @@ const ChampionItem = ({ champData, spellType }) => {
     // updateUltLevel();
   };
 
-  useEffect(() => {
-    if (counter < 5) {
-      const timer = setTimeout(() => {
-        setCounter(counter + 1);
-      }, 1000);
-      return () => clearTimeout(timer);
+  const createCurtain = () => {
+    if (curtainTimer.current) {
+      clearTimeout(curtainTimer.current);
     }
-    setStatus('modify');
-  }, [counter]);
-
-  const resetCounter = () => {
-    setCounter(0);
+    curtainTimer.current = setTimeout(() => {
+      setStatus('wait');
+      curtainTimer.current = null;
+    }, 5000);
   };
 
-  const handleClickTime = () => {
-    resetCounter();
+  const onResetSpellTime = () => {
+    createCurtain();
+    resetSpell(summonerName, spellType);
+  };
+
+  const handleClickTime = (beforeSec) => () => {
+    createCurtain();
     setStatus('modify');
-    // useSpell(summonerName, spellType);
+    onUseSpell(summonerName, spellType, beforeSec);
   };
 
   if (status === 'default') {
@@ -57,15 +61,15 @@ const ChampionItem = ({ champData, spellType }) => {
               />
             </div>
             <div className="line" />
-            <div className="panel-item" onClick={handleClickTime}>
+            <div className="panel-item" onClick={handleClickTime(0)}>
               0s전
             </div>
             <div className="line" />
-            <div className="panel-item" onClick={handleClickTime}>
+            <div className="panel-item" onClick={handleClickTime(15)}>
               15s전
             </div>
             <div className="line" />
-            <div className="panel-item" onClick={handleClickTime}>
+            <div className="panel-item" onClick={handleClickTime(30)}>
               30s전
             </div>
           </div>
@@ -85,21 +89,21 @@ const ChampionItem = ({ champData, spellType }) => {
         <div className="panel panel-spell">
           <div
             className="panel-item panel-spell-item"
-            onClick={handleClickTime}
+            onClick={handleClickTime(0)}
           >
             0s전
           </div>
           <div className="line" />
           <div
             className="panel-item panel-spell-item"
-            onClick={handleClickTime}
+            onClick={handleClickTime(15)}
           >
             15s전
           </div>
           <div className="line" />
           <div
             className="panel-item panel-spell-item"
-            onClick={handleClickTime}
+            onClick={handleClickTime(30)}
           >
             30s전
           </div>
@@ -118,7 +122,7 @@ const ChampionItem = ({ champData, spellType }) => {
             level={level}
           />
 
-          <span className="leftTime">{time || 300}s</span>
+          <span className="leftTime">{time}s</span>
         </div>
         <div className="item-right">
           <div className="timeButtons">
@@ -138,11 +142,7 @@ const ChampionItem = ({ champData, spellType }) => {
             />
           </div>
         </div>
-        <RefreshIcon
-          resetSpell={resetSpell}
-          summonerName={summonerName}
-          spellType={spellType}
-        />
+        <RefreshIcon onResetSpellTime={onResetSpellTime} />
       </div>
     );
   }

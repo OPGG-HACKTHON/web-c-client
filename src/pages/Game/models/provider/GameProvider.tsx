@@ -215,15 +215,19 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
   const openSocket = () => {
     if (socket.current) return;
-    socket.current = new SockJS('https://3.34.111.116:8070/ws-swoomi');
-    stomp.current = Stomp.over(socket.current);
+    try {
+      socket.current = new SockJS('http://3.34.111.116:8070/ws-swoomi');
+      stomp.current = Stomp.over(socket.current);
 
-    stomp.current.connect({}, () => {
-      stomp.current.subscribe(`/sub/comm/room/${matchTeamCode}`, (msg) => {
-        const data: SocketSpellData = JSON.parse(msg.body);
-        dispatcher.update(data);
+      stomp.current.connect({}, () => {
+        stomp.current.subscribe(`/sub/comm/room/${matchTeamCode}`, (msg) => {
+          const data: SocketSpellData = JSON.parse(msg.body);
+          dispatcher.update(data);
+        });
       });
-    });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {

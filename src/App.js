@@ -27,6 +27,8 @@ const Game = React.lazy(() => import('@/pages/Game'));
 const App = () => {
   const session = sessionHook();
 
+  console.log('version', '2109071107');
+
   return (
     <ConfigProvider locale={koKR}>
       <SessionContext.Provider value={session || {}}>

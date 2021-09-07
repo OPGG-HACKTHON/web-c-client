@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import axios from '@/common/helper/axios';
+import MainIcon from './components/MainIcon';
+import MiddelBox from './components/MiddleBox';
+import SearchBar from './components/SearchBar';
+import SearchButton from './components/SearchButton';
+
+import './index.scss';
 
 const Search = () => {
   const history = useHistory();
@@ -33,10 +39,11 @@ const Search = () => {
   };
 
   return (
-    <div>
-      <div>Search page!</div>
-      <input value={searchValue} onChange={(e) => setValue(e.target.value)} />
-      <button onClick={onClickSearchBtn}>검색</button>
+    <div className="Search-Page-Wrapper">
+      <MainIcon />
+      <MiddelBox />
+      <SearchBar setValue={setValue} />
+      <SearchButton onClick={onClickSearchBtn} />
     </div>
   );
 };

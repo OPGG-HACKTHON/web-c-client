@@ -1,0 +1,37 @@
+.Search-Bar {
+  input {
+    width: 306px;
+    height: 31px;
+    padding: r(8px) r(20px);
+    border: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    background: #312e3a;
+    font-weight: normal;
+    font-style: normal;
+    font-size: r(12px);
+    line-height: 14px;
+    caret-color: #88878a;
+  }
+
+  input:focus {
+    box-shadow: none;
+    outline: none;
+    color: #e5e5e5;
+  }
+
+  input:focus::-webkit-input-placeholder,
+  textarea:focus::-webkit-input-placeholder { /* WebKit browsers */ color: transparent; }
+
+  input:focus:-moz-placeholder,
+  textarea:focus:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ color: transparent; }
+
+  input:focus::-moz-placeholder,
+  textarea:focus::-moz-placeholder { /* Mozilla Firefox 19+ */ color: transparent; }
+
+  input:focus:-ms-input-placeholder,
+  textarea:focus:-ms-input-placeholder { /* Internet Explorer 10+ */ color: transparent; }
+}

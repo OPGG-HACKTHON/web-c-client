@@ -5,7 +5,14 @@ export interface SocketSpellData {
   ultTime: number,
   fspellTime: number,
   dspellTime: number,
-  type: 'SPELL' | 'ITEM'
+  type: 'SPELL' | 'ITEM',
+}
+
+export interface SpellTimeData {
+  summonerName: string,
+  cooltimeR: number,
+  cooltimeF: number,
+  cooltimeD: number,
 }
 
 export interface ContextType {

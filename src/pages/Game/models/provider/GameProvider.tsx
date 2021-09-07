@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
+import axios from 'axios';
 import { reducer, createDispatcher, initState } from './reducer';
 import GameContext from '../context/GameContext';
 import gameDataManager from '../managers/gameDataManager';
@@ -30,11 +31,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     try {
       dispatcher.loading();
       const champsData = await gameDataManager.getChampsInitData(matchTeamCode);
-
-      // const champsData: ChampData[] = await new Promise((res) => {
-      //   setTimeout(() => res(exampleData), 500);
-      // });
-
+      console.log(champsData);
       dispatcher.success(champsData);
     } catch (err) {
       dispatcher.error(err);
@@ -113,16 +110,16 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   ) => {
     try {
       dispatcher.loading();
-      // const body = { matchTeamCode, summonerName, spellType };
-      // const { data } = await axios.get(`https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=1`);
+      const { data } = await axios.get(`https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=1`);
 
-      // if (!data.success) throw new Error();
-      // console.log(data);
-      // const { cooltimeD } = data.data;
-      const second = 60;
+      if (!data.success) throw new Error();
+      const spellTimes = data.data;
+
       const userData = getData(summonerName);
+      const spellTime = spellTimes[`cooltime${spellType}`];
 
-      gameDataManager.useSpell(userData, spellType, second - timeGap);
+      const spellTimeUpdated = spellTime - timeGap < 0 ? null : spellTime - timeGap;
+      gameDataManager.useSpell(userData, spellType, spellTimeUpdated);
 
       const socketData: SocketSpellData = {
         summonerName,
@@ -147,14 +144,29 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
   const resetSpell = async (summonerName: string, spellType: SpellKey) => {
     try {
-      // dispatcher.loading();
-      // const body = { matchTeamCode, summonerName, spellType };
-      // const { data } = await axios.post('url', body);
+      dispatcher.loading();
+      const body = { matchTeamCode, summonerName, spellType };
+      const { data } = await axios.post('url', body);
 
-      // if (!data.success) throw new Error(); API 정해지면 다시
+      if (!data.data.success) throw new Error();
 
       const userData = getData(summonerName);
       gameDataManager.resetSpell(userData, spellType);
+
+      const socketData: SocketSpellData = {
+        summonerName,
+        dspellTime: userData.spells.D.time,
+        fspellTime: userData.spells.F.time,
+        ultTime: userData.spells.R.time,
+        type: 'SPELL',
+      };
+
+      stomp.current.send(
+        `/pub/comm/message/${matchTeamCode}`,
+        {},
+        JSON.stringify(socketData),
+      );
+
       dispatcher.render();
     } catch (err) {
       dispatcher.error(err);

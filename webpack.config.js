@@ -160,7 +160,7 @@ module.exports = async (outSideEnv = {}) => {
               options: {
                 lessOptions: {
                   modifyVars: {
-                    'primary-color': '#1890ff',
+                    'primary-color': '#6675FF',
                     'danger-color': '#dc3545',
                     'info-color': '#2972ff',
                     'green-color': '#28a745',

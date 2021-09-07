@@ -41,7 +41,7 @@ module.exports = async (outSideEnv = {}) => {
 
   switch (env.SERVICE_MODE.toLowerCase()) {
     case 'test':
-      env.API_BASE_URL = 'https://URL';
+      env.CLIENT_BASE_URL = 'https://URL';
       env.API_BASE_URL = 'https://URL';
       env.PUBLIC_PATH = `${env.CLIENT_BASE_URL}/`;
       env.SERVICE_MODE = 'test';
@@ -52,7 +52,7 @@ module.exports = async (outSideEnv = {}) => {
 
     case 'prod':
       env.CLIENT_BASE_URL = 'https://swoomi.me';
-      env.API_BASE_URL = 'https://URL';
+      env.API_BASE_URL = 'https://backend.swoomi.me';
       env.PUBLIC_PATH = `${env.CLIENT_BASE_URL}/`;
       env.SERVICE_MODE = 'prod';
       localOptions = {
@@ -62,7 +62,7 @@ module.exports = async (outSideEnv = {}) => {
 
     default:
       env.CLIENT_BASE_URL = 'http://localhost:4000';
-      env.API_BASE_URL = 'http://localhost:3000';
+      env.API_BASE_URL = 'https://backend.swoomi.me';
       env.PUBLIC_PATH = '/';
       env.SERVICE_MODE = 'local';
       localOptions = {

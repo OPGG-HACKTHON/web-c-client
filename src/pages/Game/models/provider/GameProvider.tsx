@@ -5,7 +5,6 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import axios from 'axios';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { reducer, createDispatcher, initState } from './reducer';
@@ -110,12 +109,12 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const onUseSpell = async (
     summonerName: string,
     spellType: SpellKey,
-    timeGap: number,
+    timeGap: number = 0,
   ) => {
     try {
       dispatcher.loading();
       // const body = { matchTeamCode, summonerName, spellType };
-      // const { data } = await axios.get(`http://3.34.111.116:8070/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=1`);
+      // const { data } = await axios.get(`https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=1`);
 
       // if (!data.success) throw new Error();
       // console.log(data);
@@ -216,7 +215,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const openSocket = () => {
     if (socket.current) return;
     try {
-      socket.current = new SockJS('http://3.34.111.116:8070/ws-swoomi');
+      socket.current = new SockJS('https://backend.swoomi.me/ws-swoomi');
       stomp.current = Stomp.over(socket.current);
 
       stomp.current.connect({}, () => {

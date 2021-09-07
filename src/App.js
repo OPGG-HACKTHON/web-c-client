@@ -11,9 +11,6 @@ import koKR from 'antd/lib/locale-provider/ko_KR';
 import 'moment/locale/ko';
 
 import { history } from '@/global/scripts/store';
-import sessionHook from '@/common/hooks/session';
-
-import SessionContext from '@/common/context/SessionContext';
 
 import BrowserWarning from '@/global/layout/components/BrowserWarning';
 
@@ -25,23 +22,19 @@ const Room = React.lazy(() => import('@/pages/Room'));
 const Game = React.lazy(() => import('@/pages/Game'));
 
 const App = () => {
-  const session = sessionHook();
-
-  console.log('version', '2109071107');
+  console.log('version', '2109072127');
 
   return (
     <ConfigProvider locale={koKR}>
-      <SessionContext.Provider value={session || {}}>
-        <Router history={history}>
-          <Switch>
-            <PublicRoute exact path="/" component={Search} />
-            <PublicRoute exact path="/room/:summonerName" component={Room} />
-            <PrivateRoute exact path="/game/:matchTeamCode" component={Game} />
-            <Redirect path="*" to="/" />
-          </Switch>
-        </Router>
-        <BrowserWarning />
-      </SessionContext.Provider>
+      <Router history={history}>
+        <Switch>
+          <PublicRoute exact path="/" component={Search} />
+          <PublicRoute exact path="/room/:summonerName" component={Room} />
+          <PrivateRoute exact path="/game/:matchTeamCode" component={Game} />
+          <Redirect path="*" to="/" />
+        </Switch>
+      </Router>
+      <BrowserWarning />
     </ConfigProvider>
   );
 };

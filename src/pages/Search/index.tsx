@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+
+import axios from '@/common/helper/axios';
 
 const Search = () => {
+  const history = useHistory();
   const [searchValue, setValue] = useState<string>('');
 
   const getMatchTeamCode = async () => {
     try {
-      const { data } = await axios.get(`http://3.34.111.116:8070/v1/match/status/${searchValue}`);
+      const { data } = await axios.get(`/v1/match/status/${searchValue}`);
       const { matchTeamCode } = data.data;
       return matchTeamCode;
     } catch (err) {
       console.log(err);
+      return null;
     }
   };
 
   const onClickSearchBtn = async () => {
     try {
-      const { data } = await axios.get(`http://3.34.111.116:8070/v1/match/${searchValue}`);
+      const { data } = await axios.get(`/v1/match/${searchValue}`);
       if (data.data.matchStatus === false) {
         alert('게임 시작 안함');
       } else {
         const matchTeamCode = await getMatchTeamCode();
-        window.location.href = `/game/${matchTeamCode}`;
+        history.push(`/game/${matchTeamCode}`);
       }
     } catch (err) {
       alert('없는 소환사');

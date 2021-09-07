@@ -8,7 +8,6 @@ import { ChampData } from '../models/type';
 import Champion from './Champion';
 import ChamptionItemContainer from './ChamptionItemContainer';
 import ChampionItem from './ChampionItem';
-import useGameData from '../hooks/useGameData';
 
 import './ChampionContainer.scss';
 

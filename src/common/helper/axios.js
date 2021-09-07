@@ -4,6 +4,8 @@ import axios from 'axios';
 // 모든 요청에 Ajax 요청 헤더 추가
 // axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // axios.defaults.baseURL = process.env.API_BASE_URL;
+
+// TODO: test 서버 만들어 로컬에서 http 로 연결 가능케 한 이후에는 활성화 필요
 // axios.defaults.withCredentials = true;
 export const clientAxiosConfig = (config) => {
   const customHeaders = config.customHeaders || {};
@@ -13,7 +15,7 @@ export const clientAxiosConfig = (config) => {
       ...customHeaders,
       'X-Requested-With': 'XMLHttpRequest',
     },
-    withCredentials: true,
+    // withCredentials: true,
     maxContentLength: 50 * 1024 * 1024,
   };
 };
@@ -25,23 +27,5 @@ const customAxios = axios.create({
 });
 
 customAxios.interceptors.request.use(axiosInterceptBeforeRequest);
-
-export const operationAxios = axios.create({
-  baseURL: process.env.OPERATION_API_BASE_URL,
-});
-
-operationAxios.interceptors.request.use(axiosInterceptBeforeRequest);
-
-export const adminAxios = axios.create({
-  baseURL: process.env.ADMIN_API_BASE_URL,
-});
-
-adminAxios.interceptors.request.use(axiosInterceptBeforeRequest);
-
-export const recruitAxios = axios.create({
-  baseURL: process.env.RECRUIT_API_BASE_URL,
-});
-
-recruitAxios.interceptors.request.use(axiosInterceptBeforeRequest);
 
 export default customAxios;

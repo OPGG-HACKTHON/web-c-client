@@ -29,6 +29,7 @@ const ChamptionItemContainer = ({
           {
             itemsPurchased?.map((itemData) => (
               <Item
+                key={itemData.name}
                 itemData={itemData}
                 onClick={() => cancelItem(summonerName, itemData.name)}
               />
@@ -42,6 +43,7 @@ const ChamptionItemContainer = ({
 
               return (
                 <Item
+                  key={itemData.name}
                   itemData={itemData}
                   onClick={() => buyItems(summonerName, [itemData.name])}
                   disabled={!isPurchased}

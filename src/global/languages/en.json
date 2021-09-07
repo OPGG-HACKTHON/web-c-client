@@ -1,5 +1,8 @@
 {
-  "errorMessages": {
-    "J99999": "unknown error"
+  "aa": "aasdsad",
+  "game": {
+    "championItem": {
+      "beforeTimeText": "{{second}}s ago"
+    }
   }
 }

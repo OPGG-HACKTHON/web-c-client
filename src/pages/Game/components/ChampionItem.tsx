@@ -1,6 +1,8 @@
 import React, {
   useState, useEffect, useContext, useRef,
 } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import TimeButton from '@/common/components/TimeButton';
 import RefreshIcon from '@/common/components/RefreshIcon';
 import SpellIconInItem from './SpellIconInItem';
@@ -9,10 +11,13 @@ import GameContext from '../models/context/GameContext';
 
 import './ChampionItem.scss';
 
-const ChampionItem = ({ champData, spellType }) => {
+const ChampionItem = ({
+  champData, spellType,
+}) => {
   const [counter, setCounter] = useState(0);
   const [status, setStatus] = useState('default');
   const curtainTimer = useRef(null);
+  const { t } = useTranslation();
 
   const {
     onUseSpell, resetSpell, updateTimeUsed, updateUltLevel,
@@ -69,15 +74,15 @@ const ChampionItem = ({ champData, spellType }) => {
             </div>
             <div className="line" />
             <div className="panel-item" onClick={handleClickTime(0)}>
-              0s전
+              {t('game.championItem.beforeTimeText', { second: 0 })}
             </div>
             <div className="line" />
             <div className="panel-item" onClick={handleClickTime(15)}>
-              15s전
+              {t('game.championItem.beforeTimeText', { second: 15 })}
             </div>
             <div className="line" />
             <div className="panel-item" onClick={handleClickTime(30)}>
-              30s전
+              {t('game.championItem.beforeTimeText', { second: 30 })}
             </div>
           </div>
         </div>
@@ -98,21 +103,21 @@ const ChampionItem = ({ champData, spellType }) => {
             className="panel-item panel-spell-item"
             onClick={handleClickTime(0)}
           >
-            0s전
+            {t('game.championItem.beforeTimeText', { second: 0 })}
           </div>
           <div className="line" />
           <div
             className="panel-item panel-spell-item"
             onClick={handleClickTime(15)}
           >
-            15s전
+            {t('game.championItem.beforeTimeText', { second: 15 })}
           </div>
           <div className="line" />
           <div
             className="panel-item panel-spell-item"
             onClick={handleClickTime(30)}
           >
-            30s전
+            {t('game.championItem.beforeTimeText', { second: 30 })}
           </div>
         </div>
       </div>

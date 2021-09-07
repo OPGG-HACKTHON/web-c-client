@@ -38,6 +38,14 @@ const Search = () => {
     }
   };
 
+  React.useEffect(() => {
+    const findUser = (e) => {
+      if (e.key === 'Enter') onClickSearchBtn();
+    };
+    document.addEventListener('keydown', findUser);
+    return () => document.removeEventListener('keydown', findUser);
+  }, [searchValue]);
+
   return (
     <div className="Search-Page-Wrapper">
       <MainIcon />

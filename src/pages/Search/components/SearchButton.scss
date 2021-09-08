@@ -1,7 +1,7 @@
 .Search-Button {
   position: absolute;
   bottom: 0;
-  width: 375px;
+  width: 100%;
   height: 50px;
 
   @include bp-up(md) {

@@ -465,7 +465,7 @@ const enChampion = [
 
 export const koActionDict = {
   R: ['노궁', '녹음', '노공', '노 공', '노 0'],
-  노플: ['노플', '도플', '노페', '어플', '녹색', '로페', '독해', '노팬', '노페인', '독채', '독재', '도배', '노트 8', '뷔페', '노 페인', '도팽', '독백', '녹스', '도쿄', '높여', '독뱀', '노펜', '녹화해', '노캡', '높이', '노벨'],
+  노플: ['노플', '도플', '노페', '어플', '녹색', '로페', '독해', '노팬', '노페인', '독채', '독재', '도배', '노트 8', '뷔페', '노 페인', '도팽', '독백', '녹스', '도쿄', '높여', '독뱀', '노펜', '녹화해', '노캡', '높이', '노벨', '높을'],
   노텔: ['노텔', '노태', '로테', '로텔', '호텔', '로태', '루태', '노태우', '노보텔', '노텍', '로텍', '모텔', '로지텍', '로템'],
   노탈진: ['노탈진', '너 탈젠', '너 탈진', '노 탈젠', '로탈 잼', '노탈 잼', '노트 8 젠', '모탈 잼', '노 탈 잼', '너 탈 잼', '노털 잼', '못할 잼', '노타이 잼', '로탈 젬', '노트 8 잼', '노탈 젬', '노털 젬', '노트 8 짐', '로타리 잼', '노트 8 10', '노털 젠', '못 할 잼', '노트 8 진', '노트 8 cm', '노트 탈젠', '노탈 젠', '노트 8 재생', '못할 젠', '노트에 잼', '로탈 젠'],
   노스펠: ['노스펠', '노스페이스', '노스펙', '노 스 페', '노스 페이스'],
@@ -563,39 +563,44 @@ export const getGrammarString = (language: LanguageType = LanguageType.ko, gramm
   return grammar;
 };
 
-export const interpret = (transcriptList: Array<string>) => {
-  const findKey = (word, dict) => _.findKey(dict, (wl) => {
+// TODO: 챔피언별 스펠 보유 여부 체크
+export const interpret = (transcriptList: Array<string>, championList: Array<string>) => {
+  const findKey = (word, dict, allowedKeyList = Object.keys(dict)) => _.findKey(dict, (wl, key) => {
     const wordList = _.flattenDeep(wl);
-    return !!wordList.find((w) => word === w);
+    return allowedKeyList.includes(key) && !!wordList.find((w) => word === w);
   });
 
   const resultList = transcriptList
     .map((transcript) => {
-      const firstWord = transcript.split(' ')[0];
-      const secondWord = transcript.split(' ')[1];
-      const thirdWord = transcript.split(' ')[2];
+      const wordList = transcript.split(' ');
+      if (wordList.length < 2) {
+        return null;
+      }
 
       let action;
       let champion;
 
-      if (!firstWord || !secondWord) {
-        return null;
+      for (let i = 1; i < 5; i += 1) {
+        if (!wordList[i]) return null;
+
+        action = findKey(wordList[i], koActionDict);
+        // console.log(`action ${i}`, action);
+
+        let championWord = '';
+        for (let n = i - 1; n >= 0 && !champion; n -= 1) {
+          championWord = `${wordList[n]} ${championWord}`;
+          championWord = championWord.trim();
+          // console.log(`championWord ${i}-${n}`, championWord);
+          champion = findKey(championWord, koChampionDict, championList);
+          // console.log(`champion ${i}`, champion);
+        }
+
+        if (champion && action) {
+          return { champion, action };
+        }
       }
 
-      action = findKey(secondWord, koActionDict);
-      champion = findKey(firstWord, koChampionDict);
-
-      if (!action) {
-        if (!thirdWord) return null;
-        action = findKey(thirdWord, koActionDict);
-        champion = findKey(`${firstWord} ${secondWord}`, koChampionDict);
-      }
-
-      if (!champion) {
-        return null;
-      }
-
-      return { champion, action };
+      return null;
     })
     .filter((t) => t);
 

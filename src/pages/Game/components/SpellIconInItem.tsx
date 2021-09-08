@@ -2,7 +2,7 @@ import React from 'react';
 
 interface SpellIconInItemProps {
   spellType: string;
-  handleClick: (event: React.MouseEvent<HTMLDivElement>)=> void;
+  handleClick: (e: React.MouseEvent)=> void;
   src: string;
   level?: number;
 }

@@ -40,6 +40,7 @@
     img {
       width: 31px;
       height: 31px;
+      border: 2px solid #25232c;
       border-radius: r(5px);
     }
   }
@@ -53,6 +54,7 @@
 
   .ultimate {
     position: relative;
+    margin-left: r(-4px);
 
     img {
       width: 40px;
@@ -76,13 +78,8 @@
     }
   }
 
-  .line {
-    width: 0.5px;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-
   .leftTime {
+    margin-left: r(10px);
     font-weight: bold;
     font-size: r(20px);
     line-height: 24px;
@@ -92,68 +89,54 @@
     width: 31px;
     height: 31px;
   }
-
-  .timeButton {
-    display: flex;
-    justify-content: space-around;
-    width: r(145px);
-  }
-}
-
-.timeButtons {
-  display: flex;
-  justify-content: space-between;
-  width: r(136px);
-}
-
-.panel-clicked {
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  padding-right: r(14px);
-  padding-left: calc(12.5% - 15.5px);
-  border-radius: r(15px);
-  background-color: #4f4b5b;
 }
 
 .item-left {
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  img {
-    margin-right: r(16px);
-  }
-
-  .icon {
-    background-color: transparent;
-  }
-
-  .ultimate {
-    margin-left: r(-4px);
-  }
+  width: 40%;
+  height: 100%;
+  padding-left: calc(12.5% - 17.5px);
+  border-radius: r(15px);
+  background: #6675ff;
 }
 
 .item-right {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  width: 60%;
+  height: 100%;
+  border-radius: r(15px);
+  background: #4f4b5b;
+
+  .time-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    height: 100%;
+    text-align: center;
+  }
+
+  .refresh-button {
+    margin: auto;
+  }
 }
 
-.panel-wait {
+.line {
+  width: 0.5px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.item-right-wait {
   display: flex;
-  justify-content: start;
-  padding-left: calc(12.5% - 17.5px);
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  height: 100%;
   border: 2px solid #6675ff;
   border-radius: r(15px);
-  background: rgba(102, 117, 255, 0.2);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-
-  .modify-button {
-    font-size: r(16px);
-    color: #6675ff;
-  }
+  background: rgba(102, 117, 255, 0.8);
 }

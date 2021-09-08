@@ -11,7 +11,10 @@ import './index.scss';
 
 const Search = () => {
   const history = useHistory();
+  const [isFocusInput, setIsFocusInput] = useState(false);
   const [searchValue, setValue] = useState<string>('');
+
+  const isPossibleSearch = searchValue !== '';
 
   const getMatchTeamCode = async () => {
     try {
@@ -50,8 +53,8 @@ const Search = () => {
     <div className="Search-Page-Wrapper">
       <MainIcon />
       <MiddelBox />
-      <SearchBar setValue={setValue} />
-      <SearchButton onClick={onClickSearchBtn} />
+      <SearchBar setValue={setValue} setIsFocusInput={setIsFocusInput} />
+      {isFocusInput || isPossibleSearch ? <SearchButton onClick={onClickSearchBtn} isPossibleSearch={isPossibleSearch} /> : null}
     </div>
   );
 };

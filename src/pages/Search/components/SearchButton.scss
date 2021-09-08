@@ -4,10 +4,21 @@
   width: 375px;
   height: 50px;
 
+  @include bp-up(md) {
+    visibility: hidden;
+  }
+
   button {
     width: 100%;
     height: 100%;
     border: none;
+  }
+
+  .possible {
+    background: #6675ff;
+  }
+
+  .impossible {
     background: #4f4b5b;
   }
 }

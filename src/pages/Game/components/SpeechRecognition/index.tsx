@@ -98,10 +98,10 @@ const SpeechRecognition = () => {
     recognition.start();
   }, [speechText, gameData]);
 
-  useEffect(() => {
-    if (!speechText) return;
-    initSpeechRecognition();
-  }, [speechText]);
+  // useEffect(() => {
+  //   if (!speechText) return;
+  //   initSpeechRecognition();
+  // }, [speechText]);
 
   return (
     <div

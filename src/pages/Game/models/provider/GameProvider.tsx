@@ -33,7 +33,6 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     try {
       dispatcher.loading();
       const champsData = await gameDataManager.getChampsInitData(matchTeamCode);
-      console.log(champsData);
       dispatcher.success(champsData);
     } catch (err) {
       dispatcher.error(err);

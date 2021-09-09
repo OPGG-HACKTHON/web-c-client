@@ -21,10 +21,12 @@ interface GameProviderProps {
 
 function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const [dataState, dispatch] = useReducer(reducer, initState);
+  const [isNotClickedInFiveSec, setIsNotClickedInFiveSec] = useState(false);
   const dispatcher = createDispatcher(dispatch);
   const spellTimer = useRef([]);
   const socket = useRef(null);
   const stomp = useRef(null);
+  const curtainTimer = useRef(null);
   const [itemSelectingSummonerName, setItemSelectingSummonerName] = useState();
 
   const getChampsInitData = async () => {
@@ -110,7 +112,9 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   ) => {
     try {
       dispatcher.loading();
-      const { data } = await axios.get(`https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=1`);
+      const { data } = await axios.get(
+        `https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=1`,
+      );
 
       if (!data.success) throw new Error();
       const spellTimes = data.data;
@@ -212,6 +216,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const providerValue = {
     gameData: dataState.champsData,
     loadingState: { loading: dataState.loading, error: dataState.error },
+    isNotClickedInFiveSec,
     buyItems,
     cancelItem,
     onUseSpell,
@@ -245,6 +250,20 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     if (socket.current) return;
     openSocket();
   }, []);
+
+  useEffect(() => {
+    curtainTimer.current = setTimeout(() => {
+      curtainTimer.current = null;
+      setIsNotClickedInFiveSec(true);
+    }, 5000);
+
+    return () => {
+      if (curtainTimer.current) {
+        clearTimeout(curtainTimer.current);
+        setIsNotClickedInFiveSec(false);
+      }
+    };
+  }, [dataState]);
 
   return (
     <GameContext.Provider value={providerValue}>

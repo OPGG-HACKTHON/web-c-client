@@ -23,17 +23,24 @@ const ChampionItem = ({ champData, spellType }: ChampionItemProps) => {
   const { t } = useTranslation();
 
   const {
-    onUseSpell, resetSpell, updateTimeUsed, updateUltLevel,
-  } = useContext(
-    GameContext,
-  );
+    isNotClickedInFiveSec,
+    onUseSpell,
+    resetSpell,
+    updateTimeUsed,
+    updateUltLevel,
+  } = useContext(GameContext);
 
+  console.log(isNotClickedInFiveSec);
   const { src, time, level } = champData.spells[spellType];
   const { summonerName } = champData;
 
   useEffect(() => {
     if (!time || time < 0) setStatus('default');
   }, [status]);
+
+  useEffect(() => {
+    if (isNotClickedInFiveSec && status !== 'default') setStatus('modify');
+  }, [time]);
 
   const handleClickIcon = () => {
     // updateUltLevel();

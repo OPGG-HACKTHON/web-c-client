@@ -2,6 +2,8 @@ import React from 'react';
 
 import searchIcon from '@/common/images/icon-search-purple.png';
 
+import useHorizontalScroll from '@/common/hooks/useHorizontalScroll';
+
 import { ChampData } from '../../models/type';
 import useGameData from '../../hooks/useGameData';
 
@@ -20,11 +22,12 @@ const ChamptionItemContainer = ({
     buyItems, cancelItem,
     setItemSelectingSummonerName,
   } = useGameData();
+  const scrollRef = useHorizontalScroll();
   const { summonerName, itemsPurchased = [], frequentItems = [] } = champData;
 
   return (
     <div className="ChamptionItemContainer">
-      <div className="left-container">
+      <div className="left-container" ref={scrollRef}>
         <div className="item-container">
           {
             itemsPurchased?.map((itemData) => (

@@ -8,13 +8,15 @@ import './SummonaryChamp.scss';
 
 interface SummonaryChampProps {
   champData: ChampData
+  order: number;
+  swapTargetIndex: number;
 }
 
-const SummonaryChamp = ({ champData }: SummonaryChampProps) => {
+const SummonaryChamp = ({ champData, order, swapTargetIndex }: SummonaryChampProps) => {
   const { spells } = champData;
 
   return (
-    <div className="SummonaryChamp">
+    <div className={cs('SummonaryChamp', { swapping: order === swapTargetIndex })}>
       <div className="summonary-top-container">
         <Champion champData={champData} />
       </div>

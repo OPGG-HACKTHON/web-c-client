@@ -12,6 +12,10 @@
     height: 142px;
   }
 
+  .SummonaryChamp {
+    transform: translate(0, 0) !important;
+  }
+
   .summonary-info-fixed-holder {
     position: fixed;
     top: $topbar-height;

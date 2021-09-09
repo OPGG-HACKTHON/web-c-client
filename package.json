@@ -32,7 +32,6 @@
     "@types/react": "^17.0.18",
     "@types/react-dom": "^17.0.9",
     "antd": "^4.9.2",
-    "array-move": "^4.0.0",
     "axios": "^0.21.1",
     "babel-plugin-import": "1.13.3",
     "classnames": "^2.2.6",

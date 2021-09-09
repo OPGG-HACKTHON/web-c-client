@@ -35,6 +35,7 @@ export interface ChampData {
   champName: string,
   summonerName: string,
   src: string,
+  originalFrequentItems?: ItemData[],
   frequentItems: ItemData[],
   itemsPurchased: ItemData[] | null,
   spells: {

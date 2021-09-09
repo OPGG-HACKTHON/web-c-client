@@ -218,6 +218,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     resetSpell,
     updateTimeUsed,
     updateUltLevel,
+    updateGameData: (gameData) => dispatcher.success(gameData),
 
     isItemSelectorVisible: !!itemSelectingSummonerName,
     itemSelectingSummonerName,

@@ -56,7 +56,7 @@ module.exports = async (outSideEnv = {}) => {
       env.PUBLIC_PATH = `${env.CLIENT_BASE_URL}/`;
       env.SERVICE_MODE = 'prod';
       localOptions = {
-        devtool: 'eval-source-map',
+        devtool: 'source-map',
       };
       break;
 

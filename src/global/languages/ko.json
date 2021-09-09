@@ -4,5 +4,14 @@
     "championItem": {
       "beforeTimeText": "{{second}}s전"
     }
+  },
+  "ultimate": "궁극기",
+  "spells": {
+    "SummonerHeal": "힐",
+    "SummonerDot": "점화",
+    "SummonerBoost": "정화",
+    "SummonerTeleport": "텔레포트",
+    "SummonerExhaust": "탈진",
+    "SummonerFlash": "점멸"
   }
 }

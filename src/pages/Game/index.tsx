@@ -8,6 +8,8 @@ import SummonaryInfoContainer from './components/SummonaryInfoContainer';
 import ChampionContainer from './components/ChampionContainer';
 import ItemSelector from './components/ChamptionItemContainer/components/ItemSelector';
 
+import Speech from './components/SpeechRecognition';
+
 const InGame = ({ match }: RouteComponentProps) => {
   const { matchTeamCode } = match.params;
 
@@ -32,6 +34,7 @@ const InGame = ({ match }: RouteComponentProps) => {
               {isItemSelectorVisible && (
                 <ItemSelector />
               )}
+              <Speech />
             </>
           )}
         </GameContext.Consumer>

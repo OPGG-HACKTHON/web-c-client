@@ -1,5 +1,9 @@
 import React, {
-  useState, useEffect, useContext, useRef,
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  MouseEventHandler,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -37,14 +41,6 @@ const ChampionItem = ({
   const { src, time, level } = champData.spells[spellType];
   const { summonerName } = champData;
 
-  useEffect(() => {
-    if (!time || time < 0) setStatus('default');
-  }, [status]);
-
-  useEffect(() => {
-    if (isNotClickedInFiveSec && status !== 'default') setStatus('modify');
-  }, [time]);
-
   const handleClickIcon = () => {
     spellType === 'R' && handleClickUltimate();
   };
@@ -59,16 +55,16 @@ const ChampionItem = ({
     }, 5000);
   };
 
-  const onResetSpellTime = (e) => {
+  const handleReset = (e) => {
     e.stopPropagation();
     createCurtain();
     resetSpell(summonerName, spellType);
+    setStatus('default');
   };
 
-  const handleClickTime = (beforeSec: number) => () => {
-    createCurtain();
-    setStatus('modify');
+  const handleClickTime = (beforeSec: number) => (e) => {
     onUseSpell(summonerName, spellType, beforeSec);
+    changeToModifyMode(e);
   };
 
   const changeToModifyMode = (e) => {
@@ -81,7 +77,11 @@ const ChampionItem = ({
     updateTimeUsed(summonerName, spellType, time + t >= 0 ? time + t : 0);
   };
 
-  if (status === 'default') {
+  useEffect(() => {
+    if (isNotClickedInFiveSec && status !== 'default') setStatus('wait');
+  }, [status]);
+
+  if (status === 'default' || time < 1) {
     if (spellType === 'R') {
       return (
         <div className="ChampionItem">
@@ -135,6 +135,7 @@ const ChampionItem = ({
       </div>
     );
   }
+
   if (status === 'modify') {
     return (
       <div className="ChampionItem" onClick={changeToModifyMode}>
@@ -151,7 +152,7 @@ const ChampionItem = ({
             -10s
           </div>
           <div className="line" />
-          <div className="refresh-button" onClick={onResetSpellTime}>
+          <div className="refresh-button" onClick={handleReset}>
             <RefreshIcon />
           </div>
         </div>

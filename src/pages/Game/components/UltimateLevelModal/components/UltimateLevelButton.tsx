@@ -1,15 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import './UltimateLevelButton.scss';
 
-interface UltimateLevelButton {
+interface UltimateLevelButtonProps {
   level: number;
-  handleClick: React.MouseEvent;
+  handleClick: Function;
 }
 
-const UltimateLevelButton = ({ level, handleClick }) => {
+const UltimateLevelButton = ({ level, handleClick }: UltimateLevelButtonProps) => {
   return (
-    <button className="UltimateLevelButton" onClick={handleClick}>
+    <button
+      className="UltimateLevelButton"
+      onClick={() => handleClick()}
+    >
       {level}
     </button>
   );

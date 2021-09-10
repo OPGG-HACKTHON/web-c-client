@@ -1,11 +1,16 @@
-.modal-container {
+.modal-backgrond {
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1001;
   width: 100vw;
   height: 100vh;
+  cursor: pointer;
   background: rgba(0, 0, 0, 0.5);
+
+  &:not(.show) {
+    display: none;
+  }
 }
 
 .UltimateLevelModal {
@@ -34,7 +39,7 @@
     font-size: 15px;
   }
 
-  .ultimate-level-button {
+  .ultimate-level-button-contaienr {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -42,11 +47,11 @@
 }
 
 .modal-open {
-  animation: modal-open 0.5s ease-in-out;
+  animation: modal-open 0.2s ease;
 }
 
 .modal-close {
-  animation: modal-close 0.5s ease-in-out;
+  animation: modal-close 0.2s ease;
 }
 
 @keyframes modal-open {

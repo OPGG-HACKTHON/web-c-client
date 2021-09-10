@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import resizeHook from '@/common/hooks/resize';
 import Breakpoints from '@/global/styles/breakPoints';
@@ -21,25 +21,17 @@ const ChampionContainer = ({
   champData,
   onClick = () => {},
 }: ChampionComponentProps) => {
-  const [showModal, setShowModal] = useState(false);
+  const [isUltimateLevelModalVisible, setIsUltimateLevelModalVisible] = useState(false);
 
   const width = resizeHook();
   const isMobile = width < Breakpoints.md;
 
-  const handleClick = () => {
-    setShowModal(() => !showModal);
-  };
+  const toggleModal = useCallback(() => {
+    setIsUltimateLevelModalVisible(() => !isUltimateLevelModalVisible);
+  }, [isUltimateLevelModalVisible]);
 
   return (
     <>
-      {showModal && (
-        <UltimateLevelModal
-          src={champData.spells.R.src}
-          handleClick={handleClick}
-          summonerName={champData.summonerName}
-          showModal={showModal}
-        />
-      )}
       <div className="ChampionContainer">
         <div className="top-container">
           <Champion champData={champData} onClick={onClick} isUsingName />
@@ -53,12 +45,18 @@ const ChampionContainer = ({
                 key={spell}
                 champData={champData}
                 spellType={spell}
-                handleClickUltimate={handleClick}
+                handleClickUltimate={toggleModal}
               />
             );
           })}
         </div>
       </div>
+      <UltimateLevelModal
+        isVisible={isUltimateLevelModalVisible}
+        toggleModal={toggleModal}
+        src={champData.spells.R.src}
+        summonerName={champData.summonerName}
+      />
     </>
   );
 };

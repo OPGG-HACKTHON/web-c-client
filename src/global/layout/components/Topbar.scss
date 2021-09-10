@@ -1,26 +1,51 @@
-.Topbar,
-.Topbar-PrivateLayout {
+.Topbar {
   position: fixed;
   top: 0;
   z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   min-width: 320px;
   height: 64px;
   background-color: #1a181e;
 
-  .logo-image {
-    width: 109px;
-    height: 21px;
-    cursor: pointer;
-  }
-
-  .Topbar-PrivateLayout {
-    z-index: -1;
+  .topbar-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     max-width: map-get($grid-breakpoints, lg);
+    height: 100%;
+    margin: 0 auto;
+
+    .language-select {
+      position: absolute;
+      left: r(8px);
+      min-width: r(72px);
+
+      &.ant-select,
+      .ant-select-selector {
+        border: none !important;
+        background-color: transparent;
+        box-shadow: none !important;
+        outline: none;
+        font-size: r(12px);
+        color: rgba(255, 255, 255, 0.8);
+
+        .ant-select-selection-item {
+          margin-top: r(1px);
+        }
+      }
+
+      .ant-select-arrow svg {
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    .logo-image {
+      width: 109px;
+      height: 21px;
+      cursor: pointer;
+    }
 
     .info-image,
     .share-image {

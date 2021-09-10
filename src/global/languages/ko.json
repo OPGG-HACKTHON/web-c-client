@@ -5,6 +5,17 @@
       "beforeTimeText": "{{second}}s전"
     }
   },
+  "ChamptionItemContainer": {
+    "nothingEquipped": "아직 장착한 아이템이 없어요."
+  },
+  "ItemSelector": {
+    "searchInputPlaceHolder": "아이템을 검색해보세요.",
+    "searchedItem": "검색된 아이템",
+    "noSearchedItem": "검색된 아이템이 없습니다.",
+    "frequentItem": "추천 아이템",
+    "selectedItem": "선택된 아이템",
+    "completeSelect": "선택완료"
+  },
   "ultimate": "궁극기",
   "spells": {
     "SummonerHeal": "힐",

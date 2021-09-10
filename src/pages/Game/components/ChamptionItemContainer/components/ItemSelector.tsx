@@ -1,15 +1,18 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import backIcon from '@/common/images/icon-back.png';
-import searchIcon from '@/common/images/icon-search-white.png';
+import backIcon from '@/common/images/icon-back-purple.png';
+import searchIcon from '@/common/images/icon-search-purple.png';
 
 import useGameData from '../../../hooks/useGameData';
 
+import ITEM_LIST from './itemList';
 import Item from './Item';
 
 import './ItemSelector.scss';
 
 const ItemSelector = () => {
+  const { t } = useTranslation();
   const {
     gameData,
     buyItems,
@@ -17,6 +20,7 @@ const ItemSelector = () => {
     itemSelectingSummonerName,
     setItemSelectingSummonerName,
   } = useGameData();
+
   const [searchableItemList, setSearchableItemList] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [searchedItemList, setSearchedItemList] = useState([]);
@@ -43,8 +47,7 @@ const ItemSelector = () => {
   }, [selectedItemList]);
 
   useEffect(() => {
-    // TODO: 모든 아이템으로 수정 필요
-    const itemList = frequentItems.map((item) => {
+    const itemList = ITEM_LIST.map((item) => {
       return {
         ...item,
         nameForSearch: item.name.replace(/\s/g, ''),
@@ -56,8 +59,8 @@ const ItemSelector = () => {
 
   useEffect(() => {
     const value = searchValue.replace(/\s/g, '');
-    const itemList = searchableItemList.filter(({ nameForSearch, englishNameForSearch }) => {
-      return nameForSearch.includes(value) || englishNameForSearch.includes(value);
+    const itemList = searchableItemList.filter(({ nameForSearch, englishNameForSearch, colloq }) => {
+      return nameForSearch.includes(value) || englishNameForSearch.includes(value) || colloq.includes(value);
     });
     setSearchedItemList(itemList);
   }, [searchableItemList, searchValue]);
@@ -72,18 +75,20 @@ const ItemSelector = () => {
       <div className="search-container">
         <input
           className="search-input"
+          placeholder={t('ItemSelector.searchInputPlaceHolder')}
           onChange={({ target: { value } }) => setSearchValue(value.trim())}
         />
         <img className="search-icon" src={searchIcon} alt="검색" />
       </div>
       { !!searchValue && (
         <div className="item-list-container">
-          <h4 className="title">검색된 아이템</h4>
+          <h4 className="title">{t('ItemSelector.searchedItem')}</h4>
           { searchedItemList.length
             ? (
               <div className="item-list">
                 { searchedItemList.map((itemData) => (
                   <Item
+                    key={itemData.name}
                     itemData={itemData}
                     disabled={!getIsSelectedItem(itemData.name)}
                     onClick={() => onClickItem(itemData)}
@@ -92,15 +97,16 @@ const ItemSelector = () => {
               </div>
             )
             : (
-              <div className="no-result-text">검색된 아이템이 없습니다.</div>
+              <div className="no-result-text">{t('ItemSelector.noSearchedItem')}</div>
             )}
         </div>
       )}
       <div className="item-list-container">
-        <h4 className="title">추천 아이템</h4>
+        <h4 className="title">{t('ItemSelector.frequentItem')}</h4>
         <div className="item-list">
           { frequentItems.map((itemData) => (
             <Item
+              key={itemData.name}
               itemData={itemData}
               disabled={!getIsSelectedItem(itemData.name)}
               onClick={() => onClickItem(itemData)}
@@ -111,10 +117,11 @@ const ItemSelector = () => {
       <div className="bottom-container">
         { !!selectedItemList.length && (
           <div className="item-list-container">
-            <h4 className="title">선택된 아이템</h4>
+            <h4 className="title">{t('ItemSelector.selectedItem')}</h4>
             <div className="item-list">
               { selectedItemList.map((itemData) => (
                 <Item
+                  key={itemData.name}
                   itemData={itemData}
                   disabled={!getIsSelectedItem(itemData.name)}
                   onClick={() => onClickItem(itemData)}
@@ -127,7 +134,7 @@ const ItemSelector = () => {
           className="complete-btn"
           disabled={!selectedItemList.length}
           onClick={() => onComplete()}
-        >선택완료
+        >{t('ItemSelector.completeSelect')}
         </button>
       </div>
     </div>

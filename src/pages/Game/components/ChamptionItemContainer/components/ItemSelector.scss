@@ -8,10 +8,12 @@ $bottom-container-padding: r(12px);
   bottom: 0;
   left: 0;
   z-index: 2000;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: #25232c;
   backdrop-filter: blur(30px);
 
   .top-container {
+    background-color: #1a181e;
+
     .back-btn {
       padding: r(16px);
       border: none;
@@ -26,36 +28,41 @@ $bottom-container-padding: r(12px);
 
   .search-container {
     position: relative;
-    margin-bottom: r(24px);
-    padding: r(8px $horizontal-padding);
+    padding: r(12px $horizontal-padding 24px $horizontal-padding);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #1a181e;
 
     .search-input {
       width: 100%;
-      padding: r(8px 0);
+      padding: r(8px 12px);
       border: none;
-      border-bottom: 1px solid #fff;
-      background-color: transparent !important;
+      border-radius: r(5px);
+      background-color: #312e3a !important;
       outline: none;
-      font-weight: 600;
-      font-size: r(14px);
-      color: white;
-      line-height: r(18px);
+      font-weight: 400;
+      font-size: r(12px);
+      color: #e5e5e5;
+      line-height: r(14px);
+
+      &::placeholder {
+        color: rgba(229, 229, 229, 0.5);
+      }
     }
 
     .search-icon {
       position: absolute;
       right: r(calc(#{$horizontal-padding} + 4px));
-      bottom: r(8px + 8px);
+      bottom: r(24px + 5px);
       width: r(20px);
       height: r(20px);
     }
   }
 
   .item-list-container {
-    padding: r(8px $horizontal-padding);
+    padding: r(24px $horizontal-padding 0 $horizontal-padding);
 
     .title {
-      margin-bottom: r(16px);
+      margin-bottom: r(12px);
       font-weight: 600;
       font-size: r(14px);
       color: white;
@@ -70,6 +77,8 @@ $bottom-container-padding: r(12px);
     }
 
     .item-list {
+      margin-bottom: r(-8px);
+
       .Item {
         margin-right: r(8px);
         margin-bottom: r(8px);
@@ -82,29 +91,26 @@ $bottom-container-padding: r(12px);
     right: 0;
     bottom: 0;
     left: 0;
-    padding: $bottom-container-padding;
 
     .item-list-container {
-      margin-right: calc(#{$horizontal-padding} - #{$bottom-container-padding});
+      margin-right: $horizontal-padding;
       margin-bottom: r(12px);
-      margin-left: calc(#{$horizontal-padding} - #{$bottom-container-padding});
+      margin-left: $horizontal-padding;
       padding: 0;
     }
 
     .complete-btn {
       width: 100%;
-      height: r(48px);
+      height: r(50px);
       border: none;
-      border-radius: 10px;
-      background-color: #4f4f4f;
-      font-size: r(14px);
-      color: white;
+      background-color: #6675ff;
+      font-weight: 600;
+      font-size: r(15px);
+      color: #1a181e;
       line-height: r(18px);
 
       &:disabled {
-        border: 1px solid #b8b8b8;
-        background-color: transparent;
-        color: #b8b8b8;
+        background-color: #4f4b5b;
       }
     }
   }

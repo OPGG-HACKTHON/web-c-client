@@ -15,18 +15,24 @@ import './ChampionItem.scss';
 interface ChampionItemProps {
   champData: ChampData;
   spellType: string;
+  handleClickUltimate: Function;
 }
 
-const ChampionItem = ({ champData, spellType }: ChampionItemProps) => {
+const ChampionItem = ({
+  champData,
+  spellType,
+  handleClickUltimate,
+}: ChampionItemProps) => {
   const [status, setStatus] = useState('default');
   const curtainTimer = useRef(null);
   const { t } = useTranslation();
 
   const {
-    onUseSpell, resetSpell, updateTimeUsed, updateUltLevel,
-  } = useContext(
-    GameContext,
-  );
+    isNotClickedInFiveSec,
+    onUseSpell,
+    resetSpell,
+    updateTimeUsed,
+  } = useContext(GameContext);
 
   const { src, time, level } = champData.spells[spellType];
   const { summonerName } = champData;
@@ -35,8 +41,12 @@ const ChampionItem = ({ champData, spellType }: ChampionItemProps) => {
     if (!time || time < 0) setStatus('default');
   }, [status]);
 
+  useEffect(() => {
+    if (isNotClickedInFiveSec && status !== 'default') setStatus('modify');
+  }, [time]);
+
   const handleClickIcon = () => {
-    // updateUltLevel();
+    spellType === 'R' && handleClickUltimate();
   };
 
   const createCurtain = () => {
@@ -76,13 +86,8 @@ const ChampionItem = ({ champData, spellType }: ChampionItemProps) => {
       return (
         <div className="ChampionItem">
           <div className="panel panel-ultimate">
-            <div className="panel-item">
-              <SpellIconInItem
-                spellType={spellType}
-                handleClick={handleClickIcon}
-                src={src}
-                level={level}
-              />
+            <div className="panel-item" onClick={handleClickIcon}>
+              <SpellIconInItem spellType={spellType} src={src} level={level} />
             </div>
             <div className="line" />
             <div className="panel-item" onClick={handleClickTime(0)}>
@@ -102,13 +107,8 @@ const ChampionItem = ({ champData, spellType }: ChampionItemProps) => {
     }
     return (
       <div className="ChampionItem">
-        <div className="panel-item spell">
-          <SpellIconInItem
-            spellType={spellType}
-            handleClick={handleClickIcon}
-            src={src}
-            level={level}
-          />
+        <div className="panel-item spell" onClick={handleClickIcon}>
+          <SpellIconInItem spellType={spellType} src={src} level={level} />
         </div>
         <div className="panel panel-spell">
           <div
@@ -138,13 +138,8 @@ const ChampionItem = ({ champData, spellType }: ChampionItemProps) => {
   if (status === 'modify') {
     return (
       <div className="ChampionItem" onClick={changeToModifyMode}>
-        <div className="item-left">
-          <SpellIconInItem
-            spellType={spellType}
-            handleClick={handleClickIcon}
-            src={src}
-            level={level}
-          />
+        <div className="item-left" onClick={handleClickIcon}>
+          <SpellIconInItem spellType={spellType} src={src} level={level} />
           <span className="leftTime">{time}s</span>
         </div>
         <div className="item-right">
@@ -166,13 +161,8 @@ const ChampionItem = ({ champData, spellType }: ChampionItemProps) => {
 
   return (
     <div className="ChampionItem" onClick={changeToModifyMode}>
-      <div className="item-left">
-        <SpellIconInItem
-          spellType={spellType}
-          handleClick={handleClickIcon}
-          src={src}
-          level={level}
-        />
+      <div className="item-left" onClick={handleClickIcon}>
+        <SpellIconInItem spellType={spellType} src={src} level={level} />
         {/* TODO: 기본 초기 시간으로 리셋 */}
         <span className="leftTime">{time || 300}s</span>
       </div>

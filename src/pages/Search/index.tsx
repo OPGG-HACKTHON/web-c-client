@@ -60,7 +60,7 @@ const Search = () => {
     <div className="Search-Page-Wrapper">
       <MainIcon />
       <MiddelBox />
-      <SearchBar setValue={setValue} setIsFocusInput={setIsFocusInput} />
+      <SearchBar value={searchValue} setValue={setValue} setIsFocusInput={setIsFocusInput} />
       {isFocusInput || isPossibleSearch ? (
         <SearchButton
           onClick={onClickSearchBtn}

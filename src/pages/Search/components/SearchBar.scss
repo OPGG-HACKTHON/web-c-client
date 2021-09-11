@@ -1,4 +1,6 @@
 .Search-Bar {
+  position: relative;
+
   input {
     width: 306px;
     height: 31px;
@@ -22,6 +24,17 @@
     box-shadow: none;
     outline: none;
     color: #e5e5e5;
+  }
+
+  svg {
+    position: absolute;
+    top: 8.5px;
+    right: 8.5px;
+    color: #746e84;
+  }
+
+  svg:hover {
+    cursor: pointer;
   }
 
   input:focus::-webkit-input-placeholder,

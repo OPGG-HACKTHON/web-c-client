@@ -94,10 +94,17 @@ const gameDataManager = {
 
   resetSpell(userData: ChampData, spellType: SpellKey) {
     const spellData = userData.spells[spellType] as SpellData;
-    const { src } = spellData;
-    userData.spells[spellType] = {
-      src, spellType, time: null, isOn: true,
-    };
+    if (spellType === 'R') {
+      const { src, level } = spellData;
+      userData.spells[spellType] = {
+        src, spellType, time: null, isOn: true, level,
+      };
+    } else {
+      const { src } = spellData;
+      userData.spells[spellType] = {
+        src, spellType, time: null, isOn: true,
+      };
+    }
   },
 
   updateSpellTime(userData: ChampData, spellType: SpellKey, changedTime: number) {

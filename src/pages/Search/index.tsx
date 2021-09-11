@@ -16,9 +16,9 @@ const Search = () => {
 
   const isPossibleSearch = searchValue !== '';
 
-  const getMatchTeamCode = async () => {
+  const getMatchTeamCode = async (summonerName: string) => {
     try {
-      const { data } = await axios.get(`/v1/match/status/${searchValue}`);
+      const { data } = await axios.get(`/v1/match/status/${summonerName}`);
       const { matchTeamCode } = data.data;
       return matchTeamCode;
     } catch (err) {
@@ -30,12 +30,16 @@ const Search = () => {
   const onClickSearchBtn = async () => {
     try {
       const { data: nameData } = await axios.get(`/v1/summoner/${searchValue}`);
-      const { data } = await axios.get(`/v1/match/${nameData.summonerName}`);
+      const { summonerName } = nameData.data;
+      console.log(nameData);
+      if (!nameData.success) throw new Error('not find');
 
+      const { data } = await axios.get(`/v1/match/${summonerName}`);
+      console.log(data);
       if (data.data.matchStatus === false) {
-        history.push(`/room/${searchValue}`);
+        history.push(`/room/${summonerName}`);
       } else {
-        const matchTeamCode = await getMatchTeamCode();
+        const matchTeamCode = await getMatchTeamCode(summonerName);
         history.push(`/game/${matchTeamCode}`);
       }
     } catch (err) {

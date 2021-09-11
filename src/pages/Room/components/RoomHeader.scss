@@ -1,0 +1,21 @@
+.room-topbar-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: map-get($grid-breakpoints, lg);
+  height: 100%;
+
+  .logo-image {
+    cursor: pointer;
+  }
+}
+
+.back-image {
+  position: absolute;
+  left: r(16px);
+  width: 7.5px;
+  height: 15px;
+  cursor: pointer;
+}

@@ -39,7 +39,7 @@ const SummonaryChamp = ({
               })}
             >
               <img
-                className={spellTime !== '-' && 'gray-filter'}
+                className={spellTime !== '-' ? 'gray-filter' : ''}
                 src={spellData.src}
                 alt="스펠 이미지"
               />

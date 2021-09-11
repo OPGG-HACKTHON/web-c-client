@@ -30,6 +30,7 @@
     justify-content: center;
     width: 25%;
     height: 100%;
+    font-weight: 600;
   }
 
   .panel-spell-item {
@@ -116,6 +117,7 @@
     justify-content: center;
     width: 40%;
     height: 100%;
+    font-weight: bold;
     text-align: center;
   }
 
@@ -139,6 +141,10 @@
   border: 2px solid #6675ff;
   border-radius: r(15px);
   background: rgba(102, 117, 255, 0.8);
+
+  .lock-span {
+    font-weight: 600;
+  }
 }
 
 .gray-filter {

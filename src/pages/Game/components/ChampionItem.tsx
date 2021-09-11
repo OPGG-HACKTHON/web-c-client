@@ -190,7 +190,7 @@ const ChampionItem = ({
       </div>
       <div className="item-right-wait">
         <LockerIcon />
-        <span>잠금해제</span>
+        <span className="lock-span">잠금해제</span>
       </div>
     </div>
   );

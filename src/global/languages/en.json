@@ -4,5 +4,25 @@
     "championItem": {
       "beforeTimeText": "{{second}}s ago"
     }
+  },
+  "ChamptionItemContainer": {
+    "nothingEquipped": "Items are not equipped yet."
+  },
+  "ItemSelector": {
+    "searchInputPlaceHolder": "Try to search Item.",
+    "searchedItem": "Searched Items",
+    "noSearchedItem": "Nothing searched.",
+    "frequentItem": "Frequent Items",
+    "selectedItem": "Selected Items",
+    "completeSelect": "Select"
+  },
+  "ultimate": "Ultimate",
+  "spells": {
+    "SummonerHeal": "Heal",
+    "SummonerDot": "Ignite",
+    "SummonerBoost": "Cleanse",
+    "SummonerTeleport": "Teleport",
+    "SummonerExhaust": "Exhaust",
+    "SummonerFlash": "Flash"
   }
 }

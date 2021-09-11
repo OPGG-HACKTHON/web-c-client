@@ -25,6 +25,7 @@ export interface ContextType {
   cancelItem: (summonerName: string, itemName: string)=> Promise<void>;
   onUseSpell: (summonerName: string, spellType: SpellKey)=> Promise<void>;
   resetSpell: (summonerName: string, spellType: SpellKey)=> Promise<void>;
+  updateGameData: (gameData: ChampData[])=> Promise<void>;
 
   itemSelectingSummonerName: string | null,
   setItemSelectingSummonerName: Function,
@@ -34,6 +35,7 @@ export interface ChampData {
   champName: string,
   summonerName: string,
   src: string,
+  originalFrequentItems?: ItemData[],
   frequentItems: ItemData[],
   itemsPurchased: ItemData[] | null,
   spells: {

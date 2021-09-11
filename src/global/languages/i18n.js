@@ -6,10 +6,10 @@ import ko from './ko.json';
 import en from './en.json';
 
 const resources = {
-  ko: {
+  'ko-KR': {
     translation: ko,
   },
-  en: {
+  'en-US': {
     translation: en,
   },
 };
@@ -21,7 +21,7 @@ i18n
     // IE11 지원 문제로 es6 사용 X
     // eslint-disable-next-line object-shorthand
     resources: resources,
-    fallbackLng: 'ko',
+    fallbackLng: 'ko-KR',
 
     interpolation: {
       escapeValue: false,

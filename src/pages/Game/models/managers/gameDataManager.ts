@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-useless-catch */
+import _ from 'lodash';
 import axios from '@/common/helper/axios';
 import {
   ChampData, SpellKey, ServerData, SpellData,
@@ -60,21 +61,29 @@ const gameDataManager = {
     }, initItemMap);
 
     const { itemsPurchased, itemsNotPurchased } = itemMap;
-    purchaserData.frequentItems = [...itemsNotPurchased];
+    purchaserData.originalFrequentItems = purchaserData.originalFrequentItems || purchaserData.frequentItems;
+    purchaserData.frequentItems = _.sortBy(
+      itemsNotPurchased,
+      (item) => purchaserData.originalFrequentItems.findIndex((i) => i.name === item.name),
+    );
     purchaserData.itemsPurchased = [...itemsPurchased];
   },
 
   cancelItem(purchaserData: ChampData, itemName: string) {
-    const initItemMap = { itemsPurchased: [], itemToCancle: null };
+    const initItemMap = { itemsPurchased: [], itemToCancel: null };
     const itemMap = purchaserData.itemsPurchased.reduce((acc, itemData) => {
-      if (itemName === itemData.name) acc.itemToCancle = itemData;
+      if (itemName === itemData.name) acc.itemToCancel = itemData;
       else acc.itemsPurchased.push(itemData);
       return acc;
     }, initItemMap);
 
-    const { itemsPurchased, itemToCancle } = itemMap;
+    const { itemsPurchased, itemToCancel } = itemMap;
     purchaserData.itemsPurchased = [...itemsPurchased];
-    purchaserData.frequentItems = [...purchaserData.frequentItems, itemToCancle];
+    purchaserData.originalFrequentItems = purchaserData.originalFrequentItems || purchaserData.frequentItems;
+    purchaserData.frequentItems = _.sortBy(
+      [...purchaserData.frequentItems, itemToCancel],
+      (item) => purchaserData.originalFrequentItems.findIndex((i) => i.name === item.name),
+    );
   },
 
   useSpell(userData: ChampData, spellType: SpellKey, second: number) {

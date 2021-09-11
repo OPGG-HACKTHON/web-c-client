@@ -22,7 +22,7 @@ const Room = React.lazy(() => import('@/pages/Room'));
 const Game = React.lazy(() => import('@/pages/Game'));
 
 const App = () => {
-  console.log('version', '21090090157');
+  console.log('version', '2109100415');
 
   return (
     <ConfigProvider locale={koKR}>

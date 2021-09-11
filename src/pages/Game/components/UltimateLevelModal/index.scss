@@ -1,0 +1,78 @@
+.modal-backgrond {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  width: 100vw;
+  height: 100vh;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.5);
+
+  &:not(.show) {
+    display: none;
+  }
+}
+
+.UltimateLevelModal {
+  position: fixed;
+  bottom: 0;
+  z-index: 998;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 32px 32px;
+  border-radius: 20px 20px 0 0;
+  background: #6573f7;
+  font-size: r(15px);
+  color: white;
+
+  img {
+    width: 72px;
+    margin: 12px 6px;
+    border-radius: 5px;
+  }
+
+  span {
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+
+  .ultimate-level-button-contaienr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.modal-open {
+  animation: modal-open 0.2s ease;
+}
+
+.modal-close {
+  animation: modal-close 0.2s ease;
+}
+
+@keyframes modal-open {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes modal-close {
+  from {
+    transform: none;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}

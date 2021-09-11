@@ -1,3 +1,7 @@
+.react-sortable-hoc-current {
+  z-index: 9999;
+}
+
 .SummonaryInfoContainer {
   z-index: 1000;
   width: 100%;
@@ -6,6 +10,10 @@
 
   @include bp-down(md) {
     height: 142px;
+  }
+
+  .SummonaryChamp {
+    transform: translate(0, 0) !important;
   }
 
   .summonary-info-fixed-holder {

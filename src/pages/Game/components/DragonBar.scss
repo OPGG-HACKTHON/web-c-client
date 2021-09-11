@@ -1,0 +1,78 @@
+.dragonContainer {
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: map-get($grid-breakpoints, lg);
+  height: 64px;
+  background-color: #1a181e;
+
+  .dragonBar {
+    position: fixed;
+    top: $summonerContainer-height-web;
+    z-index: 1000;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    width: 100%;
+    max-width: map-get($grid-breakpoints, lg);
+    height: 64px;
+    padding: 0 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #1a181e;
+    font-weight: 400;
+    font-size: r(12px);
+    color: #fff;
+
+    @include bp-down(md) {
+      top: $summonerContainer-height-mobile;
+    }
+
+    .notice-container {
+      display: flex;
+      align-items: center;
+
+      .countBox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 16px;
+        margin: 0 3px;
+        border-radius: 5px;
+        background: #6675ff;
+        box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.3);
+      }
+
+      .dragonImg {
+        width: r(36px);
+        height: r(36px);
+        margin: 13px;
+        border: 3.2px solid #312e3a;
+        border-radius: 6px;
+      }
+
+      .notice-text {
+        display: flex;
+      }
+    }
+
+    .control-contianer {
+      display: flex;
+
+      .arrowBox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 25px;
+        margin-left: 7px;
+        border-radius: 5px;
+        background: #6675ff;
+      }
+    }
+  }
+}

@@ -9,6 +9,7 @@ import ChampionContainer from './components/ChampionContainer';
 import ItemSelector from './components/ChamptionItemContainer/components/ItemSelector';
 
 import Speech from './components/SpeechRecognition';
+import DragonBar from './components/DragonBar';
 
 const InGame = ({ match }: RouteComponentProps) => {
   const { matchTeamCode } = match.params;
@@ -17,6 +18,7 @@ const InGame = ({ match }: RouteComponentProps) => {
     <GameProvider matchTeamCode={matchTeamCode}>
       <div>
         <SummonaryInfoContainer />
+        <DragonBar />
         <GameContext.Consumer>
           {({
             gameData,

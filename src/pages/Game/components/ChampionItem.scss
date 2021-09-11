@@ -140,3 +140,7 @@
   border-radius: r(15px);
   background: rgba(102, 117, 255, 0.8);
 }
+
+.gray-filter {
+  filter: grayscale(100%);
+}

@@ -89,7 +89,12 @@ const ChampionItem = ({
         <div className="ChampionItem">
           <div className="panel panel-ultimate">
             <div className="panel-item" onClick={handleClickIcon}>
-              <SpellIconInItem spellType={spellType} src={src} level={level} />
+              <SpellIconInItem
+                spellType={spellType}
+                src={src}
+                level={level}
+                time={time}
+              />
             </div>
             <div className="line" />
             <div className="panel-item" onClick={handleClickTime(0)}>
@@ -110,7 +115,12 @@ const ChampionItem = ({
     return (
       <div className="ChampionItem">
         <div className="panel-item spell" onClick={handleClickIcon}>
-          <SpellIconInItem spellType={spellType} src={src} level={level} />
+          <SpellIconInItem
+            spellType={spellType}
+            src={src}
+            level={level}
+            time={time}
+          />
         </div>
         <div className="panel panel-spell">
           <div
@@ -142,7 +152,12 @@ const ChampionItem = ({
     return (
       <div className="ChampionItem" onClick={changeToModifyMode}>
         <div className="item-left" onClick={handleClickIcon}>
-          <SpellIconInItem spellType={spellType} src={src} level={level} />
+          <SpellIconInItem
+            spellType={spellType}
+            src={src}
+            level={level}
+            time={time}
+          />
           <span className="leftTime">{time}s</span>
         </div>
         <div className="item-right">
@@ -165,9 +180,13 @@ const ChampionItem = ({
   return (
     <div className="ChampionItem" onClick={changeToModifyMode}>
       <div className="item-left" onClick={handleClickIcon}>
-        <SpellIconInItem spellType={spellType} src={src} level={level} />
-        {/* TODO: 기본 초기 시간으로 리셋 */}
-        <span className="leftTime">{time || 300}s</span>
+        <SpellIconInItem
+          spellType={spellType}
+          src={src}
+          level={level}
+          time={time}
+        />
+        <span className="leftTime">{time}s</span>
       </div>
       <div className="item-right-wait">
         <LockerIcon />

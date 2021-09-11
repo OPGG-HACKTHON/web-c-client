@@ -71,6 +71,7 @@ const gameDataManager = {
 
   cancelItem(purchaserData: ChampData, itemName: string) {
     const initItemMap = { itemsPurchased: [], itemToCancel: null };
+
     const itemMap = purchaserData.itemsPurchased.reduce((acc, itemData) => {
       if (itemName === itemData.name) acc.itemToCancel = itemData;
       else acc.itemsPurchased.push(itemData);

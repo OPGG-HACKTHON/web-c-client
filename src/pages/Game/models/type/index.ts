@@ -9,6 +9,11 @@ export interface SocketSpellData {
   type: 'SPELL' | 'ITEM' | 'ULT',
 }
 
+export interface SocketDragonData {
+  matchTeamCode: string,
+  dragonCount: number
+}
+
 export interface SocketItemData {
   summonerName: string,
   championName: string,
@@ -41,7 +46,8 @@ export interface ContextType {
   onUseSpell: (summonerName: string, spellType: SpellKey)=> Promise<void>;
   resetSpell: (summonerName: string, spellType: SpellKey)=> Promise<void>;
   updateGameData: (gameData: ChampData[])=> Promise<void>;
-
+  dragonCnt: number,
+  updateDragonCnt: (cnt: number)=> void;
   itemSelectingSummonerName: string | null,
   setItemSelectingSummonerName: Function,
 }

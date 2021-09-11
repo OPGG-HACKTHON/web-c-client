@@ -5,8 +5,18 @@ import downArrow from '@/common/images/downArrow.png';
 import upArrow from '@/common/images/upArrow.png';
 
 import './DragonBar.scss';
+import useGameData from '../hooks/useGameData';
 
 function DragonBar() {
+  const { dragonCnt, updateDragonCnt } = useGameData();
+
+  const isMaxCnt = dragonCnt === 4;
+  const isMinCnt = dragonCnt === 0;
+
+  const upDragonCnt = () => updateDragonCnt(dragonCnt + 1);
+
+  const downDragonCnt = () => updateDragonCnt(dragonCnt - 1);
+
   return (
     <div className="dragonContainer">
       <div className="dragonBar">
@@ -16,18 +26,18 @@ function DragonBar() {
             적팀이 바람용을
           </p>
           <div className="countBox">
-            0
+            {dragonCnt}
           </div>
           <p>
             번 먹었어요.
           </p>
         </span>
         <div className="control-contianer">
-          <div className="arrowBox">
-            <img src={upArrow} alt="바람용 횟수 화살표" />
+          <div className={isMaxCnt ? 'arrowBox disabled' : 'arrowBox'}>
+            <img src={upArrow} alt="바람용 횟수 화살표" onClick={upDragonCnt} />
           </div>
-          <div className="arrowBox">
-            <img src={downArrow} alt="바람용 횟수 화살표" />
+          <div className={isMinCnt ? 'arrowBox disabled' : 'arrowBox'}>
+            <img src={downArrow} alt="바람용 횟수 화살표" onClick={downDragonCnt} />
           </div>
         </div>
       </div>

@@ -1,6 +1,9 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
-import { ChampData, SocketSpellData, SpellKey } from '../type';
+import gameDataManager from '../managers/gameDataManager';
+import {
+  ChampData, SocketSpellData, SpellKey,
+} from '../type';
 import exampleData from './example';
 
 enum Action {
@@ -10,6 +13,8 @@ enum Action {
   RENDER,
   UPDATE,
   COUNT,
+  ULTLEVEL,
+  ITEM,
 }
 
 export interface FetchState {
@@ -24,7 +29,10 @@ interface IAction {
   error?: Error,
   data?: SocketSpellData,
   summonerName?: string,
-  spellKey?: SpellKey
+  spellKey?: SpellKey,
+  level?: number
+  items?: string[]
+  method?: string
 }
 
 export const initState: FetchState = {
@@ -54,6 +62,29 @@ export function reducer(state: FetchState, action: IAction) {
       return setFecthState(newChampsData, false, null);
     }
 
+    case Action.ITEM: {
+      const newChampsData = [...state.champsData];
+      const { summonerName, items, method } = action;
+      const userData = newChampsData.filter(
+        (data) => data.summonerName === summonerName,
+      )[0];
+
+      if (method === 'BUY') {
+        gameDataManager.buyItems(userData, items);
+      }
+      if (method === 'DELETE') {
+        gameDataManager.cancelItem(userData, items[0]);
+      }
+
+      newChampsData.forEach((champData) => {
+        if (champData.summonerName === action.summonerName) {
+          champData = userData;
+        }
+      });
+
+      return setFecthState(newChampsData, false, null);
+    }
+
     case Action.COUNT: {
       const { summonerName, spellKey } = action;
       const newChampsData = [...state.champsData];
@@ -62,6 +93,17 @@ export function reducer(state: FetchState, action: IAction) {
           const { time } = champData.spells[spellKey];
           if (!time || time < 0) champData.spells[spellKey].time = null;
           else champData.spells[spellKey].time -= 1;
+        }
+      });
+      return setFecthState(newChampsData, false, null);
+    }
+
+    case Action.ULTLEVEL: {
+      const { summonerName, level } = action;
+      const newChampsData = [...state.champsData];
+      newChampsData.forEach((champData) => {
+        if (champData.summonerName === summonerName) {
+          champData.spells.R.level = level;
         }
       });
       return setFecthState(newChampsData, false, null);
@@ -107,6 +149,16 @@ export const createDispatcher = (dispatch: React.Dispatch<IAction>) => {
 
     count(summonerName: string, spellKey: SpellKey) {
       dispatch({ type: Action.COUNT, summonerName, spellKey });
+    },
+
+    updateUltLevel(summonerName: string, level: number) {
+      dispatch({ type: Action.ULTLEVEL, summonerName, level });
+    },
+
+    updateItem(summonerName: string, items: string[], method: string) {
+      dispatch({
+        type: Action.ITEM, summonerName, items, method,
+      });
     },
 
     error(error: Error) {

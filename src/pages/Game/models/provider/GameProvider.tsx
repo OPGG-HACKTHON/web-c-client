@@ -12,7 +12,6 @@ import { reducer, createDispatcher, initState } from './reducer';
 import GameContext from '../context/GameContext';
 import gameDataManager from '../managers/gameDataManager';
 import { ChampData, SocketSpellData, SpellKey } from '../type';
-import exampleData from './example';
 
 interface GameProviderProps {
   matchTeamCode: string;

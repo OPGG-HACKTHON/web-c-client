@@ -51,11 +51,11 @@ export function reducer(state: FetchState, action: IAction) {
       return setFecthState(state.champsData, true, null);
 
     case Action.ERROR:
-      console.log(action.error);
       return setFecthState(state.champsData, false, action.error);
 
-    case Action.SUCCESS:
+    case Action.SUCCESS: {
       return setFecthState(action.champsData, false, null);
+    }
 
     case Action.RENDER: {
       const newChampsData = [...state.champsData];

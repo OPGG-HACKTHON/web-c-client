@@ -47,10 +47,12 @@
 }
 
 .modal-open {
+  -webkit-animation: modal-open 0.2s ease;
   animation: modal-open 0.2s ease;
 }
 
 .modal-close {
+  -webkit-animation: modal-close 0.2s ease;
   animation: modal-close 0.2s ease;
 }
 

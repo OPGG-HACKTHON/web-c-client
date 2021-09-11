@@ -32,7 +32,7 @@ const UltimateLevelModal = ({
 
   return (
     <div
-      className={cs('modal-backgruond', { show: isVisible })}
+      className={cs('modal-background', { show: isVisible })}
       onClick={() => toggleModal()}
     >
       <div

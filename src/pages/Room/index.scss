@@ -67,7 +67,8 @@
       background: rgba(102, 117, 255, 0.15);
       color: #6675ff;
       text-align: center;
-      animation: 0.1s message-open;
+      -webkit-animation: 0.3s message-open;
+      animation: 0.3s message-open;
     }
   }
 }

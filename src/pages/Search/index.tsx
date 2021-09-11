@@ -29,7 +29,9 @@ const Search = () => {
 
   const onClickSearchBtn = async () => {
     try {
-      const { data } = await axios.get(`/v1/match/${searchValue}`);
+      const { data: nameData } = await axios.get(`/v1/summoner/${searchValue}`);
+      const { data } = await axios.get(`/v1/match/${nameData.summonerName}`);
+
       if (data.data.matchStatus === false) {
         history.push(`/room/${searchValue}`);
       } else {
@@ -37,6 +39,7 @@ const Search = () => {
         history.push(`/game/${matchTeamCode}`);
       }
     } catch (err) {
+      console.log(err);
       alert('없는 소환사');
     }
   };

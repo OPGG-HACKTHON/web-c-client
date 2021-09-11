@@ -80,26 +80,18 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     }
   };
 
-  const countSpellTime = (summonerName: string, spellKey: SpellKey) => {
+  const countSpellTime = (summonerName: string, spellKey: SpellKey, totalTime) => {
     if (spellTimer.current.includes(summonerName + spellKey)) return;
     spellTimer.current.push(summonerName + spellKey);
+    const cnt = totalTime;
 
     const timer = setInterval(() => {
-      const champData = getData(summonerName);
-      const spellData = champData.spells[spellKey];
-
-      if (!spellData.time || spellData.time < 0) {
+      if (!cnt || cnt < 0) {
         clearInterval(timer);
         const idx = spellTimer.current.indexOf(summonerName + spellKey);
-
         spellTimer.current.splice(idx, 1);
-
-        spellData.time = null;
-        dispatcher.render();
-        return;
       }
-      spellData.time -= 1;
-      dispatcher.render();
+      dispatcher.count(summonerName, spellKey);
     }, 1000);
   };
 
@@ -110,14 +102,17 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   ) => {
     try {
       dispatcher.loading();
+
+      const userData = getData(summonerName);
+      const ultLevel = userData.spells.R.level;
+
       const { data } = await axios.get(
-        `https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=1`,
+        `https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=${1}`,
       );
 
       if (!data.success) throw new Error();
       const spellTimes = data.data;
 
-      const userData = getData(summonerName);
       const spellTime = spellTimes[`cooltime${spellType}`];
 
       const spellTimeUpdated = spellTime - timeGap < 0 ? null : spellTime - timeGap;
@@ -125,6 +120,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       const socketData: SocketSpellData = {
         summonerName,
+        changedSpell: spellType,
         dspellTime: userData.spells.D.time,
         fspellTime: userData.spells.F.time,
         ultTime: userData.spells.R.time,
@@ -137,7 +133,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
         JSON.stringify(socketData),
       );
 
-      countSpellTime(summonerName, spellType);
+      countSpellTime(summonerName, spellType, spellTimeUpdated);
       dispatcher.render();
     } catch (err) {
       dispatcher.error(err);
@@ -157,6 +153,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       const socketData: SocketSpellData = {
         summonerName,
+        changedSpell: spellType,
         dspellTime: userData.spells.D.time,
         fspellTime: userData.spells.F.time,
         ultTime: userData.spells.R.time,
@@ -181,14 +178,26 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     changedTime: number,
   ) => {
     try {
-      // dispatcher.loading();
-      // const body = { matchTeamCode, summonerName, spellType };
-      // const { data } = await axios.post('url', body);
-
-      // if (!data.success) throw new Error(); API 정해지면 다시
+      dispatcher.loading();
 
       const userData = getData(summonerName);
       gameDataManager.updateSpellTime(userData, spellType, changedTime);
+
+      const socketData: SocketSpellData = {
+        summonerName,
+        changedSpell: spellType,
+        dspellTime: userData.spells.D.time,
+        fspellTime: userData.spells.F.time,
+        ultTime: userData.spells.R.time,
+        type: 'SPELL',
+      };
+
+      stomp.current.send(
+        `/pub/comm/message/${matchTeamCode}`,
+        {},
+        JSON.stringify(socketData),
+      );
+      countSpellTime(summonerName, spellType, changedTime);
       dispatcher.render();
     } catch (err) {
       dispatcher.error(err);
@@ -237,7 +246,23 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       stomp.current.connect({}, () => {
         stomp.current.subscribe(`/sub/comm/room/${matchTeamCode}`, (msg) => {
           const data: SocketSpellData = JSON.parse(msg.body);
+          const { summonerName, changedSpell: spellType } = data;
+          let chagnedTime;
+          switch (spellType) {
+            case 'R':
+              chagnedTime = data.ultTime;
+              break;
+            case 'D':
+              chagnedTime = data.dspellTime;
+              break;
+            case 'F':
+              chagnedTime = data.fspellTime;
+              break;
+            default:
+              chagnedTime = 0;
+          }
           dispatcher.update(data);
+          countSpellTime(summonerName, spellType, chagnedTime);
         });
       });
     } catch (err) {

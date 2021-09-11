@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
-import { ChampData, SocketSpellData } from '../type';
+import { ChampData, SocketSpellData, SpellKey } from '../type';
 import exampleData from './example';
 
 enum Action {
@@ -9,6 +9,7 @@ enum Action {
   SUCCESS,
   RENDER,
   UPDATE,
+  COUNT,
 }
 
 export interface FetchState {
@@ -20,8 +21,10 @@ export interface FetchState {
 interface IAction {
   type: Action,
   champsData?: ChampData[],
-  error?: Error
-  data?: SocketSpellData
+  error?: Error,
+  data?: SocketSpellData,
+  summonerName?: string,
+  spellKey?: SpellKey
 }
 
 export const initState: FetchState = {
@@ -48,6 +51,19 @@ export function reducer(state: FetchState, action: IAction) {
 
     case Action.RENDER: {
       const newChampsData = [...state.champsData];
+      return setFecthState(newChampsData, false, null);
+    }
+
+    case Action.COUNT: {
+      const { summonerName, spellKey } = action;
+      const newChampsData = [...state.champsData];
+      newChampsData.forEach((champData) => {
+        if (champData.summonerName === summonerName) {
+          const { time } = champData.spells[spellKey];
+          if (!time || time < 0) champData.spells[spellKey].time = null;
+          else champData.spells[spellKey].time -= 1;
+        }
+      });
       return setFecthState(newChampsData, false, null);
     }
 
@@ -87,6 +103,10 @@ export const createDispatcher = (dispatch: React.Dispatch<IAction>) => {
 
     update(data: SocketSpellData) {
       dispatch({ type: Action.UPDATE, data });
+    },
+
+    count(summonerName: string, spellKey: SpellKey) {
+      dispatch({ type: Action.COUNT, summonerName, spellKey });
     },
 
     error(error: Error) {

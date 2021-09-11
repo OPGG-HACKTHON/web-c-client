@@ -27,7 +27,9 @@ const ChampionItem = ({
   spellType,
   handleClickUltimate,
 }: ChampionItemProps) => {
-  const [status, setStatus] = useState('default');
+  const isSpellUsed = champData.spells[spellType] !== null;
+  const initMode = isSpellUsed ? 'modify' : 'default';
+  const [status, setStatus] = useState(initMode);
   const curtainTimer = useRef(null);
   const { t } = useTranslation();
 

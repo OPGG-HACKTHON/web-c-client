@@ -2,6 +2,7 @@ export type SpellKey = 'D' | 'F' | 'R';
 
 export interface SocketSpellData {
   summonerName: string,
+  changedSpell: SpellKey,
   ultTime: number,
   fspellTime: number,
   dspellTime: number,

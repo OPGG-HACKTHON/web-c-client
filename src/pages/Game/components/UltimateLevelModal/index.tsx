@@ -14,7 +14,10 @@ interface UltimateLevelModalProps {
 }
 
 const UltimateLevelModal = ({
-  isVisible, toggleModal, src, summonerName,
+  isVisible,
+  toggleModal,
+  src,
+  summonerName,
 }: UltimateLevelModalProps) => {
   const { updateUltLevel } = useContext(GameContext);
 
@@ -29,11 +32,14 @@ const UltimateLevelModal = ({
 
   return (
     <div
-      className={cs('modal-backgrond', { show: isVisible })}
+      className={cs('modal-backgruond', { show: isVisible })}
       onClick={() => toggleModal()}
     >
       <div
-        className={cs('UltimateLevelModal', isVisible ? 'modal-open' : 'modal-close')}
+        className={cs(
+          'UltimateLevelModal',
+          isVisible ? 'modal-open' : 'modal-close',
+        )}
         onClick={handleClickDiv}
       >
         <span>궁극기 레벨을 선택해주세요.</span>

@@ -39,13 +39,23 @@
     width: 100%;
     margin: 0 auto;
 
-    @keyframes message-open {
+    @keyframes message-on {
       from {
         transform: translateY(100%);
       }
 
       to {
         transform: translateY(0);
+      }
+    }
+
+    @keyframes message-off {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(100%);
       }
     }
 
@@ -67,8 +77,16 @@
       background: rgba(102, 117, 255, 0.15);
       color: #6675ff;
       text-align: center;
-      -webkit-animation: 0.3s message-open;
-      animation: 0.3s message-open;
+    }
+
+    .message-on {
+      -webkit-animation: 0.2s message-on;
+      animation: 0.2s message-on;
+    }
+
+    .message-off {
+      -webkit-animation: 0.2s message-off;
+      animation: 0.2s message-off;
     }
   }
 }

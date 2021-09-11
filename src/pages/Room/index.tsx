@@ -12,7 +12,7 @@ import './index.scss';
 import MainImg from '@/common/images/MainImg.png';
 
 const Room = () => {
-  const [showShare, setShowShare] = useState(false);
+  const [showShare, setShowShare] = useState('');
   const messageTimer = useRef(null);
   const urlRef = useRef();
 
@@ -49,16 +49,22 @@ const Room = () => {
 
   const handleClickShare = (e) => {
     e.preventDefault();
-    setShowShare(true);
+    setShowShare('message-on');
     const urlElem = urlRef.current as HTMLInputElement;
     urlElem.select();
     document.execCommand('copy');
+
     if (messageTimer.current) {
       clearTimeout(messageTimer.current);
     }
+
     messageTimer.current = setTimeout(() => {
-      setShowShare(false);
-    }, 1000);
+      setShowShare('message-off');
+      setTimeout(() => {
+        messageTimer.current = null;
+        setShowShare('');
+      }, 200);
+    }, 800);
   };
 
   return (
@@ -77,7 +83,9 @@ const Room = () => {
         <div className="room-bottom">
           <input ref={urlRef} value="https://swoomi.me/" readOnly />
           {showShare && (
-            <div className="share-message">링크가 복사되었습니다.</div>
+            <div className={`share-message ${showShare}`}>
+              링크가 복사되었습니다.
+            </div>
           )}
           <ShareButton handleClickShare={handleClickShare} />
         </div>

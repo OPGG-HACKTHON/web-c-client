@@ -51,11 +51,6 @@
   animation: modal-open 0.2s ease;
 }
 
-.modal-close {
-  -webkit-animation: modal-close 0.2s ease;
-  animation: modal-close 0.2s ease;
-}
-
 @keyframes modal-open {
   from {
     opacity: 0;

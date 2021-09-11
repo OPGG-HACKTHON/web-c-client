@@ -6,7 +6,21 @@ export interface SocketSpellData {
   ultTime: number,
   fspellTime: number,
   dspellTime: number,
-  type: 'SPELL' | 'ITEM',
+  type: 'SPELL' | 'ITEM' | 'ULT',
+}
+
+export interface SocketItemData {
+  summonerName: string,
+  championName: string,
+  itemNames: string[],
+  type: 'SPELL' | 'ITEM' | 'ULT',
+  method: 'DELETE' | 'BUY',
+}
+
+export interface SocketUltData {
+  summonerName: string,
+  type: 'ULT',
+  ultLevel: number,
 }
 
 export interface SpellTimeData {

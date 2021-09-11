@@ -10,11 +10,6 @@
     padding-bottom: r(16px);
     background-color: #1f1d25;
 
-    @include bp-up(md) {
-      padding-top: r(12px);
-      padding-bottom: r(12px);
-    }
-
     .ChamptionItemContainer {
       max-width: r(376px);
     }

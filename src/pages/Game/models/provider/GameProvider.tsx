@@ -8,10 +8,13 @@ import React, {
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import axios from 'axios';
+import { string } from 'prop-types';
 import { reducer, createDispatcher, initState } from './reducer';
 import GameContext from '../context/GameContext';
 import gameDataManager from '../managers/gameDataManager';
-import { ChampData, SocketSpellData, SpellKey } from '../type';
+import {
+  ChampData, SocketItemData, SocketSpellData, SpellKey,
+} from '../type';
 
 interface GameProviderProps {
   matchTeamCode: string;
@@ -51,13 +54,24 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const buyItems = async (summonerName: string, items: string[]) => {
     try {
       dispatcher.loading();
-      // const body = { matchTeamCode, summonerName, items };
-      // const { data } = await axios.post('url', body);
-
-      // if (!data.success) throw new Error();
 
       const purchaserData = getData(summonerName);
       gameDataManager.buyItems(purchaserData, items);
+
+      const socketData: SocketItemData = {
+        summonerName,
+        championName: purchaserData.champName,
+        itemNames: items,
+        type: 'ITEM',
+        method: 'BUY',
+      };
+
+      stomp.current.send(
+        `/pub/comm/item/${matchTeamCode}`,
+        {},
+        JSON.stringify(socketData),
+      );
+
       dispatcher.render();
     } catch (err) {
       dispatcher.error(err);
@@ -67,13 +81,24 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const cancelItem = async (summonerName: string, itemName: string) => {
     try {
       dispatcher.loading();
-      // const body = { matchTeamCode, summonerName, itemName };
-      // const { data } = await axios.post('url', body); 서버 API 정해지면 다시
-
-      // if (!data.success) throw new Error();
 
       const purchaserData = getData(summonerName);
       gameDataManager.cancelItem(purchaserData, itemName);
+
+      const socketData: SocketItemData = {
+        summonerName,
+        championName: purchaserData.champName,
+        itemNames: [itemName],
+        type: 'ITEM',
+        method: 'DELETE',
+      };
+
+      stomp.current.send(
+        `/pub/comm/item/${matchTeamCode}`,
+        {},
+        JSON.stringify(socketData),
+      );
+
       dispatcher.render();
     } catch (err) {
       dispatcher.error(err);
@@ -95,6 +120,22 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     }, 1000);
   };
 
+  const updateUltLevel = async (summonerName: string, level: number) => {
+    try {
+      // dispatcher.loading();
+      // const body = { matchTeamCode, summonerName, spellType };
+      // const { data } = await axios.post('url', body);
+
+      // if (!data.success) throw new Error(); API 정해지면 다시
+
+      const userData = getData(summonerName);
+      gameDataManager.updateUltLevel(userData, level);
+      dispatcher.render();
+    } catch (err) {
+      dispatcher.error(err);
+    }
+  };
+
   const onUseSpell = async (
     summonerName: string,
     spellType: SpellKey,
@@ -105,9 +146,11 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       const userData = getData(summonerName);
       const ultLevel = userData.spells.R.level;
-
+      if (spellType === 'R' && ultLevel === 0) {
+        updateUltLevel(summonerName, 1);
+      }
       const { data } = await axios.get(
-        `https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=${1}`,
+        `https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=${ultLevel}`,
       );
 
       if (!data.success) throw new Error();
@@ -143,10 +186,6 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const resetSpell = async (summonerName: string, spellType: SpellKey) => {
     try {
       dispatcher.loading();
-      const body = { matchTeamCode, summonerName, spellType };
-      const { data } = await axios.post('url', body);
-
-      if (!data.data.success) throw new Error();
 
       const userData = getData(summonerName);
       gameDataManager.resetSpell(userData, spellType);
@@ -204,22 +243,6 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     }
   };
 
-  const updateUltLevel = async (summonerName: string, level: number) => {
-    try {
-      // dispatcher.loading();
-      // const body = { matchTeamCode, summonerName, spellType };
-      // const { data } = await axios.post('url', body);
-
-      // if (!data.success) throw new Error(); API 정해지면 다시
-
-      const userData = getData(summonerName);
-      gameDataManager.updateUltLevel(userData, level);
-      dispatcher.render();
-    } catch (err) {
-      dispatcher.error(err);
-    }
-  };
-
   const providerValue = {
     gameData: dataState.champsData,
     loadingState: { loading: dataState.loading, error: dataState.error },
@@ -246,6 +269,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       stomp.current.connect({}, () => {
         stomp.current.subscribe(`/sub/comm/room/${matchTeamCode}`, (msg) => {
           const data: SocketSpellData = JSON.parse(msg.body);
+
           const { summonerName, changedSpell: spellType } = data;
           let chagnedTime;
           switch (spellType) {
@@ -261,8 +285,15 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
             default:
               chagnedTime = 0;
           }
+
           dispatcher.update(data);
           countSpellTime(summonerName, spellType, chagnedTime);
+        });
+
+        stomp.current.subscribe(`/sub/comm/item/${matchTeamCode}`, (msg) => {
+          const data: SocketSpellData = JSON.parse(msg.body);
+
+          console.log(data);
         });
       });
     } catch (err) {

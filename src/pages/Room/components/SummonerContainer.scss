@@ -1,0 +1,19 @@
+.SummonerContainer {
+  height: r(84px);
+  margin-top: r(64px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: #1f1d25;
+  color: white;
+
+  .summoner-icon {
+    width: r(58px);
+    height: r(58px);
+    margin: 13px;
+    border: 2px solid #373737;
+    border-radius: 50%;
+  }
+
+  .summoner-name {
+    font-size: 15px;
+  }
+}

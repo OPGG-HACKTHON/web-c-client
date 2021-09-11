@@ -31,7 +31,7 @@ const Search = () => {
     try {
       const { data } = await axios.get(`/v1/match/${searchValue}`);
       if (data.data.matchStatus === false) {
-        alert('게임 시작 안함');
+        history.push(`/room/${searchValue}`);
       } else {
         const matchTeamCode = await getMatchTeamCode();
         history.push(`/game/${matchTeamCode}`);
@@ -54,7 +54,12 @@ const Search = () => {
       <MainIcon />
       <MiddelBox />
       <SearchBar setValue={setValue} setIsFocusInput={setIsFocusInput} />
-      {isFocusInput || isPossibleSearch ? <SearchButton onClick={onClickSearchBtn} isPossibleSearch={isPossibleSearch} /> : null}
+      {isFocusInput || isPossibleSearch ? (
+        <SearchButton
+          onClick={onClickSearchBtn}
+          isPossibleSearch={isPossibleSearch}
+        />
+      ) : null}
     </div>
   );
 };

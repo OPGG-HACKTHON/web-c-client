@@ -1,0 +1,73 @@
+.Room {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: map-get($grid-breakpoints, lg);
+  height: 100vh;
+  margin: 0 auto;
+  padding-bottom: 25px;
+
+  .room-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .room-middle {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+
+    span {
+      margin: 0 auto;
+      font-size: 12px;
+      color: white;
+    }
+
+    .main-image {
+      width: r(198px);
+      height: r(120px);
+      margin-bottom: 28px;
+    }
+  }
+
+  .room-bottom {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+
+    @keyframes message-open {
+      from {
+        transform: translateY(100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    input {
+      opacity: 0;
+    }
+
+    .share-message {
+      position: absolute;
+      bottom: 84px;
+      left: 10%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80%;
+      height: r(48px);
+      border: 1px solid #6675ff;
+      border-radius: r(10px);
+      background: rgba(102, 117, 255, 0.15);
+      color: #6675ff;
+      text-align: center;
+      animation: 0.1s message-open;
+    }
+  }
+}

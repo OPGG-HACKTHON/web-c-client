@@ -73,6 +73,10 @@
         border-radius: 5px;
         background: #6675ff;
       }
+
+      .disabled {
+        filter: grayscale(80%);
+      }
     }
   }
 }

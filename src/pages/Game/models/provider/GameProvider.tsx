@@ -8,12 +8,11 @@ import React, {
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import axios from 'axios';
-import { string } from 'prop-types';
 import { reducer, createDispatcher, initState } from './reducer';
 import GameContext from '../context/GameContext';
 import gameDataManager from '../managers/gameDataManager';
 import {
-  ChampData, SocketItemData, SocketSpellData, SpellKey,
+  ChampData, SocketDragonData, SocketItemData, SocketSpellData, SocketUltData, SpellKey,
 } from '../type';
 
 interface GameProviderProps {
@@ -23,6 +22,7 @@ interface GameProviderProps {
 
 function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const [dataState, dispatch] = useReducer(reducer, initState);
+  const [dragonCnt, setDragonCnt] = useState(0);
   const [isNotClickedInFiveSec, setIsNotClickedInFiveSec] = useState(false);
   const dispatcher = createDispatcher(dispatch);
   const spellTimer = useRef([]);
@@ -56,7 +56,6 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       dispatcher.loading();
 
       const purchaserData = getData(summonerName);
-      gameDataManager.buyItems(purchaserData, items);
 
       const socketData: SocketItemData = {
         summonerName,
@@ -83,7 +82,6 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       dispatcher.loading();
 
       const purchaserData = getData(summonerName);
-      gameDataManager.cancelItem(purchaserData, itemName);
 
       const socketData: SocketItemData = {
         summonerName,
@@ -122,11 +120,17 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
   const updateUltLevel = async (summonerName: string, level: number) => {
     try {
-      // dispatcher.loading();
-      // const body = { matchTeamCode, summonerName, spellType };
-      // const { data } = await axios.post('url', body);
+      const socketData: SocketUltData = {
+        summonerName,
+        type: 'ULT',
+        ultLevel: level,
+      };
 
-      // if (!data.success) throw new Error(); API 정해지면 다시
+      stomp.current.send(
+        `/pub/comm/ult/${matchTeamCode}`,
+        {},
+        JSON.stringify(socketData),
+      );
 
       const userData = getData(summonerName);
       gameDataManager.updateUltLevel(userData, level);
@@ -134,6 +138,22 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     } catch (err) {
       dispatcher.error(err);
     }
+  };
+
+  const updateDragonCnt = (cnt: number) => {
+    if (cnt < 0 || cnt > 4) return;
+
+    const socketData: SocketDragonData = {
+      matchTeamCode,
+      dragonCount: cnt,
+    };
+
+    stomp.current.send(
+      `/pub/comm/dragon/${matchTeamCode}`,
+      {},
+      JSON.stringify(socketData),
+    );
+    setDragonCnt(cnt);
   };
 
   const onUseSpell = async (
@@ -149,6 +169,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       if (spellType === 'R' && ultLevel === 0) {
         updateUltLevel(summonerName, 1);
       }
+
       const { data } = await axios.get(
         `https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=${ultLevel}`,
       );
@@ -254,7 +275,8 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     updateTimeUsed,
     updateUltLevel,
     updateGameData: (gameData) => dispatcher.success(gameData),
-
+    dragonCnt,
+    updateDragonCnt,
     isItemSelectorVisible: !!itemSelectingSummonerName,
     itemSelectingSummonerName,
     setItemSelectingSummonerName,
@@ -291,9 +313,20 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
         });
 
         stomp.current.subscribe(`/sub/comm/item/${matchTeamCode}`, (msg) => {
-          const data: SocketSpellData = JSON.parse(msg.body);
+          const data: SocketItemData = JSON.parse(msg.body);
+          const { summonerName, method, itemNames } = data;
+          dispatcher.updateItem(summonerName, itemNames, method);
+        });
 
-          console.log(data);
+        stomp.current.subscribe(`/sub/comm/ult/${matchTeamCode}`, (msg) => {
+          const data: SocketUltData = JSON.parse(msg.body);
+          const { summonerName, ultLevel } = data;
+          dispatcher.updateUltLevel(summonerName, ultLevel);
+        });
+
+        stomp.current.subscribe(`/sub/comm/dragon/${matchTeamCode}`, (msg) => {
+          const data: SocketDragonData = JSON.parse(msg.body);
+          setDragonCnt(data.dragonCount);
         });
       });
     } catch (err) {

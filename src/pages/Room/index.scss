@@ -39,54 +39,8 @@
     width: 100%;
     margin: 0 auto;
 
-    @keyframes message-on {
-      from {
-        transform: translateY(100%);
-      }
-
-      to {
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes message-off {
-      from {
-        transform: translateY(0);
-      }
-
-      to {
-        transform: translateY(100%);
-      }
-    }
-
     input {
       opacity: 0;
-    }
-
-    .share-message {
-      position: absolute;
-      bottom: 84px;
-      left: 10%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 80%;
-      height: r(48px);
-      border: 1px solid #6675ff;
-      border-radius: r(10px);
-      background: rgba(102, 117, 255, 0.15);
-      color: #6675ff;
-      text-align: center;
-    }
-
-    .message-on {
-      -webkit-animation: 0.2s message-on;
-      animation: 0.2s message-on;
-    }
-
-    .message-off {
-      -webkit-animation: 0.2s message-off;
-      animation: 0.2s message-off;
     }
   }
 }

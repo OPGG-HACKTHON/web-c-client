@@ -3,9 +3,13 @@ import { IoMdClose } from 'react-icons/io';
 
 import './SearchBar.scss';
 
-const SearchBar = ({ value, setValue, setIsFocusInput }) => {
+const SearchBar = ({
+  value, setValue, setIsFocusInput, loading,
+}) => {
   const deleteText = () => {
     setValue('');
+    const searchElem = document.querySelector('#searchBar') as HTMLElement;
+    searchElem.focus();
   };
 
   return (
@@ -14,12 +18,13 @@ const SearchBar = ({ value, setValue, setIsFocusInput }) => {
         autoFocus
         placeholder="닉네임을 입력해주세요"
         spellCheck="false"
+        id="searchBar"
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onFocus={() => setIsFocusInput(true)}
         onBlur={() => setIsFocusInput(false)}
       />
-      <IoMdClose onClick={deleteText} />
+      {loading ? 'loading' : <IoMdClose onClick={deleteText} />}
     </div>
   );
 };

@@ -2,4 +2,8 @@
   width: r(198px);
   height: r(120px);
   border-radius: 0;
+
+  @media (max-height: 400px) {
+    display: none;
+  }
 }

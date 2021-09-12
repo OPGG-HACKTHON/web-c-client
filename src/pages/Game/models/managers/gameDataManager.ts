@@ -10,6 +10,7 @@ const gameDataManager = {
   async getChampsInitData(matchTeamCode: string): Promise<ChampData[]> {
     try {
       const { data } = await axios.get(`/v1/match/data/matchTeamCode/${matchTeamCode}`);
+      console.log(data);
       const serverChampsData: ServerData[] = data.data;
       const champsData = gameDataManager.createChampsData(serverChampsData);
       return champsData;
@@ -31,12 +32,14 @@ const gameDataManager = {
             src: data.spellDImgUrl,
             time: null,
             isOn: true,
+            name: data.spellDName,
           },
           F: {
             spellType: 'F',
             src: data.spellFImgUrl,
             time: null,
             isOn: true,
+            name: data.spellFName,
           },
           R: {
             spellType: 'R',
@@ -44,6 +47,7 @@ const gameDataManager = {
             time: null,
             isOn: false,
             level: 0,
+            name: '궁',
           },
         },
         itemsPurchased: null,

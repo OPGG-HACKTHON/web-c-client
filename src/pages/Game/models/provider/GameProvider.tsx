@@ -103,23 +103,21 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     }
   };
 
-  const countSpellTime = (summonerName: string, spellKey: SpellKey, totalTime) => {
+  const countSpellTime = (summonerName: string, spellKey: SpellKey) => {
     if (spellTimer.current.includes(summonerName + spellKey)) return;
     spellTimer.current.push(summonerName + spellKey);
-    const cnt = totalTime;
 
     const timer = setInterval(() => {
-      if (!cnt || cnt < 0) {
-        clearInterval(timer);
-        const idx = spellTimer.current.indexOf(summonerName + spellKey);
-        spellTimer.current.splice(idx, 1);
-      }
-      dispatcher.count(summonerName, spellKey);
+      dispatcher.count(summonerName, spellKey, timer, spellTimer.current);
     }, 1000);
   };
 
   const updateUltLevel = async (summonerName: string, level: number) => {
+    const userData = getData(summonerName);
+    const preData = userData.spells.R.level;
     try {
+      gameDataManager.updateUltLevel(userData, level);
+
       const socketData: SocketUltData = {
         summonerName,
         type: 'ULT',
@@ -132,11 +130,10 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
         JSON.stringify(socketData),
       );
 
-      const userData = getData(summonerName);
-      gameDataManager.updateUltLevel(userData, level);
       dispatcher.render();
     } catch (err) {
       dispatcher.error(err);
+      gameDataManager.updateUltLevel(userData, preData);
     }
   };
 
@@ -156,31 +153,39 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     setDragonCnt(cnt);
   };
 
+  const getTotalSpellTime = async (summonerName: string,
+    spellType: SpellKey, timeGap: number = 0): Promise<number> => {
+    dispatcher.loading();
+
+    const userData = getData(summonerName);
+    const ultLevel = userData.spells.R.level;
+    if (spellType === 'R' && ultLevel === 0) {
+      updateUltLevel(summonerName, 1);
+    }
+
+    const { data } = await axios.get(
+      `https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=${ultLevel}`,
+    );
+
+    if (!data.success) throw new Error();
+    const spellTimes = data.data;
+
+    const spellTime = spellTimes[`cooltime${spellType}`];
+
+    const spellTimeUpdated = spellTime - timeGap < 0 ? null : spellTime - timeGap;
+    return spellTimeUpdated;
+  };
+
   const onUseSpell = async (
     summonerName: string,
     spellType: SpellKey,
     timeGap: number = 0,
   ) => {
     try {
-      dispatcher.loading();
-
+      const totalSpellTime = await getTotalSpellTime(summonerName, spellType, timeGap);
       const userData = getData(summonerName);
-      const ultLevel = userData.spells.R.level;
-      if (spellType === 'R' && ultLevel === 0) {
-        updateUltLevel(summonerName, 1);
-      }
-
-      const { data } = await axios.get(
-        `https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=${ultLevel}`,
-      );
-
-      if (!data.success) throw new Error();
-      const spellTimes = data.data;
-
-      const spellTime = spellTimes[`cooltime${spellType}`];
-
-      const spellTimeUpdated = spellTime - timeGap < 0 ? null : spellTime - timeGap;
-      gameDataManager.useSpell(userData, spellType, spellTimeUpdated);
+      gameDataManager.useSpell(userData, spellType, totalSpellTime);
+      dispatcher.render();
 
       const socketData: SocketSpellData = {
         summonerName,
@@ -197,8 +202,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
         JSON.stringify(socketData),
       );
 
-      countSpellTime(summonerName, spellType, spellTimeUpdated);
-      dispatcher.render();
+      countSpellTime(summonerName, spellType);
     } catch (err) {
       dispatcher.error(err);
     }
@@ -257,7 +261,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
         {},
         JSON.stringify(socketData),
       );
-      countSpellTime(summonerName, spellType, changedTime);
+      countSpellTime(summonerName, spellType);
       dispatcher.render();
     } catch (err) {
       dispatcher.error(err);
@@ -293,23 +297,9 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
           const data: SocketSpellData = JSON.parse(msg.body);
 
           const { summonerName, changedSpell: spellType } = data;
-          let chagnedTime;
-          switch (spellType) {
-            case 'R':
-              chagnedTime = data.ultTime;
-              break;
-            case 'D':
-              chagnedTime = data.dspellTime;
-              break;
-            case 'F':
-              chagnedTime = data.fspellTime;
-              break;
-            default:
-              chagnedTime = 0;
-          }
 
           dispatcher.update(data);
-          countSpellTime(summonerName, spellType, chagnedTime);
+          countSpellTime(summonerName, spellType);
         });
 
         stomp.current.subscribe(`/sub/comm/item/${matchTeamCode}`, (msg) => {
@@ -328,6 +318,19 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
           const data: SocketDragonData = JSON.parse(msg.body);
           setDragonCnt(data.dragonCount);
         });
+
+        stomp.current.subscribe(`/sub/comm/newUser/${matchTeamCode}`, (msg) => {
+          const data: SocketDragonData = JSON.parse(msg.body);
+          console.log(data);
+        });
+        const socketData = {
+          summonerName: '1',
+        };
+        stomp.current.send(
+          `/pub/comm/newUser/${matchTeamCode}`,
+          {},
+          JSON.stringify(socketData),
+        );
       });
     } catch (err) {
       console.error(err);
@@ -337,7 +340,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   useEffect(() => {
     if (socket.current) return;
     openSocket();
-  }, []);
+  }, [socket.current]);
 
   useEffect(() => {
     curtainTimer.current = setTimeout(() => {

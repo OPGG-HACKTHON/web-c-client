@@ -5,6 +5,7 @@ import {
   ChampData, SocketSpellData, SpellKey,
 } from '../type';
 import exampleData from './example';
+import speak from '../managers/TTS';
 
 enum Action {
   LOADING,
@@ -33,6 +34,8 @@ interface IAction {
   level?: number
   items?: string[]
   method?: string
+  timer?: NodeJS.Timer
+  timerList?: string[]
 }
 
 export const initState: FetchState = {
@@ -91,8 +94,19 @@ export function reducer(state: FetchState, action: IAction) {
       newChampsData.forEach((champData) => {
         if (champData.summonerName === summonerName) {
           const { time } = champData.spells[spellKey];
-          if (!time || time < 0) champData.spells[spellKey].time = null;
-          else champData.spells[spellKey].time -= 1;
+          if (time === 11) {
+            const text = `${champData.champName} ${champData.spells[spellKey].name} 십초 전`;
+            speak(text);
+          }
+          if (!time || time < 0) {
+            champData.spells[spellKey].time = null;
+            champData.spells[spellKey].isOn = true;
+            const text = `${champData.champName} ${champData.spells[spellKey].name} 온`;
+            speak(text);
+            clearInterval(action.timer);
+            const idx = action.timerList.indexOf(summonerName + spellKey);
+            action.timerList.splice(idx, 1);
+          } else champData.spells[spellKey].time -= 1;
         }
       });
       return setFecthState(newChampsData, false, null);
@@ -147,8 +161,10 @@ export const createDispatcher = (dispatch: React.Dispatch<IAction>) => {
       dispatch({ type: Action.UPDATE, data });
     },
 
-    count(summonerName: string, spellKey: SpellKey) {
-      dispatch({ type: Action.COUNT, summonerName, spellKey });
+    count(summonerName: string, spellKey: SpellKey, timer: NodeJS.Timer, timerList: string[]) {
+      dispatch({
+        type: Action.COUNT, summonerName, spellKey, timer, timerList,
+      });
     },
 
     updateUltLevel(summonerName: string, level: number) {

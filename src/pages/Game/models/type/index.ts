@@ -71,7 +71,8 @@ export interface SpellData {
   src: string,
   isOn: boolean,
   time: null | number,
-  level?: number
+  level?: number,
+  name?: string
 }
 
 export interface ItemData {
@@ -89,4 +90,6 @@ export interface ServerData {
   spellDImgUrl: string,
   spellFImgUrl: string,
   frequentItems: ItemData[]
+  spellDName: string,
+  spellFName: string
 }

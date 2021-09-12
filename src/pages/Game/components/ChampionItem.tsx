@@ -1,8 +1,5 @@
 import React, {
-  useState,
-  useEffect,
-  useContext,
-  useRef,
+  useState, useEffect, useContext, useRef,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -34,11 +31,7 @@ const ChampionItem = ({
   const curtainTimer = useRef(null);
   const { t } = useTranslation();
 
-  const {
-    onUseSpell,
-    resetSpell,
-    updateTimeUsed,
-  } = useContext(GameContext);
+  const { onUseSpell, resetSpell, updateTimeUsed } = useContext(GameContext);
 
   const { src, time, level } = champData.spells[spellType];
   const { summonerName } = champData;
@@ -153,7 +146,7 @@ const ChampionItem = ({
             level={level}
             time={time}
           />
-          <span className="leftTime">{time}s</span>
+          <div className="leftTime">{time}s</div>
         </div>
         <div className="item-right">
           <div className="time-button" onClick={handleClickTimeButton(10)}>
@@ -181,7 +174,7 @@ const ChampionItem = ({
           level={level}
           time={time}
         />
-        <span className="leftTime">{time}s</span>
+        <div className="leftTime">{time}s</div>
       </div>
       <div className="item-right-wait">
         <LockerIcon />

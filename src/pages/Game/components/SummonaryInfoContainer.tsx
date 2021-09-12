@@ -50,7 +50,8 @@ const SummonaryInfoContainer = () => {
   const findChampElemsPos = useCallback(() => {
     const topbarElem = document.querySelector('#Topbar') as HTMLElement;
     const summonaryInfoContainerElem = document.querySelector('#SummonaryInfoContainer') as HTMLElement;
-    const defaultHeight = topbarElem.offsetHeight + summonaryInfoContainerElem.offsetHeight;
+    const dragonElem = document.querySelector('#dragonContainer') as HTMLElement;
+    const defaultHeight = topbarElem.offsetHeight + summonaryInfoContainerElem.offsetHeight + dragonElem.offsetHeight;
     const champElems = document.querySelectorAll('.ChampionContainer');
     const champsScrollPos = Array.from(champElems).map((elem: HTMLElement) => elem.offsetTop - defaultHeight);
     return champsScrollPos;

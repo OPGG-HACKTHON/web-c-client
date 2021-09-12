@@ -18,7 +18,7 @@ function DragonBar() {
   const downDragonCnt = () => updateDragonCnt(dragonCnt - 1);
 
   return (
-    <div className="dragonContainer">
+    <div className="dragonContainer" id="dragonContainer">
       <div className="dragonBar">
         <span className="notice-container">
           <img src={dragon} alt="바람용" className="dragonImg" />

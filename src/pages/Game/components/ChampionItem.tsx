@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useContext,
   useRef,
-  MouseEventHandler,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -22,19 +21,20 @@ interface ChampionItemProps {
   handleClickUltimate: Function;
 }
 
+type ModeType = 'modify' | 'default' | 'wait';
+
 const ChampionItem = ({
   champData,
   spellType,
   handleClickUltimate,
 }: ChampionItemProps) => {
   const isSpellUsed = champData.spells[spellType] !== null;
-  const initMode = isSpellUsed ? 'modify' : 'default';
-  const [status, setStatus] = useState(initMode);
+  const initMode: ModeType = isSpellUsed ? 'wait' : 'default';
+  const [status, setStatus] = useState<ModeType>(initMode);
   const curtainTimer = useRef(null);
   const { t } = useTranslation();
 
   const {
-    isNotClickedInFiveSec,
     onUseSpell,
     resetSpell,
     updateTimeUsed,
@@ -44,13 +44,14 @@ const ChampionItem = ({
   const { summonerName } = champData;
 
   const handleClickIcon = () => {
-    spellType === 'R' && handleClickUltimate();
+    if (spellType === 'R') handleClickUltimate();
   };
 
   const createCurtain = () => {
     if (curtainTimer.current) {
       clearTimeout(curtainTimer.current);
     }
+
     curtainTimer.current = setTimeout(() => {
       setStatus('wait');
       curtainTimer.current = null;
@@ -59,29 +60,23 @@ const ChampionItem = ({
 
   const handleReset = (e) => {
     e.stopPropagation();
-    createCurtain();
     resetSpell(summonerName, spellType);
     setStatus('default');
   };
 
-  const handleClickTime = (beforeSec: number) => (e) => {
-    onUseSpell(summonerName, spellType, beforeSec);
-    changeToModifyMode(e);
-  };
-
-  const changeToModifyMode = (e) => {
-    e.stopPropagation();
+  const changeToModifyMode = () => {
     createCurtain();
     setStatus('modify');
+  };
+
+  const handleClickTime = (beforeSec: number) => () => {
+    onUseSpell(summonerName, spellType, beforeSec);
+    changeToModifyMode();
   };
 
   const handleClickTimeButton = (t: number) => () => {
     updateTimeUsed(summonerName, spellType, time + t >= 0 ? time + t : 0);
   };
-
-  useEffect(() => {
-    if (isNotClickedInFiveSec && status !== 'default') setStatus('wait');
-  }, [status]);
 
   if (status === 'default' || time < 1) {
     if (spellType === 'R') {

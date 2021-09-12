@@ -31,11 +31,9 @@ const Search = () => {
     try {
       const { data: nameData } = await axios.get(`/v1/summoner/${searchValue}`);
       const { summonerName } = nameData.data;
-      console.log(nameData);
       if (!nameData.success) throw new Error('not find');
 
       const { data } = await axios.get(`/v1/match/${summonerName}`);
-      console.log(data);
       if (data.data.matchStatus === false) {
         history.push(`/room/${summonerName}`);
       } else {

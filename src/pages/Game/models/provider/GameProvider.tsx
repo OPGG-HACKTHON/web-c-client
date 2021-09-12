@@ -8,6 +8,7 @@ import React, {
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import axios from 'axios';
+import NoSleep from 'nosleep.js';
 import { reducer, createDispatcher, initState } from './reducer';
 import GameContext from '../context/GameContext';
 import gameDataManager from '../managers/gameDataManager';
@@ -43,6 +44,11 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
   React.useEffect(() => {
     getChampsInitData();
+    const noSleep = new NoSleep();
+    document.addEventListener('click', function enableNoSleep() {
+      document.removeEventListener('click', enableNoSleep, false);
+      noSleep.enable();
+    }, false);
   }, []);
 
   const getData = (summonerName: string): ChampData => {

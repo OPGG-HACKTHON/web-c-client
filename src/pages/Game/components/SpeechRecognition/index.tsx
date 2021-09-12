@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import useSpeechText from '@/common/hooks/useSpeechText';
@@ -22,10 +22,7 @@ export const getSpellKeyFromSrc = (src: string) => {
 };
 
 const SpeechRecognition = () => {
-  const {
-    gameData,
-    onUseSpell,
-  } = useGameData();
+  const { gameData, onUseSpell } = useGameData();
 
   const speechText = useSpeechText();
   const { t } = useTranslation();
@@ -51,10 +48,15 @@ const SpeechRecognition = () => {
     recognition.maxAlternatives = 50;
 
     recognition.onresult = async (event) => {
-      const transcriptList = Object.values(event.results[0]).map(({ transcript }) => transcript);
+      const transcriptList = Object.values(event.results[0]).map(
+        ({ transcript }) => transcript,
+      );
       const championNameList = gameData.map((s) => s.champName);
       const spellDict = gameData.reduce((acc, cur) => {
-        acc[cur.champName] = [getSpellKeyFromSrc(cur.spells.D.src), getSpellKeyFromSrc(cur.spells.F.src)];
+        acc[cur.champName] = [
+          getSpellKeyFromSrc(cur.spells.D.src),
+          getSpellKeyFromSrc(cur.spells.F.src),
+        ];
         return acc;
       }, {});
       console.log(spellDict);
@@ -66,7 +68,9 @@ const SpeechRecognition = () => {
         return;
       }
 
-      const summoner = gameData.find(({ champName }) => champName === result.champion);
+      const summoner = gameData.find(
+        ({ champName }) => champName === result.champion,
+      );
       if (!summoner) {
         return;
       }
@@ -100,7 +104,13 @@ const SpeechRecognition = () => {
         queue: false,
         listeners: {
           onend: () => {
-            setTimeout(() => speechText.speak({ text: `${result.champion} ${spellText} 사용`, queue: false }), 300);
+            setTimeout(
+              () => speechText.speak({
+                text: `${result.champion} ${spellText} 사용`,
+                queue: false,
+              }),
+              300,
+            );
           },
         },
       });

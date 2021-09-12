@@ -30,6 +30,18 @@ const Search = () => {
     }
   };
 
+  const showMessage = () => {
+    setShowShare(true);
+    if (messageTimer.current) {
+      clearTimeout(messageTimer.current);
+    }
+
+    messageTimer.current = setTimeout(() => {
+      setShowShare(false);
+      messageTimer.current = null;
+    }, 1500);
+  };
+
   const onClickSearchBtn = async () => {
     try {
       const { data: nameData } = await axios.get(`/v1/summoner/${searchValue}`);
@@ -46,18 +58,6 @@ const Search = () => {
     } catch (err) {
       showMessage();
     }
-  };
-
-  const showMessage = () => {
-    setShowShare(true);
-    if (messageTimer.current) {
-      clearTimeout(messageTimer.current);
-    }
-
-    messageTimer.current = setTimeout(() => {
-      setShowShare(false);
-      messageTimer.current = null;
-    }, 1500);
   };
 
   React.useEffect(() => {

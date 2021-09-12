@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import MainImg from '@/common/images/MainImg.png';
+
 import axios from '@/common/helper/axios';
 import useInterval from '@/common/hooks/useInterval';
 import ToastMessage from '@/common/components/ToastMessage';
@@ -9,8 +11,6 @@ import ShareButton from './components/ShareButton';
 import SummonerContainer from './components/SummonerContainer';
 
 import './index.scss';
-
-import MainImg from '@/common/images/MainImg.png';
 
 const Room = () => {
   const [showShare, setShowShare] = useState<boolean>(false);

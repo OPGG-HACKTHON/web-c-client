@@ -1,6 +1,4 @@
-import React, {
-  useState, useEffect, useContext, useRef,
-} from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import RefreshIcon from '@/common/components/RefreshIcon';
@@ -67,8 +65,8 @@ const ChampionItem = ({
     changeToModifyMode();
   };
 
-  const handleClickTimeButton = (t: number) => () => {
-    updateTimeUsed(summonerName, spellType, time + t >= 0 ? time + t : 0);
+  const handleClickTimeButton = (sec: number) => () => {
+    updateTimeUsed(summonerName, spellType, time + sec >= 0 ? time + sec : 0);
   };
 
   if (status === 'default' || time < 1) {

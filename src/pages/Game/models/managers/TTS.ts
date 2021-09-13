@@ -7,8 +7,8 @@ function speak(text) {
   window.speechSynthesis.cancel(); // 현재 읽고있다면 초기화
 
   const prop = {
-    rate: 1,
-    pitch: 1.2,
+    rate: 0.2,
+    pitch: 0.2,
     lang: 'ko-KR',
   };
 

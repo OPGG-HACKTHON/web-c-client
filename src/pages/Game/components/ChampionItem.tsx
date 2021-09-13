@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useRef,
-} from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import RefreshIcon from '@/common/components/RefreshIcon';
@@ -34,11 +29,7 @@ const ChampionItem = ({
   const curtainTimer = useRef(null);
   const { t } = useTranslation();
 
-  const {
-    onUseSpell,
-    resetSpell,
-    updateTimeUsed,
-  } = useContext(GameContext);
+  const { onUseSpell, resetSpell, updateTimeUsed } = useContext(GameContext);
 
   const { src, time, level } = champData.spells[spellType];
   const { summonerName } = champData;
@@ -74,8 +65,8 @@ const ChampionItem = ({
     changeToModifyMode();
   };
 
-  const handleClickTimeButton = (t: number) => () => {
-    updateTimeUsed(summonerName, spellType, time + t >= 0 ? time + t : 0);
+  const handleClickTimeButton = (sec: number) => () => {
+    updateTimeUsed(summonerName, spellType, time + sec >= 0 ? time + sec : 0);
   };
 
   if (status === 'default' || time < 1) {
@@ -153,7 +144,7 @@ const ChampionItem = ({
             level={level}
             time={time}
           />
-          <span className="leftTime">{time}s</span>
+          <div className="leftTime">{time}s</div>
         </div>
         <div className="item-right">
           <div className="time-button" onClick={handleClickTimeButton(10)}>
@@ -181,7 +172,7 @@ const ChampionItem = ({
           level={level}
           time={time}
         />
-        <span className="leftTime">{time}s</span>
+        <div className="leftTime">{time}s</div>
       </div>
       <div className="item-right-wait">
         <LockerIcon />

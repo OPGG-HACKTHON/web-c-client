@@ -16,11 +16,11 @@ const SpellIconInItem = ({
   return spellType === 'R' ? (
     <div className={`ultimate ${time && 'gray-filter'}`}>
       <div className="ultimate-level">Lv.{level}</div>
-      <img src={src} />
+      <img src={src} alt="궁" />
     </div>
   ) : (
     <div className={`icon ${time && 'gray-filter'}`}>
-      <img src={src} />
+      <img src={src} alt="스펠" />
     </div>
   );
 };

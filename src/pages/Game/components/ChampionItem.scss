@@ -80,7 +80,9 @@
   }
 
   .leftTime {
-    margin-left: r(10px);
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
     font-weight: bold;
     font-size: r(20px);
     line-height: 24px;

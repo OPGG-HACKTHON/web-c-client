@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import axios from '@/common/helper/axios';
+import ToastMessage from '@/common/components/ToastMessage';
 import MainIcon from './components/MainIcon';
 import MiddelBox from './components/MiddleBox';
 import SearchBar from './components/SearchBar';
@@ -14,7 +15,9 @@ const Search = () => {
   const [isFocusInput, setIsFocusInput] = useState(false);
   const [searchValue, setValue] = useState<string>('');
   const [loading, setLoading] = useState(false);
+  const [showShare, setShowShare] = useState<boolean>(false);
 
+  const messageTimer = useRef(null);
   const isPossibleSearch = searchValue !== '';
 
   const getMatchTeamCode = async (summonerName: string) => {
@@ -26,6 +29,18 @@ const Search = () => {
       console.log(err);
       return null;
     }
+  };
+
+  const showMessage = () => {
+    setShowShare(true);
+    if (messageTimer.current) {
+      clearTimeout(messageTimer.current);
+    }
+
+    messageTimer.current = setTimeout(() => {
+      setShowShare(false);
+      messageTimer.current = null;
+    }, 1500);
   };
 
   const onClickSearchBtn = async () => {
@@ -44,9 +59,8 @@ const Search = () => {
         history.push(`/game/${matchTeamCode}`);
       }
     } catch (err) {
-      console.log(err);
       setLoading(false);
-      alert('없는 소환사');
+      showMessage();
     }
   };
 
@@ -74,7 +88,16 @@ const Search = () => {
     <div className="Search-Page-Wrapper">
       <MainIcon />
       <MiddelBox />
-      <SearchBar value={searchValue} setValue={setValue} setIsFocusInput={setIsFocusInput} loading={loading} />
+      {/* <SearchBar value={searchValue} setValue={setValue} setIsFocusInput={setIsFocusInput} loading={loading} /> */}
+      <SearchBar
+        loading={loading}
+        value={searchValue}
+        setValue={setValue}
+        setIsFocusInput={setIsFocusInput}
+      />
+      {showShare && (
+        <ToastMessage content="닉네임을 확인해주세요." time={1500} />
+      )}
       {isFocusInput || isPossibleSearch ? (
         <SearchButton
           onClick={onClickSearchBtn}

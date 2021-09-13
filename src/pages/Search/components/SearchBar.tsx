@@ -20,8 +20,14 @@ const SearchBar = ({
         spellCheck="false"
         id="searchBar"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
-        onFocus={() => setIsFocusInput(true)}
+        onChange={(e) => {
+          e.preventDefault();
+          setValue(e.target.value);
+        }}
+        onFocus={(e) => {
+          setIsFocusInput(true);
+          e.preventDefault();
+        }}
         onBlur={() => setIsFocusInput(false)}
       />
       {loading ? 'loading' : <IoMdClose onClick={deleteText} />}

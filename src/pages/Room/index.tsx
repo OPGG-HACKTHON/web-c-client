@@ -1,18 +1,19 @@
 import React, { useState, useRef } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import MainImg from '@/common/images/MainImg.png';
+
 import axios from '@/common/helper/axios';
 import useInterval from '@/common/hooks/useInterval';
+import ToastMessage from '@/common/components/ToastMessage';
 import RoomHeader from './components/RoomHeader';
 import ShareButton from './components/ShareButton';
 import SummonerContainer from './components/SummonerContainer';
 
 import './index.scss';
 
-import MainImg from '@/common/images/MainImg.png';
-
 const Room = () => {
-  const [showShare, setShowShare] = useState('');
+  const [showShare, setShowShare] = useState<boolean>(false);
   const messageTimer = useRef(null);
   const urlRef = useRef();
 
@@ -49,7 +50,7 @@ const Room = () => {
 
   const handleClickShare = (e) => {
     e.preventDefault();
-    setShowShare('message-on');
+    setShowShare(true);
     const urlElem = urlRef.current as HTMLInputElement;
     urlElem.select();
     document.execCommand('copy');
@@ -59,12 +60,9 @@ const Room = () => {
     }
 
     messageTimer.current = setTimeout(() => {
-      setShowShare('message-off');
-      setTimeout(() => {
-        messageTimer.current = null;
-        setShowShare('');
-      }, 200);
-    }, 800);
+      setShowShare(false);
+      messageTimer.current = null;
+    }, 1500);
   };
 
   return (
@@ -83,9 +81,7 @@ const Room = () => {
         <div className="room-bottom">
           <input ref={urlRef} value="https://swoomi.me/" readOnly />
           {showShare && (
-            <div className={`share-message ${showShare}`}>
-              링크가 복사되었습니다.
-            </div>
+            <ToastMessage content="링크가 복사되었습니다." time={1500} />
           )}
           <ShareButton handleClickShare={handleClickShare} />
         </div>

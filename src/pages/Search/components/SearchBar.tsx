@@ -2,6 +2,7 @@ import React from 'react';
 import { IoMdClose } from 'react-icons/io';
 
 import './SearchBar.scss';
+import Spinner from '@/common/components/spinner';
 
 const SearchBar = ({
   value, setValue, setIsFocusInput, loading,
@@ -21,17 +22,15 @@ const SearchBar = ({
         id="searchBar"
         value={value}
         onChange={(e) => {
-          e.preventDefault();
           setValue(e.target.value);
         }}
-        onFocus={(e) => {
+        onFocus={() => {
           setIsFocusInput(true);
-          e.preventDefault();
         }}
         onBlur={() => setIsFocusInput(false)}
         autoComplete="off"
       />
-      {loading ? 'loading' : <IoMdClose onClick={deleteText} />}
+      {loading ? <Spinner /> : <IoMdClose onClick={deleteText} />}
     </div>
   );
 };

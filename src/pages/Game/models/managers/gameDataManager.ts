@@ -20,6 +20,7 @@ const gameDataManager = {
 
   async isGameOver(matchTeamCode: string) {
     const { data } = await axios.get(`/v1/match/${matchTeamCode}`);
+    console.log(data);
     return data.data.matchStatus;
   },
 
@@ -117,6 +118,7 @@ const gameDataManager = {
 
   updateSpellTime(userData: ChampData, spellType: SpellKey, changedTime: number) {
     const spellData = userData.spells[spellType] as SpellData;
+    if (!changedTime || changedTime < 0 || isNaN(changedTime)) changedTime = 0;
     userData.spells[spellType] = { ...spellData, time: changedTime, isOn: false };
   },
 

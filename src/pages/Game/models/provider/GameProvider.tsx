@@ -44,11 +44,11 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
   const getChampsInitData = async () => {
     try {
+      await gameDataManager.isGameOver(matchTeamCode);
       dispatcher.loading();
       const champsData = await gameDataManager.getChampsInitData(matchTeamCode);
       dispatcher.success(champsData);
     } catch (err) {
-      history.push('/');
       dispatcher.error(err);
     }
   };
@@ -71,7 +71,6 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const buyItems = async (summonerName: string, items: string[]) => {
     try {
       dispatcher.loading();
-
       const purchaserData = getData(summonerName);
 
       const socketData: SocketItemData = {
@@ -278,6 +277,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
         {},
         JSON.stringify(socketData),
       );
+
       countSpellTime(summonerName, spellType);
       dispatcher.render();
     } catch (err) {

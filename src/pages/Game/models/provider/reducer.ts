@@ -104,14 +104,18 @@ export function reducer(state: FetchState, action: IAction) {
             const text = `${champData.champName} ${champData.spells[spellKey].name} 십초 전`;
             speak(text);
           }
-          if (!time || time < 0) {
-            champData.spells[spellKey].time = null;
+          if (time === 1) {
+            champData.spells[spellKey].time = 0;
             champData.spells[spellKey].isOn = true;
             const text = `${champData.champName} ${champData.spells[spellKey].name} 온`;
+            if (!champData.spells[spellKey].name) return;
             speak(text);
+          }
+          if (!time || time < 0) {
             clearInterval(action.timer);
             const idx = action.timerList.indexOf(summonerName + spellKey);
             action.timerList.splice(idx, 1);
+            champData.spells[spellKey].time = null;
           } else champData.spells[spellKey].time -= 1;
         }
       });

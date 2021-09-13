@@ -10,13 +10,17 @@ const gameDataManager = {
   async getChampsInitData(matchTeamCode: string): Promise<ChampData[]> {
     try {
       const { data } = await axios.get(`/v1/match/data/matchTeamCode/${matchTeamCode}`);
-      console.log(data);
       const serverChampsData: ServerData[] = data.data;
       const champsData = gameDataManager.createChampsData(serverChampsData);
       return champsData;
     } catch (err) {
       throw err;
     }
+  },
+
+  async isGameOver(matchTeamCode: string) {
+    const { data } = await axios.get(`/v1/match/${matchTeamCode}`);
+    return data.data.matchStatus;
   },
 
   createChampsData(champsServerData: ServerData[]): ChampData[] {

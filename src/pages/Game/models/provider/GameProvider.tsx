@@ -9,11 +9,14 @@ import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import axios from 'axios';
 import NoSleep from 'nosleep.js';
+import { useHistory } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import { match } from 'assert/strict';
 import { reducer, createDispatcher, initState } from './reducer';
 import GameContext from '../context/GameContext';
 import gameDataManager from '../managers/gameDataManager';
 import {
-  ChampData, SocketDragonData, SocketItemData, SocketSpellData, SocketUltData, SpellKey,
+  ChampData, SocketDragonData, SocketItemData, SocketSpellData, SocketUltData, SpellData, SpellKey,
 } from '../type';
 
 interface GameProviderProps {
@@ -22,6 +25,7 @@ interface GameProviderProps {
 }
 
 function GameProvider({ matchTeamCode, children }: GameProviderProps) {
+  const history = useHistory();
   const [dataState, dispatch] = useReducer(reducer, initState);
   const [dragonCnt, setDragonCnt] = useState(0);
   const [isNotClickedInFiveSec, setIsNotClickedInFiveSec] = useState(false);
@@ -30,7 +34,13 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const socket = useRef(null);
   const stomp = useRef(null);
   const curtainTimer = useRef(null);
+  const userId = useRef(uuidv4());
+  const isUpdatedData = useRef(false);
   const [itemSelectingSummonerName, setItemSelectingSummonerName] = useState();
+
+  // const goWaitPageGameOver = () => {
+  //   if(gameDataManager.isGameOver(matchTeamCode)) history.push('/')
+  // }
 
   const getChampsInitData = async () => {
     try {
@@ -38,6 +48,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       const champsData = await gameDataManager.getChampsInitData(matchTeamCode);
       dispatcher.success(champsData);
     } catch (err) {
+      history.push('/');
       dispatcher.error(err);
     }
   };
@@ -297,7 +308,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     try {
       socket.current = new SockJS('https://backend.swoomi.me/ws-swoomi');
       stomp.current = Stomp.over(socket.current);
-
+      stomp.current.debug = null;
       stomp.current.connect({}, () => {
         stomp.current.subscribe(`/sub/comm/room/${matchTeamCode}`, (msg) => {
           const data: SocketSpellData = JSON.parse(msg.body);
@@ -325,13 +336,35 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
           setDragonCnt(data.dragonCount);
         });
 
-        stomp.current.subscribe(`/sub/comm/newUser/${matchTeamCode}`, (msg) => {
-          const data: SocketDragonData = JSON.parse(msg.body);
-          console.log(data);
+        stomp.current.subscribe(`/sub/comm/initData/${matchTeamCode}`, (msg) => {
+          const data = JSON.parse(msg.body);
+          const { data: initData, newUser } = data.initData;
+
+          if (newUser === userId.current) {
+            initData.forEach((champData: ChampData) => {
+              Object.keys(champData.spells).forEach((spellKey: SpellKey) => {
+                const spellData: SpellData = champData.spells[spellKey];
+                if (spellData.time !== null) {
+                  countSpellTime(champData.summonerName, spellKey);
+                }
+              });
+            });
+            dispatcher.success(initData);
+            isUpdatedData.current = true;
+          }
         });
+
+        stomp.current.subscribe(`/sub/comm/newUser/${matchTeamCode}`, (msg) => {
+          const data = JSON.parse(msg.body);
+          if (data.summonerName === userId.current) return;
+
+          dispatcher.send(stomp, data.summonerName, matchTeamCode);
+        });
+
         const socketData = {
-          summonerName: '1',
+          summonerName: userId.current,
         };
+
         stomp.current.send(
           `/pub/comm/newUser/${matchTeamCode}`,
           {},

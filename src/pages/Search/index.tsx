@@ -26,7 +26,6 @@ const Search = () => {
       const { matchTeamCode } = data.data;
       return matchTeamCode;
     } catch (err) {
-      console.log(err);
       return null;
     }
   };
@@ -81,14 +80,12 @@ const Search = () => {
     };
     findHeight();
     window.addEventListener('resize', findHeight);
-    // return window.removeEventListener('resize', findHeight);
   }, []);
 
   return (
     <div className="Search-Page-Wrapper">
       <MainIcon />
       <MiddelBox />
-      {/* <SearchBar value={searchValue} setValue={setValue} setIsFocusInput={setIsFocusInput} loading={loading} /> */}
       <SearchBar
         loading={loading}
         value={searchValue}

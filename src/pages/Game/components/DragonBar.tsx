@@ -33,11 +33,11 @@ function DragonBar() {
           </p>
         </span>
         <div className="control-contianer">
-          <div className={isMaxCnt ? 'arrowBox disabled' : 'arrowBox'}>
+          <div className={isMaxCnt ? 'arrowBox disabled' : 'arrowBox'} onClick={downDragonCnt}>
             <img src={upArrow} alt="바람용 횟수 화살표" onClick={upDragonCnt} />
           </div>
-          <div className={isMinCnt ? 'arrowBox disabled' : 'arrowBox'}>
-            <img src={downArrow} alt="바람용 횟수 화살표" onClick={downDragonCnt} />
+          <div className={isMinCnt ? 'arrowBox disabled' : 'arrowBox'} onClick={downDragonCnt}>
+            <img src={downArrow} alt="바람용 횟수 화살표" />
           </div>
         </div>
       </div>

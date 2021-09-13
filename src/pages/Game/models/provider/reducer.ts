@@ -16,6 +16,7 @@ enum Action {
   COUNT,
   ULTLEVEL,
   ITEM,
+  SEND,
 }
 
 export interface FetchState {
@@ -36,6 +37,9 @@ interface IAction {
   method?: string
   timer?: NodeJS.Timer
   timerList?: string[]
+  stomp?: React.MutableRefObject<any>
+  newUser?: string
+  matchTeamCode?: string
 }
 
 export const initState: FetchState = {
@@ -53,8 +57,10 @@ export function reducer(state: FetchState, action: IAction) {
     case Action.LOADING:
       return setFecthState(state.champsData, true, null);
 
-    case Action.ERROR:
+    case Action.ERROR: {
+      console.log(action.error);
       return setFecthState(state.champsData, false, action.error);
+    }
 
     case Action.SUCCESS: {
       return setFecthState(action.champsData, false, null);
@@ -138,6 +144,20 @@ export function reducer(state: FetchState, action: IAction) {
       return setFecthState(newChampsData, false, null);
     }
 
+    case Action.SEND: {
+      const { stomp, newUser, matchTeamCode } = action;
+      const socketData = {
+        initData: { data: state.champsData, newUser },
+      };
+
+      stomp.current.send(
+        `/pub/comm/initData/${matchTeamCode}`,
+        {},
+        JSON.stringify(socketData),
+      );
+      return setFecthState(state.champsData, false, null);
+    }
+
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -179,6 +199,12 @@ export const createDispatcher = (dispatch: React.Dispatch<IAction>) => {
 
     error(error: Error) {
       dispatch({ type: Action.ERROR, error });
+    },
+
+    send(stomp: React.MutableRefObject<any>, newUser: string, matchTeamCode: string) {
+      dispatch({
+        type: Action.SEND, stomp, newUser, matchTeamCode,
+      });
     },
   };
 };

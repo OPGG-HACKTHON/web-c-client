@@ -18,9 +18,10 @@ const gameDataManager = {
     }
   },
 
-  async isGameOver(matchTeamCode: string) {
-    const { data } = await axios.get(`/v1/match/teamCode/${matchTeamCode}`);
-    return data.data.matchStatus;
+  async isGameOver(summonerName: string, history: any) {
+    if (!summonerName) history.push('/');
+    const { data } = await axios.get(`https://backend.swoomi.me/v1/match/${summonerName}`);
+    return !data.data.matchStatus;
   },
 
   createChampsData(champsServerData: ServerData[]): ChampData[] {
@@ -103,14 +104,14 @@ const gameDataManager = {
   resetSpell(userData: ChampData, spellType: SpellKey) {
     const spellData = userData.spells[spellType] as SpellData;
     if (spellType === 'R') {
-      const { src, level } = spellData;
+      const { src, level, name } = spellData;
       userData.spells[spellType] = {
-        src, spellType, time: null, isOn: true, level,
+        src, spellType, time: null, isOn: true, level, name,
       };
     } else {
-      const { src } = spellData;
+      const { src, name } = spellData;
       userData.spells[spellType] = {
-        src, spellType, time: null, isOn: true,
+        src, spellType, time: null, isOn: true, name,
       };
     }
   },

@@ -98,9 +98,11 @@ export function reducer(state: FetchState, action: IAction) {
       const { summonerName, spellKey } = action;
       const newChampsData = [...state.champsData];
       newChampsData.forEach((champData) => {
+        console.log(champData.spells);
         if (champData.summonerName === summonerName) {
           const { time } = champData.spells[spellKey];
           if (time === 11) {
+            // if (!champData.spells[spellKey].name) return;
             const text = `${champData.champName} ${champData.spells[spellKey].name} 십초 전`;
             speak(text);
           }
@@ -108,7 +110,7 @@ export function reducer(state: FetchState, action: IAction) {
             champData.spells[spellKey].time = 0;
             champData.spells[spellKey].isOn = true;
             const text = `${champData.champName} ${champData.spells[spellKey].name} 온`;
-            if (!champData.spells[spellKey].name) return;
+            // if (!champData.spells[spellKey].name) return;
             speak(text);
           }
           if (!time || time < 0) {

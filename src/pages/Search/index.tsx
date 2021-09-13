@@ -47,7 +47,7 @@ const Search = () => {
       setLoading(true);
       const { data: nameData } = await axios.get(`/v1/summoner/${searchValue}`);
       const { summonerName } = nameData.data;
-      console.log(summonerName);
+      localStorage.setItem('summonerName', summonerName);
       if (!nameData.success) throw new Error('not find');
 
       const { data } = await axios.get(`/v1/match/${summonerName}`);

@@ -11,7 +11,6 @@ import axios from 'axios';
 import NoSleep from 'nosleep.js';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { match } from 'assert/strict';
 import { reducer, createDispatcher, initState } from './reducer';
 import GameContext from '../context/GameContext';
 import gameDataManager from '../managers/gameDataManager';
@@ -36,20 +35,30 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const curtainTimer = useRef(null);
   const userId = useRef(uuidv4());
   const isUpdatedData = useRef(false);
+  const userName = useRef(localStorage.getItem('summonerName'));
   const [itemSelectingSummonerName, setItemSelectingSummonerName] = useState();
 
-  // const goWaitPageGameOver = () => {
-  //   if(gameDataManager.isGameOver(matchTeamCode)) history.push('/')
-  // }
+  const handelError = async (err) => {
+    const isGameOver = await gameDataManager.isGameOver(userName.current, history);
+    if (isGameOver) {
+      history.push(`/room/${userName.current}`);
+    } else {
+      const { data } = await axios.get(`https://backend.swoomi.me/v1/match/status/${userName.current}`);
+      const { matchTeamCode: newCode } = data.data;
+      window.location.href = `/game/${newCode}`; // history 시 현재 게임 데이터로 최신화가 안됨( 매치 데이터는 최산 맞음)
+    }
+    dispatcher.error(err);
+  };
 
   const getChampsInitData = async () => {
     try {
-      await gameDataManager.isGameOver(matchTeamCode);
       dispatcher.loading();
+      const isGameOver = await gameDataManager.isGameOver(userName.current, history);
+      if (isGameOver) throw new Error();
       const champsData = await gameDataManager.getChampsInitData(matchTeamCode);
       dispatcher.success(champsData);
     } catch (err) {
-      dispatcher.error(err);
+      handelError(err);
     }
   };
 
@@ -89,7 +98,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       dispatcher.render();
     } catch (err) {
-      dispatcher.error(err);
+      handelError(err);
     }
   };
 
@@ -115,7 +124,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       dispatcher.render();
     } catch (err) {
-      dispatcher.error(err);
+      handelError(err);
     }
   };
 
@@ -148,7 +157,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       dispatcher.render();
     } catch (err) {
-      dispatcher.error(err);
+      handelError(err);
       gameDataManager.updateUltLevel(userData, preData);
     }
   };
@@ -171,25 +180,29 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
   const getTotalSpellTime = async (summonerName: string,
     spellType: SpellKey, timeGap: number = 0): Promise<number> => {
-    dispatcher.loading();
+    try {
+      dispatcher.loading();
 
-    const userData = getData(summonerName);
-    const ultLevel = userData.spells.R.level;
-    if (spellType === 'R' && ultLevel === 0) {
-      updateUltLevel(summonerName, 1);
+      const userData = getData(summonerName);
+      const ultLevel = userData.spells.R.level;
+      if (spellType === 'R' && ultLevel === 0) {
+        updateUltLevel(summonerName, 1);
+      }
+
+      const { data } = await axios.get(
+        `https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=${ultLevel}`,
+      );
+
+      if (!data.success) throw new Error();
+      const spellTimes = data.data;
+
+      const spellTime = spellTimes[`cooltime${spellType}`];
+
+      const spellTimeUpdated = spellTime - timeGap < 0 ? null : spellTime - timeGap;
+      return spellTimeUpdated;
+    } catch (err) {
+      handelError(err);
     }
-
-    const { data } = await axios.get(
-      `https://backend.swoomi.me/champion/calcedCooltimeInfo?summonerName=${summonerName}&ultLevel=${ultLevel}`,
-    );
-
-    if (!data.success) throw new Error();
-    const spellTimes = data.data;
-
-    const spellTime = spellTimes[`cooltime${spellType}`];
-
-    const spellTimeUpdated = spellTime - timeGap < 0 ? null : spellTime - timeGap;
-    return spellTimeUpdated;
   };
 
   const onUseSpell = async (
@@ -220,7 +233,8 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       countSpellTime(summonerName, spellType);
     } catch (err) {
-      dispatcher.error(err);
+      console.log(err);
+      handelError(err);
     }
   };
 
@@ -248,7 +262,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       dispatcher.render();
     } catch (err) {
-      dispatcher.error(err);
+      handelError(err);
     }
   };
 
@@ -281,7 +295,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       countSpellTime(summonerName, spellType);
       dispatcher.render();
     } catch (err) {
-      dispatcher.error(err);
+      handelError(err);
     }
   };
 

@@ -98,7 +98,6 @@ export function reducer(state: FetchState, action: IAction) {
       const { summonerName, spellKey } = action;
       const newChampsData = [...state.champsData];
       newChampsData.forEach((champData) => {
-        console.log(champData.spells);
         if (champData.summonerName === summonerName) {
           const { time } = champData.spells[spellKey];
           if (time === 11) {

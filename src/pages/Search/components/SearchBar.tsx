@@ -29,6 +29,7 @@ const SearchBar = ({
           e.preventDefault();
         }}
         onBlur={() => setIsFocusInput(false)}
+        autoComplete="off"
       />
       {loading ? 'loading' : <IoMdClose onClick={deleteText} />}
     </div>

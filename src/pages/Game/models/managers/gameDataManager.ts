@@ -19,8 +19,7 @@ const gameDataManager = {
   },
 
   async isGameOver(matchTeamCode: string) {
-    const { data } = await axios.get(`/v1/match/${matchTeamCode}`);
-    console.log(data);
+    const { data } = await axios.get(`/v1/match/teamCode/${matchTeamCode}`);
     return data.data.matchStatus;
   },
 

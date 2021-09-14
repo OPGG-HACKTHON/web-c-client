@@ -17,7 +17,7 @@ import BrowserWarning from '@/global/layout/components/BrowserWarning';
 import PublicRoute from '@/global/routes/PublicRoute';
 import PrivateRoute from '@/global/routes/PrivateRoute';
 
-const Share = React.lazy(() => import('@/pages/Share'));
+// const Share = React.lazy(() => import('@/pages/Share'));
 const Search = React.lazy(() => import('@/pages/Search'));
 const Room = React.lazy(() => import('@/pages/Room'));
 const Game = React.lazy(() => import('@/pages/Game'));

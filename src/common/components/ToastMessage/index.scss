@@ -1,11 +1,11 @@
 .toast-message {
   position: absolute;
   bottom: 84px;
-  left: 10%;
+  left: calc(50% - 156.5px);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: r(313px);
   height: r(48px);
   border: 1px solid #6675ff;
   border-radius: r(10px);

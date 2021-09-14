@@ -73,6 +73,11 @@
         border-radius: 5px;
         cursor: pointer;
         background: #6675ff;
+
+        img {
+          width: r(10px);
+          height: r(5px);
+        }
       }
 
       .disabled {

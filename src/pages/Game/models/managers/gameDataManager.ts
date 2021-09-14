@@ -3,13 +3,13 @@
 import _ from 'lodash';
 import axios from '@/common/helper/axios';
 import {
-  ChampData, SpellKey, ServerData, SpellData,
+  ChampData, SpellKey, ServerData, SpellData, ItemData,
 } from '../type';
+import ITEM_LIST from '../../components/ChamptionItemContainer/components/itemList';
 
 const gameDataManager = {
   async getChampsInitData(matchTeamCode: string): Promise<ChampData[]> {
     try {
-      console.log(matchTeamCode);
       const { data } = await axios.get(`/v1/match/data/matchTeamCode/${matchTeamCode}`);
       const serverChampsData: ServerData[] = data.data;
       const champsData = gameDataManager.createChampsData(serverChampsData);
@@ -61,16 +61,44 @@ const gameDataManager = {
     });
   },
 
+  getItemDataByRiot(itemName: string) {
+    let itemData = {};
+    ITEM_LIST.forEach((riotData) => {
+      if (riotData.name === itemName) {
+        itemData = {
+          name: itemName,
+          skillAccel: Number(riotData.skillAccel),
+          englishName: riotData.englishName,
+          src: riotData.src,
+        };
+      }
+    });
+    return itemData;
+  },
+
   buyItems(purchaserData: ChampData, items: string[]) {
     const preItemsPurchased = purchaserData.itemsPurchased ?? [];
     const initItemMap = { itemsPurchased: [...preItemsPurchased], itemsNotPurchased: [] };
+
     const itemMap = purchaserData.frequentItems.reduce((acc, itemData) => {
-      if (items.includes(itemData.name)) acc.itemsPurchased.push(itemData);
-      else acc.itemsNotPurchased.push(itemData);
+      if (items.includes(itemData.name)) {
+        acc.itemsPurchased.push(itemData);
+        const idx = items.indexOf(itemData.name);
+        items.splice(idx, 1);
+      } else acc.itemsNotPurchased.push(itemData);
       return acc;
     }, initItemMap);
 
     const { itemsPurchased, itemsNotPurchased } = itemMap;
+    if (items.length !== 0) {
+      items.forEach((itemName) => {
+        const isAleadyPurchased = purchaserData.itemsPurchased && purchaserData.itemsPurchased.filter((itemData) => itemData.name === itemName).length !== 0;
+        if (isAleadyPurchased) return;
+        const itemData = gameDataManager.getItemDataByRiot(itemName) as ItemData;
+        itemsPurchased.push(itemData);
+      });
+    }
+
     purchaserData.originalFrequentItems = purchaserData.originalFrequentItems || purchaserData.frequentItems;
     purchaserData.frequentItems = _.sortBy(
       itemsNotPurchased,

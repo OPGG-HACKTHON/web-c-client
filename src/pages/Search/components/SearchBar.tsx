@@ -1,6 +1,6 @@
 import React from 'react';
 import Breakpoints from '@/global/styles/breakPoints';
-
+import { useTranslation } from 'react-i18next';
 import { IoMdClose } from 'react-icons/io';
 
 import './SearchBar.scss';
@@ -9,6 +9,8 @@ import Spinner from '@/common/components/spinner';
 const SearchBar = ({
   value, setValue, setIsFocusInput, loading,
 }) => {
+  const { t } = useTranslation();
+
   const deleteText = () => {
     setValue('');
     const searchElem = document.querySelector('#search-bar') as HTMLElement;
@@ -21,7 +23,7 @@ const SearchBar = ({
     <div className="SearchBar">
       <input
         autoFocus={isDesktop}
-        placeholder="닉네임을 입력해주세요"
+        placeholder={t('search.writeNickname')}
         spellCheck="false"
         id="search-bar"
         value={value}

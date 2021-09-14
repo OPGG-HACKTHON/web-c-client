@@ -1,8 +1,24 @@
 {
-  "aa": "aasdsad",
+  "mainValueHTML": "Conveniently, try to raise your tier by checking the <strong>exact spell cooltime.</strong>",
+  "search": {
+    "writeNickname": "Your Summoner Name",
+    "checkNickname": "Please check your Summoner Name is correct.",
+    "doSearch": "Search"
+  },
+  "room": {
+    "gameNotStarted": "The game hasn't started yet.",
+    "inviteYourTeam": "Invite your team members through link sharing!",
+    "linkCopied": "Share Link Copied.",
+    "share": "Share"
+  },
   "game": {
+    "dragonBar": {
+      "infoBeforeCount": "Enemy takes",
+      "infoAfterCount": "Cloud Drake."
+    },
     "championItem": {
-      "beforeTimeText": "{{second}}s ago"
+      "beforeTimeText": "{{second}}s ago",
+      "unlock": "Unlock"
     }
   },
   "ChamptionItemContainer": {
@@ -18,11 +34,13 @@
   },
   "ultimate": "Ultimate",
   "spells": {
-    "SummonerHeal": "Heal",
-    "SummonerDot": "Ignite",
-    "SummonerBoost": "Cleanse",
-    "SummonerTeleport": "Teleport",
-    "SummonerExhaust": "Exhaust",
-    "SummonerFlash": "Flash"
+    "회복": "Heal",
+    "점화": "Ignite",
+    "정화": "Cleanse",
+    "순간이동": "Teleport",
+    "탈진": "Exhaust",
+    "방어막": "Barrier",
+    "유체화": "Ghost",
+    "점멸": "Flash"
   }
 }

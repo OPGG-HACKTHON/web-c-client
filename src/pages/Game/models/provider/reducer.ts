@@ -1,11 +1,11 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
+import { speechTextFunc } from '@/common/hooks/useSpeechText.js';
 import gameDataManager from '../managers/gameDataManager';
 import {
   ChampData, SocketSpellData, SpellKey,
 } from '../type';
 import exampleData from './example';
-import speak from '../managers/TTS';
 import { dragonData } from './dragonData';
 
 enum Action {
@@ -98,20 +98,20 @@ export function reducer(state: FetchState, action: IAction) {
     case Action.COUNT: {
       const { summonerName, spellKey } = action;
       const newChampsData = [...state.champsData];
-      newChampsData.forEach((champData) => {
+      newChampsData.forEach(async (champData) => {
         if (champData.summonerName === summonerName) {
           const { time } = champData.spells[spellKey];
           if (time === 11) {
-            // if (!champData.spells[spellKey].name) return;
-            const text = `${champData.champName} ${champData.spells[spellKey].name} 십초 전`;
-            speak(text);
+            const text = `${champData.champName} ${champData.spells[spellKey].name}`;
+            const secondText = '10초 전';
+            speechTextFunc(text, secondText);
           }
           if (time === 1) {
             champData.spells[spellKey].time = 0;
             champData.spells[spellKey].isOn = true;
-            const text = `${champData.champName} ${champData.spells[spellKey].name} 온`;
-            // if (!champData.spells[spellKey].name) return;
-            speak(text);
+            const text = `${champData.champName}`;
+            const secondText = `${champData.spells[spellKey].name} 온`;
+            speechTextFunc(text, secondText);
           }
           if (!time || time < 0) {
             clearInterval(action.timer);

@@ -9,7 +9,7 @@
 
   .dragonBar {
     position: fixed;
-    top: $summonerContainer-height-web;
+    top: $summonerContainer-height-mobile;
     z-index: 1000;
     display: -webkit-flex;
     display: flex;
@@ -27,9 +27,10 @@
     font-size: r(12px);
     color: #fff;
 
-    @include bp-down(md) {
-      top: $summonerContainer-height-mobile;
-    }
+    // TODO-web
+    // @include bp-up(md) {
+    //   top: $summonerContainer-height-pc;
+    // }
 
     .notice-container {
       display: flex;
@@ -78,11 +79,16 @@
           width: r(10px);
           height: r(5px);
         }
-      }
 
-      .disabled {
-        margin-top: 1px;
-        filter: grayscale(80%);
+        &:last-child {
+          img {
+            margin-top: 1px;
+          }
+        }
+
+        .disabled {
+          filter: grayscale(80%);
+        }
       }
     }
   }

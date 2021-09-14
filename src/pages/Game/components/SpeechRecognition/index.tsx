@@ -17,10 +17,6 @@ declare global {
 
 const LANGUAGE = 'ko-KR';
 
-export const getSpellKeyFromSrc = (src: string) => {
-  return src.split('/')[src.split('/').length - 1].split('.')[0];
-};
-
 const SpeechRecognition = () => {
   const { gameData, onUseSpell } = useGameData();
 
@@ -54,8 +50,8 @@ const SpeechRecognition = () => {
       const championNameList = gameData.map((s) => s.champName);
       const spellDict = gameData.reduce((acc, cur) => {
         acc[cur.champName] = [
-          getSpellKeyFromSrc(cur.spells.D.src),
-          getSpellKeyFromSrc(cur.spells.F.src),
+          cur.spells.D.name,
+          cur.spells.F.name,
         ];
         return acc;
       }, {});

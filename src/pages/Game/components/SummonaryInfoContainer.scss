@@ -6,11 +6,12 @@
   z-index: 1000;
   width: 100%;
   max-width: $app-max-width;
-  height: 82px;
+  height: 142px;
 
-  @include bp-down(md) {
-    height: 142px;
-  }
+  // TODO-web
+  // @include bp-up(md) {
+  //   height: 82px;
+  // }
 
   .SummonaryChamp {
     transform: translate(0, 0) !important;
@@ -28,10 +29,11 @@
     padding: r(12px $game-page-horizontal-padding-mobile 16px $game-page-horizontal-padding-mobile);
     background-color: #1a181e;
 
-    @include bp-up(md) {
-      padding-right: $game-page-horizontal-padding-pc;
-      padding-left: $game-page-horizontal-padding-pc;
-    }
+    // TODO-web
+    // @include bp-up(md) {
+    //   padding-right: $game-page-horizontal-padding-pc;
+    //   padding-left: $game-page-horizontal-padding-pc;
+    // }
 
     & > * {
       flex: 0 1;

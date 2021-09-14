@@ -1,8 +1,24 @@
 {
-  "aa": "aasdsad",
+  "mainValueHTML": "편리하게, 정확한 <strong>스펠체크</strong>로 티어를 상승 시켜보세요",
+  "search": {
+    "writeNickname": "닉네임을 입력해주세요",
+    "checkNickname": "닉네임을 확인해주세요.",
+    "doSearch": "검색하기"
+  },
+  "room": {
+    "gameNotStarted": "아직 게임이 시작되지 않았어요.",
+    "inviteYourTeam": "링크 공유를 통해 팀원들을 초대해보세요!",
+    "linkCopied": "링크가 복사되었습니다.",
+    "share": "공유하기"
+  },
   "game": {
+    "dragonBar": {
+      "infoBeforeCount": "적팀이 바람용을",
+      "infoAfterCount": "번 먹었어요."
+    },
     "championItem": {
-      "beforeTimeText": "{{second}}s전"
+      "beforeTimeText": "{{second}}s전",
+      "unlock": "잠금해제"
     }
   },
   "ChamptionItemContainer": {
@@ -18,11 +34,13 @@
   },
   "ultimate": "궁극기",
   "spells": {
-    "SummonerHeal": "힐",
-    "SummonerDot": "점화",
-    "SummonerBoost": "정화",
-    "SummonerTeleport": "텔레포트",
-    "SummonerExhaust": "탈진",
-    "SummonerFlash": "점멸"
+    "회복": "힐",
+    "점화": "점화",
+    "정화": "정화",
+    "순간이동": "텔레포트",
+    "탈진": "탈진",
+    "방어막": "방어막",
+    "유체화": "유체화",
+    "점멸": "점멸"
   }
 }

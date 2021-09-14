@@ -4,10 +4,6 @@
   #app-body {
     margin-top: $topbar-height;
 
-    @include bp-down(md) {
-      margin-top: $topbar-height;
-    }
-
     #app-body-content {
       max-width: $app-max-width;
       margin: 0 auto;

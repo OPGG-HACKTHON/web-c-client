@@ -2,6 +2,7 @@
 /* eslint-disable no-useless-catch */
 import _ from 'lodash';
 import axios from '@/common/helper/axios';
+
 import {
   ChampData, SpellKey, ServerData, SpellData, ItemData,
 } from '../type';

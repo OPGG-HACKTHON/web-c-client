@@ -67,75 +67,79 @@ const ItemSelector = () => {
 
   return (
     <div className="ItemSelector">
-      <div className="top-container">
-        <button className="back-btn" onClick={() => setItemSelectingSummonerName(null)}>
-          <img src={backIcon} alt="닫기" />
-        </button>
-      </div>
-      <div className="search-container">
-        <input
-          className="search-input"
-          placeholder={t('ItemSelector.searchInputPlaceHolder')}
-          onChange={({ target: { value } }) => setSearchValue(value.trim())}
-        />
-        <img className="search-icon" src={searchIcon} alt="검색" />
-      </div>
-      { !!searchValue && (
-        <div className="item-list-container">
-          <h4 className="title">{t('ItemSelector.searchedItem')}</h4>
-          { searchedItemList.length
-            ? (
-              <div className="item-list">
-                { searchedItemList.map((itemData) => (
-                  <Item
-                    key={itemData.name}
-                    itemData={itemData}
-                    disabled={!getIsSelectedItem(itemData.name)}
-                    onClick={() => onClickItem(itemData)}
-                  />
-                ))}
-              </div>
-            )
-            : (
-              <div className="no-result-text">{t('ItemSelector.noSearchedItem')}</div>
-            )}
+      <div className="item-selector-holder">
+        <div className="top-container">
+          <button className="back-btn" onClick={() => setItemSelectingSummonerName(null)}>
+            <img src={backIcon} alt="닫기" />
+          </button>
         </div>
-      )}
-      <div className="item-list-container">
-        <h4 className="title">{t('ItemSelector.frequentItem')}</h4>
-        <div className="item-list">
-          { frequentItems.map((itemData) => (
-            <Item
-              key={itemData.name}
-              itemData={itemData}
-              disabled={!getIsSelectedItem(itemData.name)}
-              onClick={() => onClickItem(itemData)}
-            />
-          ))}
+        <div className="search-container">
+          <input
+            className="search-input"
+            placeholder={t('ItemSelector.searchInputPlaceHolder')}
+            onChange={({ target: { value } }) => setSearchValue(value.trim())}
+          />
+          <img className="search-icon" src={searchIcon} alt="검색" />
         </div>
-      </div>
-      <div className="bottom-container">
-        { !!selectedItemList.length && (
+        { !!searchValue && (
           <div className="item-list-container">
-            <h4 className="title">{t('ItemSelector.selectedItem')}</h4>
-            <div className="item-list">
-              { selectedItemList.map((itemData) => (
-                <Item
-                  key={itemData.name}
-                  itemData={itemData}
-                  disabled={!getIsSelectedItem(itemData.name)}
-                  onClick={() => onClickItem(itemData)}
-                />
-              ))}
-            </div>
+            <h4 className="title">{t('ItemSelector.searchedItem')}</h4>
+            { searchedItemList.length
+              ? (
+                <div className="item-list">
+                  { searchedItemList.map((itemData) => (
+                    <Item
+                      key={itemData.name}
+                      itemData={itemData}
+                      disabled={!getIsSelectedItem(itemData.name)}
+                      onClick={() => onClickItem(itemData)}
+                    />
+                  ))}
+                </div>
+              )
+              : (
+                <div className="no-result-text">{t('ItemSelector.noSearchedItem')}</div>
+              )}
           </div>
         )}
-        <button
-          className="complete-btn"
-          disabled={!selectedItemList.length}
-          onClick={() => onComplete()}
-        >{t('ItemSelector.completeSelect')}
-        </button>
+        <div className="item-list-container">
+          <h4 className="title">{t('ItemSelector.frequentItem')}</h4>
+          <div className="item-list">
+            { frequentItems.map((itemData) => (
+              <Item
+                key={itemData.name}
+                itemData={itemData}
+                disabled={!getIsSelectedItem(itemData.name)}
+                onClick={() => onClickItem(itemData)}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="bottom-container">
+          <div className="bottom-holder">
+            { !!selectedItemList.length && (
+              <div className="item-list-container">
+                <h4 className="title">{t('ItemSelector.selectedItem')}</h4>
+                <div className="item-list">
+                  { selectedItemList.map((itemData) => (
+                    <Item
+                      key={itemData.name}
+                      itemData={itemData}
+                      disabled={!getIsSelectedItem(itemData.name)}
+                      onClick={() => onClickItem(itemData)}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+            <button
+              className="complete-btn"
+              disabled={!selectedItemList.length}
+              onClick={() => onComplete()}
+            >{t('ItemSelector.completeSelect')}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

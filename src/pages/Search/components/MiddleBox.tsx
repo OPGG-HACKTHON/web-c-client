@@ -1,14 +1,17 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import logo from '@/common/images/logo.png';
 
 import './MiddleBox.scss';
 
 const MiddleBox = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="MiddleBox">
       <img src={logo} alt="스우미 로고" className="logo-imgage" />
-      <span>편리하게, 정확한 <strong>스펠체크</strong>로 티어를 상승 시켜보세요</span>
+      <span dangerouslySetInnerHTML={{ __html: t('mainValueHTML') }} />
     </div>
   );
 };

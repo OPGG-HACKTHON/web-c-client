@@ -497,7 +497,7 @@ const getShortGrammarWordList = (dict: Object, wordListLength = 1) => {
     if (Array.isArray(list[0])) {
       // champWordList = _.flattenDeep(list.map((l) => l.slice(0, wordListLength)));
       // grammer 개수 한도 초과로 처음 것만 사용
-      champWordList = _.flattenDeep(Array.isArray(list[0]));
+      champWordList = _.flattenDeep(list[0].slice(0, wordListLength));
     } else {
       champWordList = list.slice(0, wordListLength);
     }
@@ -519,7 +519,7 @@ export const getGrammarList = (language: LanguageType = LanguageType.ko, grammer
           grammarList = [
             // ...koPosition,
             ...getShortGrammarWordList(koChampionDict),
-            ...getShortGrammarWordList(koAction),
+            ...getShortGrammarWordList(koActionDict),
           ];
           break;
         }
@@ -532,7 +532,7 @@ export const getGrammarList = (language: LanguageType = LanguageType.ko, grammer
           break;
         }
         case GrammerType.action: {
-          grammarList = getShortGrammarWordList(koAction);
+          grammarList = getShortGrammarWordList(koActionDict, 5);
           break;
         }
         // no default
@@ -565,6 +565,8 @@ export const getGrammarList = (language: LanguageType = LanguageType.ko, grammer
 
 export const getGrammarString = (language: LanguageType = LanguageType.ko, grammer: GrammerType = GrammerType.all) => {
   const grammarList = getGrammarList(language, grammer);
+
+  console.log(grammarList, grammarList.length);
 
   const grammar = `#JSGF V1.0; grammar firstList; public <firstList> = ${grammarList.join(' | ')};`;
   return grammar;

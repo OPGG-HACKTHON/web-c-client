@@ -115,7 +115,7 @@ const Search = () => {
           isPossibleSearch={isPossibleSearch}
         />
       ) : null}
-      <p className="version">v2109141352</p>
+      <p className="version">v2109142215</p>
     </div>
   );
 };

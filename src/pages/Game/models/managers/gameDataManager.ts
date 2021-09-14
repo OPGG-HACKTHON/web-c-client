@@ -9,6 +9,7 @@ import {
 const gameDataManager = {
   async getChampsInitData(matchTeamCode: string): Promise<ChampData[]> {
     try {
+      console.log(matchTeamCode);
       const { data } = await axios.get(`/v1/match/data/matchTeamCode/${matchTeamCode}`);
       const serverChampsData: ServerData[] = data.data;
       const champsData = gameDataManager.createChampsData(serverChampsData);

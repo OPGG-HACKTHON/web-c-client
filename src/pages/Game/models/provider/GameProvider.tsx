@@ -41,11 +41,15 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const handelError = async (err) => {
     const isGameOver = await gameDataManager.isGameOver(userName.current, history);
     if (isGameOver) {
-      history.push(`/room/${userName.current}`);
+      if (!userName.current) history.push('/');
+      else history.push(`/room/${userName.current}`);
     } else {
       const { data } = await axios.get(`https://backend.swoomi.me/v1/match/status/${userName.current}`);
       const { matchTeamCode: newCode } = data.data;
-      window.location.href = `/game/${newCode}`; // history 시 현재 게임 데이터로 최신화가 안됨( 매치 데이터는 최산 맞음)
+      if (matchTeamCode === newCode) {
+        alert('게임을 찾을 수 없습니다.');// 서버 쪽의 알 수 없는 에러 대응, 사실 라이엇에서 게임 데이터를 안보내주는 것
+        history.push('/');
+      } else window.location.href = `/game/${newCode}`; // history 시 현재 게임 데이터로 최신화가 안됨( 매치 데이터는 최산 맞음)
     }
     dispatcher.error(err);
   };
@@ -179,7 +183,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   };
 
   const getTotalSpellTime = async (summonerName: string,
-    spellType: SpellKey, timeGap: number = 0): Promise<number> => {
+    spellType: SpellKey, timeGap: number = 0) => {
     try {
       dispatcher.loading();
 
@@ -233,7 +237,6 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       countSpellTime(summonerName, spellType);
     } catch (err) {
-      console.log(err);
       handelError(err);
     }
   };

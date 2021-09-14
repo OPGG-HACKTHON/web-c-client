@@ -5,7 +5,7 @@
 .SummonaryInfoContainer {
   z-index: 1000;
   width: 100%;
-  max-width: map-get($grid-breakpoints, lg);
+  max-width: $app-max-width;
   height: 82px;
 
   @include bp-down(md) {
@@ -24,7 +24,7 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    max-width: map-get($grid-breakpoints, lg);
+    max-width: $app-max-width;
     padding: r(12px $game-page-horizontal-padding-mobile 16px $game-page-horizontal-padding-mobile);
     background-color: #1a181e;
 

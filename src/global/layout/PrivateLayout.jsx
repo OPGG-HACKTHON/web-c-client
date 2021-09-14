@@ -13,9 +13,7 @@ const PrivateLayout = ({
       <TopBar />
       <div id="app-body">
         <div id="app-body-content">
-          <div>
-            {children}
-          </div>
+          {children}
         </div>
       </div>
     </div>

@@ -1,14 +1,19 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import axios from '@/common/helper/axios';
 import ToastMessage from '@/common/components/ToastMessage';
 import MainIcon from './components/MainIcon';
-import MiddelBox from './components/MiddleBox';
+import MiddleBox from './components/MiddleBox';
 import SearchBar from './components/SearchBar';
 import SearchButton from './components/SearchButton';
 
 import './index.scss';
+
+const setScreenSize = () => {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+};
 
 const Search = () => {
   const history = useHistory();
@@ -64,7 +69,24 @@ const Search = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    setScreenSize();
+
+    window.addEventListener('resize', setScreenSize);
+    return () => window.removeEventListener('resize', setScreenSize);
+  }, []);
+
+  useEffect(() => {
+    if (isFocusInput) {
+      setTimeout(() => {
+        const scrollElem = document.querySelector('.SearchPage');
+        const scrollTop = scrollElem.scrollHeight - window.innerWidth + 64;
+        window.scrollTo({ top: scrollTop });
+      }, 200);
+    }
+  }, [isFocusInput]);
+
+  useEffect(() => {
     const findUser = (e) => {
       if (e.key === 'Enter' && !loading) {
         onClickSearchBtn();
@@ -74,19 +96,10 @@ const Search = () => {
     return () => document.removeEventListener('keydown', findUser);
   }, [searchValue, loading]);
 
-  React.useEffect(() => {
-    const findHeight = () => {
-      const wrapperElem = document.querySelector('.Search-Page-Wrapper') as HTMLElement;
-      wrapperElem.style.height = `${window.innerHeight}px`;
-    };
-    findHeight();
-    window.addEventListener('resize', findHeight);
-  }, []);
-
   return (
-    <div className="Search-Page-Wrapper">
+    <div className="SearchPage">
       <MainIcon />
-      <MiddelBox />
+      <MiddleBox />
       <SearchBar
         loading={loading}
         value={searchValue}
@@ -102,6 +115,7 @@ const Search = () => {
           isPossibleSearch={isPossibleSearch}
         />
       ) : null}
+      <p className="version">v2109141352</p>
     </div>
   );
 };

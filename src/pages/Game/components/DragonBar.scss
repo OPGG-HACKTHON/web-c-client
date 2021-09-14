@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: map-get($grid-breakpoints, lg);
+  max-width: $app-max-width;
   height: 64px;
   background-color: #1a181e;
 
@@ -17,7 +17,7 @@
     -webkit-justify-content: space-between;
     justify-content: space-between;
     width: 100%;
-    max-width: map-get($grid-breakpoints, lg);
+    max-width: $app-max-width;
     height: 64px;
     padding: 0 14px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -76,6 +76,7 @@
       }
 
       .disabled {
+        margin-top: 1px;
         filter: grayscale(80%);
       }
     }

@@ -10,9 +10,7 @@ const PublicLayout = ({
     <div className="PublicLayout">
       <div id="app-body">
         <div id="app-body-content">
-          <div>
-            {children}
-          </div>
+          {children}
         </div>
       </div>
     </div>

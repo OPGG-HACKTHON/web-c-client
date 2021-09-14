@@ -9,7 +9,7 @@
     }
 
     #app-body-content {
-      max-width: map-get($grid-breakpoints, lg);
+      max-width: $app-max-width;
       margin: 0 auto;
     }
   }

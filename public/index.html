@@ -3,7 +3,7 @@
   
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#6675FF">
 
     <meta property="og:url" content="https://swoomi.me">
@@ -21,10 +21,6 @@
     <meta name="twitter:description" content="편리하게, 정확한 스펠체크로 티어를 상승시켜보세요." />
     <meta name="twitter:image" content="imagelink" />
 
-    <!--
-      manifest.json provides metadata used when your web app is added to the
-      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
-    -->
     <!-- <link rel="manifest" href="%PUBLIC_URL%/static/manifest.json"> -->
 
     <!-- favicon -->
@@ -36,23 +32,24 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <title>롤 스펠체크 도우미 | 스우미</title>
+    
+    <script src="%PUBLIC_URL%/static/js/inobounce.min.js"></script>
 
     <style>
 html,
 body {
-  height: 0 !important;
-  background-color: #1a181e;
-
-  /* IE에서 가로 스크롤바 방지를 위해 */
-
-  /* -ms-overflow-style: none; */
+  margin: 0;
+  padding: 0;
+  background-color: #1a181e !important;
 }
 
-body {
+#app-scroll-container {
+  overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
-body::-webkit-scrollbar-thumb {
+#app-scroll-container::-webkit-scrollbar-thumb {
   height: 56px;
   border: 4px solid transparent;
   border-radius: 8px;
@@ -60,13 +57,9 @@ body::-webkit-scrollbar-thumb {
   background-clip: content-box;
 }
 
-body::-webkit-scrollbar {
+#app-scroll-container::-webkit-scrollbar {
   width: 16px;
   background-color: rgb(249, 249, 249);
-}
-
-#root {
-  min-height: calc(100vh - 54px);
 }
     </style>
   </head>
@@ -75,7 +68,7 @@ body::-webkit-scrollbar {
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <div id="root"></div>
+      <div id="root"></div>
   </body>
 
 </html>

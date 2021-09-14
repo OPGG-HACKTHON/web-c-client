@@ -11,12 +11,12 @@ import ItemSelector from './components/ChamptionItemContainer/components/ItemSel
 import Speech from './components/SpeechRecognition';
 import DragonBar from './components/DragonBar';
 
-const InGame = ({ match }: RouteComponentProps) => {
+const Game = ({ match }: RouteComponentProps) => {
   const { matchTeamCode } = match.params;
 
   return (
     <GameProvider matchTeamCode={matchTeamCode}>
-      <div>
+      <div className="Game">
         <SummonaryInfoContainer />
         <DragonBar />
         <GameContext.Consumer>
@@ -45,4 +45,4 @@ const InGame = ({ match }: RouteComponentProps) => {
   );
 };
 
-export default InGame;
+export default Game;

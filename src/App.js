@@ -22,8 +22,6 @@ const Room = React.lazy(() => import('@/pages/Room'));
 const Game = React.lazy(() => import('@/pages/Game'));
 
 const App = () => {
-  console.log('version', '2109121748');
-
   return (
     <ConfigProvider locale={koKR}>
       <Router history={history}>

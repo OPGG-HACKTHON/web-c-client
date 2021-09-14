@@ -27,7 +27,7 @@ const App = () => {
     <ConfigProvider locale={koKR}>
       <Router history={history}>
         <Switch>
-          <PublicRoute exact path="/share" component={Share} />
+          {/* <PublicRoute exact path="/share" component={Share} /> */}
           <PublicRoute exact path="/" component={Search} />
           <PublicRoute exact path="/room/:summonerName" component={Room} />
           <PrivateRoute exact path="/game/:matchTeamCode" component={Game} />

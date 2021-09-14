@@ -6,6 +6,7 @@ import {
 } from '../type';
 import exampleData from './example';
 import speak from '../managers/TTS';
+import { dragonData } from './dragonData';
 
 enum Action {
   LOADING,
@@ -152,7 +153,7 @@ export function reducer(state: FetchState, action: IAction) {
     case Action.SEND: {
       const { stomp, newUser, matchTeamCode } = action;
       const socketData = {
-        initData: { data: state.champsData, newUser },
+        initData: { data: state.champsData, newUser, dragonCnt: dragonData.dragonCnt },
       };
 
       stomp.current.send(

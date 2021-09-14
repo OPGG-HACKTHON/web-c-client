@@ -28,7 +28,7 @@ const App = () => {
       <Router history={history}>
         <Switch>
           <PublicRoute exact path="/" component={Search} />
-          <PublicRoute exact path="/share/:link" component={Share} />
+          <PublicRoute exact path="/share/:summonerName" component={Share} />
           <PublicRoute exact path="/room/:summonerName" component={Room} />
           <PrivateRoute exact path="/game/:matchTeamCode" component={Game} />
           <Redirect path="*" to="/" />

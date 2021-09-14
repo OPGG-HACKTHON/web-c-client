@@ -17,6 +17,7 @@ import gameDataManager from '../managers/gameDataManager';
 import {
   ChampData, SocketDragonData, SocketItemData, SocketSpellData, SocketUltData, SpellData, SpellKey,
 } from '../type';
+import { dragonData } from './dragonData';
 
 interface GameProviderProps {
   matchTeamCode: string;
@@ -37,6 +38,10 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const isUpdatedData = useRef(false);
   const userName = useRef(localStorage.getItem('summonerName'));
   const [itemSelectingSummonerName, setItemSelectingSummonerName] = useState();
+
+  React.useEffect(() => {
+    dragonData.dragonCnt = dragonCnt;
+  }, [dragonCnt]);
 
   const handelError = async (err) => {
     const isGameOver = await gameDataManager.isGameOver(userName.current, history);
@@ -355,7 +360,8 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
         stomp.current.subscribe(`/sub/comm/initData/${matchTeamCode}`, (msg) => {
           const data = JSON.parse(msg.body);
-          const { data: initData, newUser } = data.initData;
+          const { data: initData, newUser, dragonCnt: dragonInitCnt } = data.initData;
+          setDragonCnt(dragonInitCnt);
 
           if (newUser === userId.current) {
             initData.forEach((champData: ChampData) => {
@@ -374,7 +380,6 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
         stomp.current.subscribe(`/sub/comm/newUser/${matchTeamCode}`, (msg) => {
           const data = JSON.parse(msg.body);
           if (data.summonerName === userId.current) return;
-
           dispatcher.send(stomp, data.summonerName, matchTeamCode);
         });
 

@@ -5,9 +5,10 @@
   align-items: center;
   cursor: pointer;
 
-  @include bp-up(md) {
-    flex-direction: row;
-  }
+  // TODO-web
+  // @include bp-up(md) {
+  //   flex-direction: row;
+  // }
 
   &.swapping::after {
     content: '';
@@ -25,10 +26,11 @@
     margin-right: 0;
     margin-bottom: r(12px);
 
-    @include bp-up(md) {
-      margin-right: r(16px);
-      margin-bottom: 0;
-    }
+    // TODO-web
+    // @include bp-up(md) {
+    //   margin-right: r(16px);
+    //   margin-bottom: 0;
+    // }
   }
 
   .summonary-bottom-container {

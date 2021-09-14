@@ -17,6 +17,8 @@
   }
 
   .panel-spell {
+    flex: 3;
+    flex-basis: 75%;
     width: 75%;
   }
 
@@ -26,6 +28,8 @@
 
   .panel-item {
     display: flex;
+    flex: 1;
+    flex-basis: 25%;
     align-items: center;
     justify-content: center;
     width: 25%;
@@ -124,7 +128,10 @@
   }
 
   .refresh-button {
-    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
   }
 }
 

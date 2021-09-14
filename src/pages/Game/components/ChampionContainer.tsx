@@ -23,8 +23,10 @@ const ChampionContainer = ({
 }: ChampionComponentProps) => {
   const [isUltimateLevelModalVisible, setIsUltimateLevelModalVisible] = useState(false);
 
-  const width = resizeHook();
-  const isMobile = width < Breakpoints.md;
+  const isMobile = true;
+  // TODO-web
+  // const width = resizeHook();
+  // const isMobile = width < Breakpoints.md;
 
   const toggleModal = useCallback(() => {
     setIsUltimateLevelModalVisible(() => !isUltimateLevelModalVisible);

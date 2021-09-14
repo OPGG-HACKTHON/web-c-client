@@ -1,6 +1,5 @@
 import React, { useState, useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import RefreshIcon from '@/common/components/RefreshIcon';
 import LockerIcon from '@/common/components/LockerIcon';
 import SpellIconInItem from './SpellIconInItem';
@@ -74,7 +73,7 @@ const ChampionItem = ({
       return (
         <div className="ChampionItem">
           <div className="panel panel-ultimate">
-            <div className="panel-item" onClick={handleClickIcon}>
+            <div className="panel-item no-drag" onClick={handleClickIcon}>
               <SpellIconInItem
                 spellType={spellType}
                 src={src}
@@ -83,15 +82,15 @@ const ChampionItem = ({
               />
             </div>
             <div className="line" />
-            <div className="panel-item" onClick={handleClickTime(0)}>
+            <div className="panel-item no-drag" onClick={handleClickTime(0)}>
               {t('game.championItem.beforeTimeText', { second: 0 })}
             </div>
             <div className="line" />
-            <div className="panel-item" onClick={handleClickTime(15)}>
+            <div className="panel-item no-drag" onClick={handleClickTime(15)}>
               {t('game.championItem.beforeTimeText', { second: 15 })}
             </div>
             <div className="line" />
-            <div className="panel-item" onClick={handleClickTime(30)}>
+            <div className="panel-item no-drag" onClick={handleClickTime(30)}>
               {t('game.championItem.beforeTimeText', { second: 30 })}
             </div>
           </div>
@@ -100,7 +99,7 @@ const ChampionItem = ({
     }
     return (
       <div className="ChampionItem">
-        <div className="panel-item spell" onClick={handleClickIcon}>
+        <div className="panel-item no-drag spell" onClick={handleClickIcon}>
           <SpellIconInItem
             spellType={spellType}
             src={src}
@@ -110,21 +109,21 @@ const ChampionItem = ({
         </div>
         <div className="panel panel-spell">
           <div
-            className="panel-item panel-spell-item"
+            className="panel-item no-drag panel-spell-item"
             onClick={handleClickTime(0)}
           >
             {t('game.championItem.beforeTimeText', { second: 0 })}
           </div>
           <div className="line" />
           <div
-            className="panel-item panel-spell-item"
+            className="panel-item no-drag panel-spell-item"
             onClick={handleClickTime(15)}
           >
             {t('game.championItem.beforeTimeText', { second: 15 })}
           </div>
           <div className="line" />
           <div
-            className="panel-item panel-spell-item"
+            className="panel-item no-drag panel-spell-item"
             onClick={handleClickTime(30)}
           >
             {t('game.championItem.beforeTimeText', { second: 30 })}
@@ -147,15 +146,15 @@ const ChampionItem = ({
           <div className="leftTime">{time}s</div>
         </div>
         <div className="item-right">
-          <div className="time-button" onClick={handleClickTimeButton(10)}>
+          <div className="time-button no-drag" onClick={handleClickTimeButton(10)}>
             +10s
           </div>
           <div className="line" />
-          <div className="time-button" onClick={handleClickTimeButton(-10)}>
+          <div className="time-button no-drag" onClick={handleClickTimeButton(-10)}>
             -10s
           </div>
           <div className="line" />
-          <div className="refresh-button" onClick={handleReset}>
+          <div className="refresh-button no-drag" onClick={handleReset}>
             <RefreshIcon />
           </div>
         </div>
@@ -176,7 +175,7 @@ const ChampionItem = ({
       </div>
       <div className="item-right-wait">
         <LockerIcon />
-        <span className="lock-span">잠금해제</span>
+        <span className="lock-span">{t('game.championItem.unlock')}</span>
       </div>
     </div>
   );

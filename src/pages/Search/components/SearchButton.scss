@@ -7,9 +7,10 @@
   width: 100%;
   height: r(50px);
 
-  @include bp-up(md) {
-    visibility: hidden;
-  }
+  // TODO-web
+  // @include bp-up(md) {
+  //   visibility: hidden;
+  // }
 
   button {
     width: 100%;

@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { detect } from 'detect-browser';
+import { useTranslation } from 'react-i18next';
 
 import axios from '@/common/helper/axios';
+import setRealVh from '@/common/helper/setRealVh';
 import ToastMessage from '@/common/components/ToastMessage';
+
 import MainIcon from './components/MainIcon';
 import MiddleBox from './components/MiddleBox';
 import SearchBar from './components/SearchBar';
@@ -10,20 +14,19 @@ import SearchButton from './components/SearchButton';
 
 import './index.scss';
 
-const setScreenSize = () => {
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-};
-
 const Search = () => {
   const history = useHistory();
+  const { t } = useTranslation();
+  const messageTimer = useRef(null);
   const [isFocusInput, setIsFocusInput] = useState(false);
   const [searchValue, setValue] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [showShare, setShowShare] = useState<boolean>(false);
 
-  const messageTimer = useRef(null);
+  const browser = detect();
+  const isSafari = browser.name === 'ios';
   const isPossibleSearch = searchValue !== '';
+  const isSearchButtonVisible = !isSafari && (isFocusInput || isPossibleSearch);
 
   const getMatchTeamCode = async (summonerName: string) => {
     try {
@@ -50,7 +53,7 @@ const Search = () => {
   const onClickSearchBtn = async () => {
     try {
       setLoading(true);
-      const { data: nameData } = await axios.get(`/v1/summoner/${searchValue}`);
+      const { data: nameData } = await axios.get(`/v1/summoner/${String(searchValue).split('').join(' ')}`);
       const { summonerName } = nameData.data;
       localStorage.setItem('summonerName', summonerName);
       if (!nameData.success) throw new Error('not find');
@@ -70,10 +73,10 @@ const Search = () => {
   };
 
   useEffect(() => {
-    setScreenSize();
+    setRealVh();
 
-    window.addEventListener('resize', setScreenSize);
-    return () => window.removeEventListener('resize', setScreenSize);
+    window.addEventListener('resize', setRealVh);
+    return () => window.removeEventListener('resize', setRealVh);
   }, []);
 
   useEffect(() => {
@@ -107,15 +110,15 @@ const Search = () => {
         setIsFocusInput={setIsFocusInput}
       />
       {showShare && (
-        <ToastMessage content="닉네임을 확인해주세요." time={1500} />
+        <ToastMessage content={t('search.checkNickname')} time={1500} />
       )}
-      {isFocusInput || isPossibleSearch ? (
+      {isSearchButtonVisible && (
         <SearchButton
           onClick={onClickSearchBtn}
           isPossibleSearch={isPossibleSearch}
         />
-      ) : null}
-      <p className="version">v2109142215</p>
+      )}
+      <p className="version">v2109150140</p>
     </div>
   );
 };

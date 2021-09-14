@@ -1,4 +1,6 @@
 import React from 'react';
+import cs from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import dragon from '@/common/images/dragon.png';
 import downArrow from '@/common/images/downArrow.png';
@@ -9,6 +11,7 @@ import useGameData from '../hooks/useGameData';
 
 function DragonBar() {
   const { dragonCnt, updateDragonCnt } = useGameData();
+  const { t } = useTranslation();
 
   const isMaxCnt = dragonCnt === 4;
   const isMinCnt = dragonCnt === 0;
@@ -22,21 +25,15 @@ function DragonBar() {
       <div className="dragonBar">
         <span className="notice-container">
           <img src={dragon} alt="바람용" className="dragonImg" />
-          <p>
-            적팀이 바람용을
-          </p>
-          <div className="countBox">
-            {dragonCnt}
-          </div>
-          <p>
-            번 먹었어요.
-          </p>
+          <p>{t('game.dragonBar.infoBeforeCount')}</p>
+          <div className="countBox">{ dragonCnt }</div>
+          <p>{t('game.dragonBar.infoAfterCount')}</p>
         </span>
         <div className="control-contianer">
-          <div className={isMaxCnt ? 'arrowBox disabled' : 'arrowBox'} onClick={upDragonCnt}>
+          <div className={cs('arrowBox no-drag', { disabled: isMaxCnt })} onClick={upDragonCnt}>
             <img src={upArrow} alt="바람용 횟수 화살표" />
           </div>
-          <div className={isMinCnt ? 'arrowBox disabled' : 'arrowBox'} onClick={downDragonCnt}>
+          <div className={cs('arrowBox no-drag', { disabled: isMinCnt })} onClick={downDragonCnt}>
             <img src={downArrow} alt="바람용 횟수 화살표" />
           </div>
         </div>

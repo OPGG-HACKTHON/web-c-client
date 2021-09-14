@@ -36,9 +36,10 @@
     padding-right: $game-page-horizontal-padding-mobile;
     padding-left: $game-page-horizontal-padding-mobile;
 
-    @include bp-up(md) {
-      padding-right: $game-page-horizontal-padding-pc;
-      padding-left: $game-page-horizontal-padding-pc;
-    }
+    // TODO-web
+    // @include bp-up(md) {
+    //   padding-right: $game-page-horizontal-padding-pc;
+    //   padding-left: $game-page-horizontal-padding-pc;
+    // }
   }
 }

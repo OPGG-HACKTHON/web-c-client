@@ -5,24 +5,28 @@ $scrollbar-margin: r(10px);
 .ChamptionItemContainer {
   display: flex;
   justify-content: space-between;
+  width: 100%;
   height: r(80px);
 
-  @include bp-down(md) {
-    width: 100%;
-  }
+  // TODO-web
+  // @include bp-up(md) {
+  //   width: unset;
+  // }
 
   .left-container {
     position: relative;
     display: inline-block;
     overflow: visible;
-    width: r(320px);
+    width: auto;
+    max-width: calc(100% - #{$search-btn-left-margin} - #{$search-btn-width});
     height: r(80px);
     margin-right: $search-btn-left-margin;
 
-    @include bp-down(md) {
-      width: auto;
-      max-width: calc(100% - #{$search-btn-left-margin} - #{$search-btn-width});
-    }
+    // TODO-web
+    // @include bp-up(md) {
+    //   width: r(320px);
+    //   max-width: unset;
+    // }
 
     .item-container {
       display: flex;

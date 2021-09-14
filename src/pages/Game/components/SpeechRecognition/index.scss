@@ -1,0 +1,14 @@
+.SpeechRecognition {
+  position: fixed;
+  top: 20px;
+  left: calc(50% + 108px);
+  z-index: 9999;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  color: #6675ff;
+
+  & > * {
+    font-size: 26px;
+  }
+}

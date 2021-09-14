@@ -8,8 +8,16 @@ $bottom-container-padding: r(12px);
   bottom: 0;
   left: 0;
   z-index: 2000;
-  background-color: #25232c;
   backdrop-filter: blur(30px);
+
+  // TODO-web
+  .item-selector-holder {
+    width: 100%;
+    max-width: $app-max-width;
+    height: 100%;
+    margin: 0 auto;
+    background-color: #25232c;
+  }
 
   .top-container {
     background-color: #1a181e;
@@ -17,6 +25,7 @@ $bottom-container-padding: r(12px);
     .back-btn {
       padding: r(16px);
       border: none;
+      cursor: pointer;
       background: none;
 
       img {
@@ -92,6 +101,14 @@ $bottom-container-padding: r(12px);
     bottom: 0;
     left: 0;
 
+    // TODO-web
+    .bottom-holder {
+      width: 100%;
+      max-width: $app-max-width;
+      height: 100%;
+      margin: 0 auto;
+    }
+
     .item-list-container {
       margin-right: $horizontal-padding;
       margin-bottom: r(12px);
@@ -103,6 +120,7 @@ $bottom-container-padding: r(12px);
       width: 100%;
       height: r(50px);
       border: none;
+      cursor: pointer;
       background-color: #6675ff;
       font-weight: 600;
       font-size: r(15px);

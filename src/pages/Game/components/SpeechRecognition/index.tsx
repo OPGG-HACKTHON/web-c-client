@@ -1,10 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import useSpeechText from '@/common/hooks/useSpeechText';
+import useSpeechText from '@/common/hooks/useSpeechText.js';
 
 import useGameData from '../../hooks/useGameData';
 import { getGrammarString, interpret } from './data/grammer';
+
+import './index.scss';
 
 declare global {
   interface Window {
@@ -15,19 +17,26 @@ declare global {
   }
 }
 
+interface RecognitionInterface {
+  abort: Function;
+  stop: Function;
+}
+
 const LANGUAGE = 'ko-KR';
 
 const SpeechRecognition = () => {
   const { gameData, onUseSpell } = useGameData();
+  const [recog, setRecog] = useState<RecognitionInterface>();
 
   const speechText = useSpeechText();
   const { t } = useTranslation();
+  console.log('speechText', speechText);
 
   const initSpeechRecognition = useCallback(() => {
     const SpeechRecognitionWebApi = window.SpeechRecognition || window.webkitSpeechRecognition;
     const SpeechGrammarListWebApi = window.SpeechGrammarList || window.webkitSpeechGrammarList;
     if (!SpeechRecognitionWebApi || !SpeechGrammarListWebApi) {
-      console.log('Web Speech Api Not supported.');
+      alert('음성 인식이 지원되지 않는 브라우저입니다. Chrome 브라우저를 사용해 주세요.');
       return;
     }
 
@@ -117,8 +126,19 @@ const SpeechRecognition = () => {
       recognition.start();
     };
 
+    setRecog(recognition);
     recognition.start();
   }, [speechText, gameData]);
+
+  const startRegog = useCallback(() => {
+    if (recog) {
+      recog.abort();
+      recog.stop();
+      return;
+    }
+
+    initSpeechRecognition();
+  }, [speechText, gameData, recog]);
 
   // useEffect(() => {
   //   if (!speechText) return;
@@ -127,17 +147,13 @@ const SpeechRecognition = () => {
 
   return (
     <div
-      style={{
-        position: 'fixed',
-        zIndex: 9999,
-        top: 0,
-        left: 0,
-        width: 24,
-        height: 24,
-        cursor: 'pointer',
-      }}
-      onClick={() => initSpeechRecognition()}
-    />
+      className="SpeechRecognition"
+      onClick={startRegog}
+    >
+      <span className="material-icons">
+        mic
+      </span>
+    </div>
   );
 };
 

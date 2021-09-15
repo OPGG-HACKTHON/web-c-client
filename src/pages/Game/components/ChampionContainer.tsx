@@ -21,7 +21,9 @@ const ChampionContainer = ({
   champData,
   onClick = () => {},
 }: ChampionComponentProps) => {
-  const [isUltimateLevelModalVisible, setIsUltimateLevelModalVisible] = useState(false);
+  const [
+    isUltimateLevelModalVisible, setIsUltimateLevelModalVisible,
+  ] = useState(false);
 
   const isMobile = true;
   // TODO-web
@@ -54,6 +56,7 @@ const ChampionContainer = ({
         </div>
       </div>
       <UltimateLevelModal
+        currentLevel={champData.spells.R.level}
         isVisible={isUltimateLevelModalVisible}
         toggleModal={toggleModal}
         src={champData.spells.R.src}

@@ -3,14 +3,21 @@ import React from 'react';
 import './UltimateLevelButton.scss';
 
 interface UltimateLevelButtonProps {
+  currentLevel?: number;
   level: number;
   handleClick: Function;
 }
 
-const UltimateLevelButton = ({ level, handleClick }: UltimateLevelButtonProps) => {
+const UltimateLevelButton = ({
+  currentLevel,
+  level,
+  handleClick,
+}: UltimateLevelButtonProps) => {
   return (
     <button
-      className="UltimateLevelButton"
+      className={`UltimateLevelButton ${
+        currentLevel === level && 'current-level'
+      }`}
       onClick={() => handleClick()}
     >
       {level}

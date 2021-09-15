@@ -10,10 +10,11 @@ import "./PrivateLayout.scss";
 const PrivateLayout = ({ children }) => {
   const [showMessage, setShowMessage] = useState(false);
   const messageTimer = useRef(null);
+  const summonerName = window.localStorage.summonerName;
 
   const onClickShareBtn = () => {
     setShowMessage(true);
-    addToClipboard(`https://swoomi.me${location.pathname}`);
+    addToClipboard(`https://swoomi.me/share/${summonerName}`);
 
     if (messageTimer.current) {
       clearTimeout(messageTimer.current);

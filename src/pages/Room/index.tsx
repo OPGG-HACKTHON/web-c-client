@@ -1,21 +1,21 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import setRealVh from "@/common/helper/setRealVh";
-import axios from "@/common/helper/axios";
-import useInterval from "@/common/hooks/useInterval";
-import ToastMessage from "@/common/components/ToastMessage";
-import MainImg from "@/common/images/MainImg.png";
+import React, { useState, useRef, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import setRealVh from '@/common/helper/setRealVh';
+import axios from '@/common/helper/axios';
+import useInterval from '@/common/hooks/useInterval';
+import ToastMessage from '@/common/components/ToastMessage';
+import MainImg from '@/common/images/MainImg.png';
 
-import RoomHeader from "./components/RoomHeader";
-import ShareButton from "./components/ShareButton";
-import SummonerContainer from "./components/SummonerContainer";
+import RoomHeader from './components/RoomHeader';
+import ShareButton from './components/ShareButton';
+import SummonerContainer from './components/SummonerContainer';
 
-import "./index.scss";
+import './index.scss';
 
 const Room = () => {
   const [showShare, setShowShare] = useState<boolean>(false);
-  const [profile, setProfile] = useState<string>("");
+  const [profile, setProfile] = useState<string>('');
   const messageTimer = useRef(null);
   const urlRef = useRef();
   const { t } = useTranslation();
@@ -24,7 +24,7 @@ const Room = () => {
   const history = useHistory();
 
   const nameIndex = 1;
-  const summonerName = location.pathname.split("/room/")[nameIndex];
+  const summonerName = location.pathname.split('/room/')[nameIndex];
   const getMatchTeamCode = async () => {
     try {
       const { data } = await axios.get(`/v1/match/status/${summonerName}`);
@@ -41,12 +41,12 @@ const Room = () => {
       const { data } = await axios.get(`/v1/summoner/${summonerName}`);
       if (data) {
         const { data: img } = await axios.get(
-          `v1/profileImgURL?summonerName=${summonerName}`
+          `v1/profileImgURL?summonerName=${summonerName}`,
         );
         setProfile(img.data);
       }
     } catch (err) {
-      history.push("/");
+      history.push('/');
     }
   };
 
@@ -62,7 +62,7 @@ const Room = () => {
         history.push(`/game/${matchTeamCode}`);
       }
     } catch (err) {
-      console.log("Match Not Started");
+      console.log('Match Not Started');
       // console.error(err);
     }
   };
@@ -74,7 +74,7 @@ const Room = () => {
     setShowShare(true);
     const urlElem = urlRef.current as HTMLInputElement;
     urlElem.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
 
     if (messageTimer.current) {
       clearTimeout(messageTimer.current);
@@ -89,28 +89,28 @@ const Room = () => {
   useEffect(() => {
     setRealVh();
 
-    window.addEventListener("resize", setRealVh);
-    return () => window.removeEventListener("resize", setRealVh);
+    window.addEventListener('resize', setRealVh);
+    return () => window.removeEventListener('resize', setRealVh);
   }, []);
 
   return (
-    <div className='Room'>
+    <div className="Room">
       <RoomHeader />
-      <div className='room-container'>
+      <div className="room-container">
         <SummonerContainer src={profile} summonerName={summonerName} />
-        <div className='room-middle'>
-          <img src={MainImg} alt='메인 이미지' className='main-image' />
-          <span>{t("room.gameNotStarted")}</span>
-          <span>{t("room.inviteYourTeam")}</span>
+        <div className="room-middle">
+          <img src={MainImg} alt="메인 이미지" className="main-image" />
+          <span>{t('room.gameNotStarted')}</span>
+          <span>{t('room.inviteYourTeam')}</span>
         </div>
-        <div className='room-bottom'>
+        <div className="room-bottom">
           <input
             ref={urlRef}
-            value={`https://swoomi.me${location.pathname}`}
+            value={`https://swoomi.me/share/${summonerName}`}
             readOnly
           />
           {showShare && (
-            <ToastMessage content={t("room.linkCopied")} time={1500} />
+            <ToastMessage content={t('room.linkCopied')} time={1500} />
           )}
           <ShareButton handleClickShare={handleClickShare} />
         </div>

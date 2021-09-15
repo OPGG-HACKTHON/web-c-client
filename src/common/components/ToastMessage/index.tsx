@@ -5,9 +5,10 @@ import './index.scss';
 interface ToastMessageProps {
   content: string;
   time?: number;
+  isInGame?: boolean;
 }
 
-const ToastMessage = ({ content, time }: ToastMessageProps) => {
+const ToastMessage = ({ content, time, isInGame }: ToastMessageProps) => {
   const messageTimer = useRef(null);
   const [showShare, setShowShare] = useState('message-on');
 
@@ -19,8 +20,16 @@ const ToastMessage = ({ content, time }: ToastMessageProps) => {
     }, time - 200);
   }, [content]);
 
-  return (
-    showShare && <div className={`toast-message ${showShare}`}>{content}</div>
+  return isInGame ? (
+    <div
+      className={`toast-message message-ingame ${
+        showShare === 'message-on' ? 'message-on-ingame' : 'message-off-ingame'
+      }`}
+    >
+      {content}
+    </div>
+  ) : (
+    <div className={`toast-message ${showShare}`}>{content}</div>
   );
 };
 

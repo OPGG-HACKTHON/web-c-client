@@ -2,6 +2,7 @@
   position: absolute;
   bottom: 84px;
   left: calc(50% - 156.5px);
+  z-index: 1001;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,9 +10,19 @@
   height: r(48px);
   border: 1px solid #6675ff;
   border-radius: r(10px);
+  filter: blur(0);
   background: rgba(102, 117, 255, 0.15);
   color: #6675ff;
   text-align: center;
+}
+
+.message-ingame {
+  top: calc(50% - 42px);
+  height: r(62px);
+  background: rgba(102, 117, 255, 0.3);
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
 }
 
 .message-on {
@@ -22,6 +33,36 @@
 .message-off {
   -webkit-animation: 0.3s message-off;
   animation: 0.3s message-off;
+}
+
+.message-on-ingame {
+  -webkit-animation: 0.2s message-on-ingame;
+  animation: 0.2s message-on-ingame;
+}
+
+.message-off-ingame {
+  -webkit-animation: 0.2s message-off-ingame;
+  animation: 0.2s message-off-ingame;
+}
+
+@keyframes message-on-ingame {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes message-off-ingame {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes message-on {

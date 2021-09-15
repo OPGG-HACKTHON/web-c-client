@@ -2,6 +2,7 @@ import React, { useState, useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import RefreshIcon from '@/common/components/RefreshIcon';
 import LockerIcon from '@/common/components/LockerIcon';
+import MessageInGame from '@/common/components/MessageInGame';
 import SpellIconInItem from './SpellIconInItem';
 
 import GameContext from '../models/context/GameContext';
@@ -25,7 +26,9 @@ const ChampionItem = ({
   const isSpellUsed = champData.spells[spellType] !== null;
   const initMode: ModeType = isSpellUsed ? 'wait' : 'default';
   const [status, setStatus] = useState<ModeType>(initMode);
+  const [showMessage, setShowMessage] = useState<boolean>(false);
   const curtainTimer = useRef(null);
+  const messageTimer = useRef(null);
   const { t } = useTranslation();
 
   const { onUseSpell, resetSpell, updateTimeUsed } = useContext(GameContext);
@@ -68,11 +71,26 @@ const ChampionItem = ({
     updateTimeUsed(summonerName, spellType, time + sec >= 0 ? time + sec : 0);
   };
 
+  const openMessage = () => {
+    // TODO: 조건문 => 에러가 있다면.. 안에 들어갈 내용들.
+    setShowMessage(true);
+    if (messageTimer.current) {
+      clearTimeout(messageTimer.current);
+    }
+    messageTimer.current = setTimeout(() => {
+      setShowMessage(false);
+      messageTimer.current = null;
+    }, 1500);
+  };
+
   if (status === 'default' || time < 1) {
     if (spellType === 'R') {
       return (
         <div className="ChampionItem">
           <div className="panel panel-ultimate">
+            {showMessage && (
+              <MessageInGame content="쿨 타임을 넘어선 시간입니다." />
+            )}
             <div className="panel-item no-drag" onClick={handleClickIcon}>
               <SpellIconInItem
                 spellType={spellType}
@@ -100,6 +118,9 @@ const ChampionItem = ({
     return (
       <div className="ChampionItem">
         <div className="panel-item no-drag spell" onClick={handleClickIcon}>
+          {showMessage && (
+            <MessageInGame content="쿨 타임을 넘어선 시간입니다." />
+          )}
           <SpellIconInItem
             spellType={spellType}
             src={src}
@@ -136,6 +157,9 @@ const ChampionItem = ({
   if (status === 'modify') {
     return (
       <div className="ChampionItem" onClick={changeToModifyMode}>
+        {showMessage && (
+          <MessageInGame content="쿨 타임을 넘어선 시간입니다." />
+        )}
         <div className="item-left" onClick={handleClickIcon}>
           <SpellIconInItem
             spellType={spellType}
@@ -146,11 +170,17 @@ const ChampionItem = ({
           <div className="leftTime">{time}s</div>
         </div>
         <div className="item-right">
-          <div className="time-button no-drag" onClick={handleClickTimeButton(10)}>
+          <div
+            className="time-button no-drag"
+            onClick={handleClickTimeButton(10)}
+          >
             +10s
           </div>
           <div className="line" />
-          <div className="time-button no-drag" onClick={handleClickTimeButton(-10)}>
+          <div
+            className="time-button no-drag"
+            onClick={handleClickTimeButton(-10)}
+          >
             -10s
           </div>
           <div className="line" />

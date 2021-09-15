@@ -8,12 +8,15 @@ import {
 } from '../type';
 import ITEM_LIST from '../../components/ChamptionItemContainer/components/itemList';
 
+import { guessLane } from './championLaneData';
+
 const gameDataManager = {
   async getChampsInitData(matchTeamCode: string): Promise<ChampData[]> {
     try {
       const { data } = await axios.get(`/v1/match/data/matchTeamCode/${matchTeamCode}`);
       const serverChampsData: ServerData[] = data.data;
-      const champsData = gameDataManager.createChampsData(serverChampsData);
+      const laneSortedServerChampsData: ServerData[] = guessLane(serverChampsData);
+      const champsData = gameDataManager.createChampsData(laneSortedServerChampsData);
       return champsData;
     } catch (err) {
       throw err;

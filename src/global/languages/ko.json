@@ -18,7 +18,8 @@
     },
     "championItem": {
       "beforeTimeText": "{{second}}s전",
-      "unlock": "잠금해제"
+      "unlock": "잠금해제",
+      "coolTime": "쿨 타임을 넘어선 시간입니다."
     }
   },
   "ChamptionItemContainer": {

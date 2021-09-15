@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 import MessageInGame from "@/common/components/MessageInGame";
 
@@ -11,6 +12,7 @@ const PrivateLayout = ({ children }) => {
   const [showMessage, setShowMessage] = useState(false);
   const messageTimer = useRef(null);
   const summonerName = window.localStorage.summonerName;
+  const { t } = useTranslation();
 
   const onClickShareBtn = () => {
     setShowMessage(true);
@@ -30,7 +32,7 @@ const PrivateLayout = ({ children }) => {
     <div className='PrivateLayout'>
       <TopBar onClickShareBtn={onClickShareBtn} />
       <div id='app-body'>
-        {showMessage && <MessageInGame content='링크가 복사되었습니다.' />}
+        {showMessage && <MessageInGame content={t("room.linkCopied")} />}
         <div id='app-body-content'>{children}</div>
       </div>
     </div>

@@ -102,7 +102,7 @@ const ChampionItem = ({
         <div className="ChampionItem">
           <div className="panel panel-ultimate">
             {showMessage && (
-              <MessageInGame content="쿨 타임을 넘어선 시간입니다." />
+              <MessageInGame content={t('game.championItem.coolTime')} />
             )}
             <div className="panel-item no-drag" onClick={handleClickIcon}>
               <SpellIconInItem
@@ -132,7 +132,7 @@ const ChampionItem = ({
       <div className="ChampionItem">
         <div className="panel-item no-drag spell" onClick={handleClickIcon}>
           {showMessage && (
-            <MessageInGame content="쿨 타임을 넘어선 시간입니다." />
+            <MessageInGame content={t('game.championItem.coolTime')} />
           )}
           <SpellIconInItem
             spellType={spellType}

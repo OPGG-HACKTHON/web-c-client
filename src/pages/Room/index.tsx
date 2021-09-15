@@ -1,4 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {
+  useState, useRef, useEffect, useLayoutEffect,
+} from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import setRealVh from '@/common/helper/setRealVh';
@@ -36,6 +38,19 @@ const Room = () => {
     }
   };
 
+  const isGameStart = async () => {
+    const { data } = await axios.get(`/v1/match/${summonerName}`);
+    return data.data.matchStatus;
+  };
+
+  const redirectToGamePage = async () => {
+    const isValidAction = await isGameStart();
+    if (!isValidAction) return;
+    const { data } = await axios.get(`/v1/match/status/${summonerName}`);
+    const { matchTeamCode } = data.data;
+    history.push(`/game/${matchTeamCode}`);
+  };
+
   const isValidUser = async () => {
     try {
       const { data } = await axios.get(`/v1/summoner/${summonerName}`);
@@ -49,6 +64,10 @@ const Room = () => {
       history.push('/');
     }
   };
+
+  useLayoutEffect(() => {
+    redirectToGamePage();
+  }, []);
 
   useEffect(() => {
     isValidUser();
@@ -67,7 +86,7 @@ const Room = () => {
     }
   };
 
-  useInterval(isMatchStarted, 10000);
+  useInterval(isMatchStarted, 5000);
 
   const handleClickShare = (e) => {
     e.preventDefault();

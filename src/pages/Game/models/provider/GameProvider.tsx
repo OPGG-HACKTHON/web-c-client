@@ -31,6 +31,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const [isNotClickedInFiveSec, setIsNotClickedInFiveSec] = useState(false);
   const dispatcher = createDispatcher(dispatch);
   const spellTimer = useRef([]);
+  const [spellTimeError, setSpellTimeError] = useState(false);
   const socket = useRef(null);
   const stomp = useRef(null);
   const curtainTimer = useRef(null);
@@ -54,6 +55,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       if (matchTeamCode === newCode) {
         alert('게임을 찾을 수 없습니다.');// 서버 쪽의 알 수 없는 에러 대응, 사실 라이엇에서 게임 데이터를 안보내주는 것
         history.push('/');
+        localStorage.removeItem('summonerName');
       } else window.location.href = `/game/${newCode}`; // history 시 현재 게임 데이터로 최신화가 안됨( 매치 데이터는 최산 맞음)
     }
     dispatcher.error(err);
@@ -221,6 +223,10 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   ) => {
     try {
       const totalSpellTime = await getTotalSpellTime(summonerName, spellType, timeGap);
+      if (!totalSpellTime) {
+        setSpellTimeError(true);
+        return;
+      }
       const userData = getData(summonerName);
       gameDataManager.useSpell(userData, spellType, totalSpellTime);
       dispatcher.render();
@@ -319,6 +325,8 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     updateUltLevel,
     updateGameData: (gameData) => dispatcher.success(gameData),
     dragonCnt,
+    spellTimeError,
+    setSpellTimeError,
     updateDragonCnt,
     isItemSelectorVisible: !!itemSelectingSummonerName,
     itemSelectingSummonerName,

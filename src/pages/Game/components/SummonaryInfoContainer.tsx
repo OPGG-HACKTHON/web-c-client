@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import Spinner from '@/common/components/spinner';
 
 import useGameData from '../hooks/useGameData';
 
@@ -45,7 +46,7 @@ const swapArrayLocs = function (arr, index1, index2) {
 
 const SummonaryInfoContainer = () => {
   const [swapTargetIndex, setSwapTargetIndex] = useState();
-  const { gameData, updateGameData } = useGameData();
+  const { gameData, loadingState, updateGameData } = useGameData();
 
   const findChampElemsPos = useCallback(() => {
     const topbarElem = document.querySelector('#Topbar') as HTMLElement;
@@ -77,22 +78,25 @@ const SummonaryInfoContainer = () => {
   }, [gameData]);
 
   return (
-    <div
-      id="SummonaryInfoContainer"
-      className="SummonaryInfoContainer"
-    >
-      <SortableList
-        gameData={gameData}
-        swapTargetIndex={swapTargetIndex}
+    <>
+      <div
+        id="SummonaryInfoContainer"
+        className="SummonaryInfoContainer"
+      >
+        <SortableList
+          gameData={gameData}
+          swapTargetIndex={swapTargetIndex}
 
-        onSortStart={onSortStart}
-        onSortOver={onSortOver}
-        onSortEnd={onSortEnd}
-        helperClass="react-sortable-hoc-current"
-        axis="x"
-        lockOffset="0%"
-      />
-    </div>
+          onSortStart={onSortStart}
+          onSortOver={onSortOver}
+          onSortEnd={onSortEnd}
+          helperClass="react-sortable-hoc-current"
+          axis="x"
+          lockOffset="0%"
+        />
+      </div>
+      {loadingState.loading ? <Spinner className="gameLoadingSpinner" /> : null}
+    </>
   );
 };
 

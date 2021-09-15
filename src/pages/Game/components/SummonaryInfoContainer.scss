@@ -45,3 +45,15 @@
     }
   }
 }
+
+.gameLoadingSpinner {
+  position: fixed;
+  top: 40vh;
+  left: 48vw;
+  z-index: 99999;
+
+  div {
+    width: 30px !important;
+    height: 30px !important;
+  }
+}

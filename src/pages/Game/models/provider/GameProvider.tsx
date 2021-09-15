@@ -31,7 +31,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const [isNotClickedInFiveSec, setIsNotClickedInFiveSec] = useState(false);
   const dispatcher = createDispatcher(dispatch);
   const spellTimer = useRef([]);
-  const [spellTimeError, setSpellTimeError] = useState(false);
+  const spellTimeError = useRef(false);
   const socket = useRef(null);
   const stomp = useRef(null);
   const curtainTimer = useRef(null);
@@ -210,6 +210,10 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       const spellTime = spellTimes[`cooltime${spellType}`];
 
       const spellTimeUpdated = spellTime - timeGap < 0 ? null : spellTime - timeGap;
+      if (!spellTimeUpdated && !spellTimeError.current) {
+        spellTimeError.current = true;
+        dispatcher.render();
+      }
       return spellTimeUpdated;
     } catch (err) {
       handelError(err);
@@ -223,10 +227,6 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   ) => {
     try {
       const totalSpellTime = await getTotalSpellTime(summonerName, spellType, timeGap);
-      if (!totalSpellTime) {
-        setSpellTimeError(true);
-        return;
-      }
       const userData = getData(summonerName);
       gameDataManager.useSpell(userData, spellType, totalSpellTime);
       dispatcher.render();
@@ -326,7 +326,6 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     updateGameData: (gameData) => dispatcher.success(gameData),
     dragonCnt,
     spellTimeError,
-    setSpellTimeError,
     updateDragonCnt,
     isItemSelectorVisible: !!itemSelectingSummonerName,
     itemSelectingSummonerName,

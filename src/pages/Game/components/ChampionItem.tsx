@@ -1,4 +1,6 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, {
+  useState, useContext, useRef, useEffect,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import RefreshIcon from '@/common/components/RefreshIcon';
 import LockerIcon from '@/common/components/LockerIcon';
@@ -28,7 +30,9 @@ const ChampionItem = ({
   const curtainTimer = useRef(null);
   const { t } = useTranslation();
 
-  const { onUseSpell, resetSpell, updateTimeUsed } = useContext(GameContext);
+  const {
+    onUseSpell, resetSpell, updateTimeUsed, spellTimeError, setSpellTimeError,
+  } = useContext(GameContext);
 
   const { src, time, level } = champData.spells[spellType];
   const { summonerName } = champData;
@@ -67,6 +71,13 @@ const ChampionItem = ({
   const handleClickTimeButton = (sec: number) => () => {
     updateTimeUsed(summonerName, spellType, time + sec >= 0 ? time + sec : 0);
   };
+
+  useEffect(() => {
+    if (spellTimeError.current) {
+      console.log('dpfj');
+      spellTimeError.current = false;
+    }
+  }, [spellTimeError.current]);
 
   if (status === 'default' || time < 1) {
     if (spellType === 'R') {

@@ -39,7 +39,7 @@ const SpeechRecognition = () => {
     const SpeechRecognitionWebApi = window.SpeechRecognition || window.webkitSpeechRecognition;
     const SpeechGrammarListWebApi = window.SpeechGrammarList || window.webkitSpeechGrammarList;
     if (!SpeechRecognitionWebApi || !SpeechGrammarListWebApi) {
-      alert('음성 인식이 지원되지 않는 브라우저입니다. Chrome 브라우저를 사용해 주세요.');
+      alert('음성 인식이 지원되지 않는 환경입니다. 아이폰을 제외한 기기에서 Chrome 브라우저를 사용해 주세요.');
       return;
     }
 

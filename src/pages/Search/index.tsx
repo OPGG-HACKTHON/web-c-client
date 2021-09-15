@@ -47,13 +47,15 @@ const Search = () => {
     messageTimer.current = setTimeout(() => {
       setShowShare(false);
       messageTimer.current = null;
-    }, 1500);
+    }, 1800);
   };
 
   const onClickSearchBtn = async () => {
     try {
       setLoading(true);
-      const { data: nameData } = await axios.get(`/v1/summoner/${String(searchValue).split('').join(' ')}`);
+      const { data: nameData } = await axios.get(
+        `/v1/summoner/${String(searchValue).split('').join(' ')}`,
+      );
       const { summonerName } = nameData.data;
       localStorage.setItem('summonerName', summonerName);
       if (!nameData.success) throw new Error('not find');
@@ -110,7 +112,7 @@ const Search = () => {
         setIsFocusInput={setIsFocusInput}
       />
       {showShare && (
-        <ToastMessage content={t('search.checkNickname')} time={1500} />
+        <ToastMessage content={t('search.checkNickname')} time={1800} />
       )}
       {isSearchButtonVisible && (
         <SearchButton

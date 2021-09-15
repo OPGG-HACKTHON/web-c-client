@@ -102,7 +102,7 @@ const Room = () => {
     messageTimer.current = setTimeout(() => {
       setShowShare(false);
       messageTimer.current = null;
-    }, 1500);
+    }, 1800);
   };
 
   useEffect(() => {
@@ -129,7 +129,7 @@ const Room = () => {
             readOnly
           />
           {showShare && (
-            <ToastMessage content={t('room.linkCopied')} time={1500} />
+            <ToastMessage content={t('room.linkCopied')} time={1800} />
           )}
           <ShareButton handleClickShare={handleClickShare} />
         </div>

@@ -50,7 +50,7 @@ export interface ContextType {
   updateDragonCnt: (cnt: number)=> void;
   itemSelectingSummonerName: string | null,
   setItemSelectingSummonerName: Function,
-  spellTimeError: boolean,
+  spellTimeError: React.MutableRefObject<boolean>,
   setSpellTimeError: React.Dispatch<React.SetStateAction<boolean>>
 }
 

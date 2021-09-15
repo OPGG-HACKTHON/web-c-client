@@ -1,14 +1,14 @@
-import React, { useState, useContext, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import RefreshIcon from '@/common/components/RefreshIcon';
-import LockerIcon from '@/common/components/LockerIcon';
-import MessageInGame from '@/common/components/MessageInGame';
-import SpellIconInItem from './SpellIconInItem';
+import React, { useState, useContext, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import RefreshIcon from "@/common/components/RefreshIcon";
+import LockerIcon from "@/common/components/LockerIcon";
+import MessageInGame from "@/common/components/MessageInGame";
+import SpellIconInItem from "./SpellIconInItem";
 
-import GameContext from '../models/context/GameContext';
-import { ChampData } from '../models/type';
+import GameContext from "../models/context/GameContext";
+import { ChampData } from "../models/type";
 
-import './ChampionItem.scss';
+import "./ChampionItem.scss";
 
 interface ChampionItemProps {
   champData: ChampData;
@@ -16,7 +16,7 @@ interface ChampionItemProps {
   handleClickUltimate: Function;
 }
 
-type ModeType = 'modify' | 'default' | 'wait';
+type ModeType = "modify" | "default" | "wait";
 
 const ChampionItem = ({
   champData,
@@ -24,20 +24,26 @@ const ChampionItem = ({
   handleClickUltimate,
 }: ChampionItemProps) => {
   const isSpellUsed = champData.spells[spellType] !== null;
-  const initMode: ModeType = isSpellUsed ? 'wait' : 'default';
+  const initMode: ModeType = isSpellUsed ? "wait" : "default";
   const [status, setStatus] = useState<ModeType>(initMode);
   const [showMessage, setShowMessage] = useState<boolean>(false);
   const curtainTimer = useRef(null);
   const messageTimer = useRef(null);
   const { t } = useTranslation();
 
-  const { onUseSpell, resetSpell, updateTimeUsed } = useContext(GameContext);
+  const {
+    onUseSpell,
+    resetSpell,
+    updateTimeUsed,
+    spellTimeError,
+    setSpellTimeError,
+  } = useContext(GameContext);
 
   const { src, time, level } = champData.spells[spellType];
   const { summonerName } = champData;
 
   const handleClickIcon = () => {
-    if (spellType === 'R') handleClickUltimate();
+    if (spellType === "R") handleClickUltimate();
   };
 
   const createCurtain = () => {
@@ -46,7 +52,7 @@ const ChampionItem = ({
     }
 
     curtainTimer.current = setTimeout(() => {
-      setStatus('wait');
+      setStatus("wait");
       curtainTimer.current = null;
     }, 5000);
   };
@@ -54,12 +60,12 @@ const ChampionItem = ({
   const handleReset = (e) => {
     e.stopPropagation();
     resetSpell(summonerName, spellType);
-    setStatus('default');
+    setStatus("default");
   };
 
   const changeToModifyMode = () => {
     createCurtain();
-    setStatus('modify');
+    setStatus("modify");
   };
 
   const handleClickTime = (beforeSec: number) => () => {
@@ -72,7 +78,6 @@ const ChampionItem = ({
   };
 
   const openMessage = () => {
-    // TODO: 조건문 => 에러가 있다면.. 안에 들어갈 내용들.
     setShowMessage(true);
     if (messageTimer.current) {
       clearTimeout(messageTimer.current);
@@ -82,16 +87,22 @@ const ChampionItem = ({
       messageTimer.current = null;
     }, 1500);
   };
+  useEffect(() => {
+    if (spellTimeError.current) {
+      openMessage();
+      spellTimeError.current = false;
+    }
+  }, [spellTimeError.current]);
 
-  if (status === 'default' || time < 1) {
-    if (spellType === 'R') {
+  if (status === "default" || time < 1) {
+    if (spellType === "R") {
       return (
-        <div className="ChampionItem">
-          <div className="panel panel-ultimate">
+        <div className='ChampionItem'>
+          <div className='panel panel-ultimate'>
             {showMessage && (
-              <MessageInGame content="쿨 타임을 넘어선 시간입니다." />
+              <MessageInGame content='쿨 타임을 넘어선 시간입니다.' />
             )}
-            <div className="panel-item no-drag" onClick={handleClickIcon}>
+            <div className='panel-item no-drag' onClick={handleClickIcon}>
               <SpellIconInItem
                 spellType={spellType}
                 src={src}
@@ -99,27 +110,27 @@ const ChampionItem = ({
                 time={time}
               />
             </div>
-            <div className="line" />
-            <div className="panel-item no-drag" onClick={handleClickTime(0)}>
-              {t('game.championItem.beforeTimeText', { second: 0 })}
+            <div className='line' />
+            <div className='panel-item no-drag' onClick={handleClickTime(0)}>
+              {t("game.championItem.beforeTimeText", { second: 0 })}
             </div>
-            <div className="line" />
-            <div className="panel-item no-drag" onClick={handleClickTime(15)}>
-              {t('game.championItem.beforeTimeText', { second: 15 })}
+            <div className='line' />
+            <div className='panel-item no-drag' onClick={handleClickTime(15)}>
+              {t("game.championItem.beforeTimeText", { second: 15 })}
             </div>
-            <div className="line" />
-            <div className="panel-item no-drag" onClick={handleClickTime(30)}>
-              {t('game.championItem.beforeTimeText', { second: 30 })}
+            <div className='line' />
+            <div className='panel-item no-drag' onClick={handleClickTime(30)}>
+              {t("game.championItem.beforeTimeText", { second: 30 })}
             </div>
           </div>
         </div>
       );
     }
     return (
-      <div className="ChampionItem">
-        <div className="panel-item no-drag spell" onClick={handleClickIcon}>
+      <div className='ChampionItem'>
+        <div className='panel-item no-drag spell' onClick={handleClickIcon}>
           {showMessage && (
-            <MessageInGame content="쿨 타임을 넘어선 시간입니다." />
+            <MessageInGame content='쿨 타임을 넘어선 시간입니다.' />
           )}
           <SpellIconInItem
             spellType={spellType}
@@ -128,63 +139,60 @@ const ChampionItem = ({
             time={time}
           />
         </div>
-        <div className="panel panel-spell">
+        <div className='panel panel-spell'>
           <div
-            className="panel-item no-drag panel-spell-item"
+            className='panel-item no-drag panel-spell-item'
             onClick={handleClickTime(0)}
           >
-            {t('game.championItem.beforeTimeText', { second: 0 })}
+            {t("game.championItem.beforeTimeText", { second: 0 })}
           </div>
-          <div className="line" />
+          <div className='line' />
           <div
-            className="panel-item no-drag panel-spell-item"
+            className='panel-item no-drag panel-spell-item'
             onClick={handleClickTime(15)}
           >
-            {t('game.championItem.beforeTimeText', { second: 15 })}
+            {t("game.championItem.beforeTimeText", { second: 15 })}
           </div>
-          <div className="line" />
+          <div className='line' />
           <div
-            className="panel-item no-drag panel-spell-item"
+            className='panel-item no-drag panel-spell-item'
             onClick={handleClickTime(30)}
           >
-            {t('game.championItem.beforeTimeText', { second: 30 })}
+            {t("game.championItem.beforeTimeText", { second: 30 })}
           </div>
         </div>
       </div>
     );
   }
 
-  if (status === 'modify') {
+  if (status === "modify") {
     return (
-      <div className="ChampionItem" onClick={changeToModifyMode}>
-        {showMessage && (
-          <MessageInGame content="쿨 타임을 넘어선 시간입니다." />
-        )}
-        <div className="item-left" onClick={handleClickIcon}>
+      <div className='ChampionItem' onClick={changeToModifyMode}>
+        <div className='item-left' onClick={handleClickIcon}>
           <SpellIconInItem
             spellType={spellType}
             src={src}
             level={level}
             time={time}
           />
-          <div className="leftTime">{time}s</div>
+          <div className='leftTime'>{time}s</div>
         </div>
-        <div className="item-right">
+        <div className='item-right'>
           <div
-            className="time-button no-drag"
+            className='time-button no-drag'
             onClick={handleClickTimeButton(10)}
           >
             +10s
           </div>
-          <div className="line" />
+          <div className='line' />
           <div
-            className="time-button no-drag"
+            className='time-button no-drag'
             onClick={handleClickTimeButton(-10)}
           >
             -10s
           </div>
-          <div className="line" />
-          <div className="refresh-button no-drag" onClick={handleReset}>
+          <div className='line' />
+          <div className='refresh-button no-drag' onClick={handleReset}>
             <RefreshIcon />
           </div>
         </div>
@@ -193,19 +201,19 @@ const ChampionItem = ({
   }
 
   return (
-    <div className="ChampionItem" onClick={changeToModifyMode}>
-      <div className="item-left" onClick={handleClickIcon}>
+    <div className='ChampionItem' onClick={changeToModifyMode}>
+      <div className='item-left' onClick={handleClickIcon}>
         <SpellIconInItem
           spellType={spellType}
           src={src}
           level={level}
           time={time}
         />
-        <div className="leftTime">{time}s</div>
+        <div className='leftTime'>{time}s</div>
       </div>
-      <div className="item-right-wait">
+      <div className='item-right-wait'>
         <LockerIcon />
-        <span className="lock-span">{t('game.championItem.unlock')}</span>
+        <span className='lock-span'>{t("game.championItem.unlock")}</span>
       </div>
     </div>
   );

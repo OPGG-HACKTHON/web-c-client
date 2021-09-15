@@ -54,6 +54,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       if (matchTeamCode === newCode) {
         alert('게임을 찾을 수 없습니다.');// 서버 쪽의 알 수 없는 에러 대응, 사실 라이엇에서 게임 데이터를 안보내주는 것
         history.push('/');
+        localStorage.removeItem('summonerName');
       } else window.location.href = `/game/${newCode}`; // history 시 현재 게임 데이터로 최신화가 안됨( 매치 데이터는 최산 맞음)
     }
     dispatcher.error(err);

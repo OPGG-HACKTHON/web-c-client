@@ -1,7 +1,7 @@
 import React from 'react';
-import Breakpoints from '@/global/styles/breakPoints';
 import { useTranslation } from 'react-i18next';
 import { IoMdClose } from 'react-icons/io';
+import Breakpoints from '@/global/styles/breakPoints';
 
 import './SearchBar.scss';
 import Spinner from '@/common/components/spinner';
@@ -38,7 +38,7 @@ const SearchBar = ({
         }}
         autoComplete="off"
       />
-      {loading ? <Spinner /> : <IoMdClose onClick={deleteText} />}
+      {loading ? <Spinner className="searchSpinner" /> : <IoMdClose onClick={deleteText} />}
     </div>
   );
 };

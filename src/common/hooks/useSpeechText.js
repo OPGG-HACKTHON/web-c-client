@@ -14,7 +14,6 @@ const init = async (language = 'ko-KR') => {
     });
 
     if (speech.hasBrowserSupport()) {
-      console.log('Speech is ready', data);
       return speech;
     }
     throw new Error();
@@ -37,7 +36,7 @@ export const speechTextFunc = async (text, secondText) => {
             text: secondText,
             queue: false,
           }),
-          100,
+          50,
         );
       },
     },

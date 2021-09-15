@@ -30,7 +30,6 @@ const SpeechRecognition = () => {
 
   const speechText = useSpeechText();
   const { t } = useTranslation();
-  console.log('speechText', speechText);
 
   const initSpeechRecognition = useCallback(() => {
     const SpeechRecognitionWebApi = window.SpeechRecognition || window.webkitSpeechRecognition;

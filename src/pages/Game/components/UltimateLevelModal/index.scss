@@ -16,17 +16,23 @@
 .UltimateLevelModal {
   position: fixed;
   bottom: 0;
+  left: calc(50% - 225px);
   z-index: 998;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: r(450px);
   padding: 32px 32px;
   border-radius: 20px 20px 0 0;
   background: #6573f7;
   font-size: r(15px);
   color: white;
+
+  @include bp-down(ss) {
+    left: 0;
+    width: 100%;
+  }
 
   img {
     width: 72px;

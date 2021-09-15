@@ -1,12 +1,18 @@
 .SpeechRecognition {
   position: fixed;
   top: 20px;
-  left: calc(50% + 108px);
+  right: r(54px);
+  left: unset;
   z-index: 9999;
   width: 26px;
   height: 26px;
   cursor: pointer;
   color: #6675ff;
+
+  @include bp-up(ss) {
+    right: unset;
+    left: calc(50% + 148px);
+  }
 
   & > * {
     font-size: 26px;

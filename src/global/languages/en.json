@@ -18,7 +18,8 @@
     },
     "championItem": {
       "beforeTimeText": "{{second}}s ago",
-      "unlock": "Unlock"
+      "unlock": "Unlock",
+      "coolTime": "It exceeds remained cooldown."
     }
   },
   "ChamptionItemContainer": {

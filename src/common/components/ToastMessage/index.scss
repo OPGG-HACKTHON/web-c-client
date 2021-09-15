@@ -1,5 +1,5 @@
 .toast-message {
-  position: absolute;
+  position: fixed;
   bottom: 84px;
   left: calc(50% - 156.5px);
   z-index: 1001;
@@ -10,7 +10,7 @@
   height: r(48px);
   border: 1px solid #6675ff;
   border-radius: r(10px);
-  filter: blur(0);
+  backdrop-filter: blur(10px);
   background: rgba(102, 117, 255, 0.15);
   color: #6675ff;
   text-align: center;

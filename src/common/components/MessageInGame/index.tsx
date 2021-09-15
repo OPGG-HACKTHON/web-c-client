@@ -7,7 +7,7 @@ interface MessageInGameProps {
 }
 
 const MessageInGame = ({ content }: MessageInGameProps) => {
-  return <ToastMessage content={content} time={1000} isInGame />;
+  return <ToastMessage content={content} time={1500} isInGame />;
 };
 
 export default MessageInGame;

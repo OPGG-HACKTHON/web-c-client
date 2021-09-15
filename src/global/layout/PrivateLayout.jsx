@@ -23,7 +23,7 @@ const PrivateLayout = ({ children }) => {
     messageTimer.current = setTimeout(() => {
       setShowMessage(false);
       messageTimer.current = null;
-    }, 1000);
+    }, 1500);
   };
 
   return (

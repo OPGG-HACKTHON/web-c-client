@@ -1,7 +1,7 @@
 .SpeechRecognition {
   position: fixed;
   top: 20px;
-  right: r(54px);
+  right: r(45px);
   left: unset;
   z-index: 9999;
   width: 26px;
@@ -14,7 +14,17 @@
     left: calc(50% + 148px);
   }
 
+  span {
+    display: none;
+  }
+
   & > * {
     font-size: 26px;
+  }
+
+  img {
+    right: r(43px);
+    width: r(18px);
+    height: r(20px);
   }
 }

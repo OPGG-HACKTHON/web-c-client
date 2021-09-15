@@ -6,7 +6,7 @@ import { Select } from 'antd';
 import './Topbar.scss';
 
 import logo from '@/common/images/logo.png';
-import info from '@/common/images/info.png';
+// import info from '@/common/images/info.png';
 import share from '@/common/images/share.png';
 
 const { Option } = Select;

@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import useSpeechText from '@/common/hooks/useSpeechText.js';
 
+import micOff from '@/common/images/micOff.png';
+import micOn from '@/common/images/micOn.png';
+
 import useGameData from '../../hooks/useGameData';
 import { getGrammarString, interpret } from './data/grammer';
 
@@ -27,6 +30,7 @@ const LANGUAGE = 'ko-KR';
 const SpeechRecognition = () => {
   const { gameData, onUseSpell } = useGameData();
   const [recog, setRecog] = useState<RecognitionInterface>();
+  const [isStart, setIsStart] = useState(false);
 
   const speechText = useSpeechText();
   const { t } = useTranslation();
@@ -130,6 +134,7 @@ const SpeechRecognition = () => {
   }, [speechText, gameData]);
 
   const startRegog = useCallback(() => {
+    setIsStart(true);
     if (recog) {
       recog.abort();
       recog.stop();
@@ -144,11 +149,23 @@ const SpeechRecognition = () => {
   //   initSpeechRecognition();
   // }, [speechText]);
 
+  if (!isStart) {
+    return (
+      <div
+        className="SpeechRecognition"
+        onClick={startRegog}
+      >
+        <img src={micOff} alt="마이크 꺼짐" />
+      </div>
+    );
+  }
+
   return (
     <div
       className="SpeechRecognition"
       onClick={startRegog}
     >
+      <img src={micOn} alt="마이크 켜짐" />
       <span className="material-icons">
         mic
       </span>

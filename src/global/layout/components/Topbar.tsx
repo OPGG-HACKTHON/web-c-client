@@ -45,12 +45,12 @@ const Topbar = ({ onClickInfoBtn, onClickShareBtn }: TopbarComponentProps) => {
           className="logo-image"
           onClick={() => history.push('/')}
         />
-        <img
+        {/* <img
           src={info}
           alt="스우미 정보 버튼"
           className="info-image"
           onClick={() => onClickInfoBtn()}
-        />
+        /> */}
         <img
           src={share}
           alt="링크 공유 버튼"

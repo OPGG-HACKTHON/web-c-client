@@ -4,8 +4,9 @@ import { RouteComponentProps, useHistory } from 'react-router-dom';
 import './index.scss';
 
 import axios from 'axios';
-import MainImg from '@/common/images/MainImg.png';
+import mainImg from '@/common/images/mainImg.png';
 import logo from '@/common/images/logo.png';
+import defaultQR from '@/common/images/defaultQR.png';
 
 const setScreenSize = ({ match }: RouteComponentProps) => {
   const { summonerName } = match.params;
@@ -23,14 +24,14 @@ const setScreenSize = ({ match }: RouteComponentProps) => {
   return (
     <div className="pageWrapper">
       <div className="pcWrapper">
-        <img src={MainImg} alt="메인 이미지" className="main-image" />
+        <img src={mainImg} alt="메인 이미지" className="main-image" />
         <img src={logo} alt="logo" className="share_logo" />
         <button onClick={() => history.push(`/room/${summonerName}`)}>웹으로 보기</button>
       </div>
       <div className="qrWrapper">
         <p>모바일로 보기</p>
         <span>휴대폰으로 QR코드를 스캔해주세요!</span>
-        <img src={QRUrl} alt="qr코드" className="qr" />
+        { QRUrl ? <img src={QRUrl} alt="qr코드" className="qr" /> : <img src={defaultQR} alt="qr코드" />}
       </div>
     </div>
   );

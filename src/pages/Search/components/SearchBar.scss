@@ -19,6 +19,12 @@
     color: #e5e5e5;
     line-height: 14px;
     caret-color: #88878a;
+
+    @include bp-up(md) {
+      width: 500px;
+      height: 45px;
+      font-size: r(16px);
+    }
   }
 
   input:focus {
@@ -32,6 +38,25 @@
     top: 8.5px;
     right: 8.5px;
     color: #746e84;
+
+    @include bp-up(md) {
+      top: 15px;
+      right: 17px;
+      font-size: r(16px);
+    }
+  }
+
+  .searchSpinner {
+    position: absolute;
+    top: 8.5px;
+    right: 8.5px;
+    color: #746e84;
+
+    @include bp-up(md) {
+      top: 15px;
+      right: 17px;
+      font-size: r(16px);
+    }
   }
 
   svg:hover {

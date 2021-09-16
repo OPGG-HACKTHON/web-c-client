@@ -67,7 +67,6 @@ const SpeechRecognition = () => {
         ];
         return acc;
       }, {});
-      console.log(spellDict);
       console.log('transcript list', transcriptList);
       const result = interpret(transcriptList, championNameList, spellDict);
       console.log('result', result);

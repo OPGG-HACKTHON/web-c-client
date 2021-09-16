@@ -9,6 +9,12 @@
     width: 109px;
     height: 21px;
     margin-bottom: r(11px);
+
+    @include bp-up(md) {
+      width: r(218px);
+      height: r(42px);
+      margin-bottom: r(24px);
+    }
   }
 
   span {
@@ -20,6 +26,12 @@
     font-size: r(12px);
     color: #fff;
     line-height: r(14px);
+
+    @include bp-up(md) {
+      height: 28px;
+      margin-bottom: r(0);
+      font-size: r(16px);
+    }
 
     strong {
       font-weight: 800;

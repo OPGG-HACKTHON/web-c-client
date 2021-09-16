@@ -80,10 +80,10 @@ const ChampionItem = ({
   };
 
   const openMessage = () => {
-    setShowMessage(true);
     if (messageTimer.current) {
       clearTimeout(messageTimer.current);
     }
+    setShowMessage(true);
     messageTimer.current = setTimeout(() => {
       setShowMessage(false);
       messageTimer.current = null;

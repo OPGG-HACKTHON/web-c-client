@@ -7,7 +7,7 @@ import setRealVh from '@/common/helper/setRealVh';
 import axios from '@/common/helper/axios';
 import useInterval from '@/common/hooks/useInterval';
 import ToastMessage from '@/common/components/ToastMessage';
-import MainImg from '@/common/images/MainImg.png';
+import mainImg from '@/common/images/mainImg.png';
 
 import RoomHeader from './components/RoomHeader';
 import ShareButton from './components/ShareButton';
@@ -44,11 +44,16 @@ const Room = () => {
   };
 
   const redirectToGamePage = async () => {
-    const isValidAction = await isGameStart();
-    if (!isValidAction) return;
-    const { data } = await axios.get(`/v1/match/status/${summonerName}`);
-    const { matchTeamCode } = data.data;
-    history.push(`/game/${matchTeamCode}`);
+    try {
+      const isValidAction = await isGameStart();
+      if (!isValidAction) return;
+      const { data } = await axios.get(`/v1/match/status/${summonerName}`);
+      const { matchTeamCode } = data.data;
+      localStorage.setItem('summonerName', summonerName);
+      window.location.href = `/game/${matchTeamCode}`;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const isValidUser = async () => {
@@ -118,7 +123,7 @@ const Room = () => {
       <div className="room-container">
         <SummonerContainer src={profile} summonerName={summonerName} />
         <div className="room-middle">
-          <img src={MainImg} alt="메인 이미지" className="main-image" />
+          <img src={mainImg} alt="메인 이미지" className="main-image" />
           <span>{t('room.gameNotStarted')}</span>
           <span>{t('room.inviteYourTeam')}</span>
         </div>

@@ -85,10 +85,14 @@
             margin-top: 1px;
           }
         }
+      }
 
-        .disabled {
-          filter: grayscale(80%);
-        }
+      .arrowBox:not(.disabled):hover {
+        opacity: 90%;
+      }
+
+      .disabled {
+        background-color: #302e39;
       }
     }
   }

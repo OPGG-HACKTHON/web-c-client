@@ -49,7 +49,6 @@ export default () => {
 
   const initSpeechText = useCallback(async () => {
     const speech = await init(i18n.language);
-    console.log('speech', speech);
     setSpeechText(speech);
   }, [i18n]);
 

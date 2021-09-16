@@ -35,6 +35,17 @@
       color: #6675ff;
       text-align: center;
     }
+
+    .emptyWrapper {
+      width: r(126px);
+      height: r(126px);
+      margin: r(24px) 0;
+      border: 2px solid #6675ff;
+      border-radius: 12px;
+      backdrop-filter: blur(4px);
+      background: rgba(102, 117, 255, 0.8);
+      color: rgba(102, 117, 255, 0.8);
+    }
   }
 
   .qrWrapper,
@@ -51,8 +62,8 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
     .main-image {
-      width: r(198px);
-      height: r(120px);
+      width: r(170px);
+      height: r(127px);
     }
 
     .share_logo {

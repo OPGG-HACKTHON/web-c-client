@@ -187,6 +187,7 @@ module.exports = async (outSideEnv = {}) => {
         inject: true,
         template: 'public/index.html',
         filename: `index.html?version=${new Date().getTime()}`,
+        favicon: 'public/static/favicon/main.png',
       }),
 
       new InterpolateHtmlPlugin(HtmlWebpackPlugin, env),

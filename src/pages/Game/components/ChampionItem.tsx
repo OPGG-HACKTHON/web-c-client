@@ -81,14 +81,12 @@ const ChampionItem = ({
   const openMessage = () => {
     if (modalTimer) {
       clearTimeout(modalTimer);
-      return;
     }
 
     modalTimer = setTimeout(() => {
-      setShowMessage(false);
-      clearTimeout(modalTimer);
       modalTimer = null;
       spellTimeError.current = false;
+      setShowMessage(false);
     }, 1800);
   };
 

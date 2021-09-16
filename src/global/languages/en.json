@@ -39,7 +39,10 @@
     "completeSelect": "Select"
   },
   "ultimate": "Ultimate",
+  "ultimateShort": "ultimate",
+  "궁": "ultimate",
   "spells": {
+    "강타": "Smite",
     "회복": "Heal",
     "점화": "Ignite",
     "정화": "Cleanse",
@@ -48,5 +51,11 @@
     "방어막": "Barrier",
     "유체화": "Ghost",
     "점멸": "Flash"
+  },
+  "speech": {
+    "speechRecognition": "Voice recognition",
+    "use": "used.",
+    "on": "on",
+    "tenSecondsLeft": "10 seconds left"
   }
 }

@@ -1,645 +1,821 @@
 import _ from 'lodash';
-
+import i18n from '@/global/languages/i18n';
 
 /*
 https://ddragon.leagueoflegends.com/cdn/11.18.1/data/ko_KR/champion.json
-Object.values(json.data).map(c => ({ name: c.name, key: c.key }));
+const koChampions = Object.values(json.data).map(c => ({ name: c.name, key: c.key }));
 
+https://ddragon.leagueoflegends.com/cdn/11.18.1/data/ko_KR/champion.json
+Object.values(json.data).map(c => ({ name: c.name, key: c.key }));
+const enChampions = Object.values(json.data).map(c => ({ name: c.name, key: c.key }));
+const championList = koChampions.map(c => ({ ...c, englishName: enChampions.find(enC => enC.key === c.key).name }));
 
 https://lolalytics.com/lol/tierlist/?lane=top&patch=7
 네트워크 https://axe.lolalytics.com/tierlist/1/?lane=top&patch=7&tier=platinum_plus&queue=420&region=all
-
-5개
-
+포지션별 5개
 
 */
 
-const championList = [
+export const championList = [
   {
     name: '아트록스',
     key: '266',
+    englishName: 'Aatrox',
   },
   {
     name: '아리',
     key: '103',
+    englishName: 'Ahri',
   },
   {
     name: '아칼리',
     key: '84',
+    englishName: 'Akali',
   },
   {
     name: '아크샨',
     key: '166',
+    englishName: 'Akshan',
   },
   {
     name: '알리스타',
     key: '12',
+    englishName: 'Alistar',
   },
   {
     name: '아무무',
     key: '32',
+    englishName: 'Amumu',
   },
   {
     name: '애니비아',
     key: '34',
+    englishName: 'Anivia',
   },
   {
     name: '애니',
     key: '1',
+    englishName: 'Annie',
   },
   {
     name: '아펠리오스',
     key: '523',
+    englishName: 'Aphelios',
   },
   {
     name: '애쉬',
     key: '22',
+    englishName: 'Ashe',
   },
   {
     name: '아우렐리온 솔',
     key: '136',
+    englishName: 'Aurelion Sol',
   },
   {
     name: '아지르',
     key: '268',
+    englishName: 'Azir',
   },
   {
     name: '바드',
     key: '432',
+    englishName: 'Bard',
   },
   {
     name: '블리츠크랭크',
     key: '53',
+    englishName: 'Blitzcrank',
   },
   {
     name: '브랜드',
     key: '63',
+    englishName: 'Brand',
   },
   {
     name: '브라움',
     key: '201',
+    englishName: 'Braum',
   },
   {
     name: '케이틀린',
     key: '51',
+    englishName: 'Caitlyn',
   },
   {
     name: '카밀',
     key: '164',
+    englishName: 'Camille',
   },
   {
     name: '카시오페아',
     key: '69',
+    englishName: 'Cassiopeia',
   },
   {
     name: '초가스',
     key: '31',
+    englishName: "Cho'Gath",
   },
   {
     name: '코르키',
     key: '42',
+    englishName: 'Corki',
   },
   {
     name: '다리우스',
     key: '122',
+    englishName: 'Darius',
   },
   {
     name: '다이애나',
     key: '131',
+    englishName: 'Diana',
   },
   {
     name: '드레이븐',
     key: '119',
+    englishName: 'Draven',
   },
   {
     name: '문도 박사',
     key: '36',
+    englishName: 'Dr. Mundo',
   },
   {
     name: '에코',
     key: '245',
+    englishName: 'Ekko',
   },
   {
     name: '엘리스',
     key: '60',
+    englishName: 'Elise',
   },
   {
     name: '이블린',
     key: '28',
+    englishName: 'Evelynn',
   },
   {
     name: '이즈리얼',
     key: '81',
+    englishName: 'Ezreal',
   },
   {
     name: '피들스틱',
     key: '9',
+    englishName: 'Fiddlesticks',
   },
   {
     name: '피오라',
     key: '114',
+    englishName: 'Fiora',
   },
   {
     name: '피즈',
     key: '105',
+    englishName: 'Fizz',
   },
   {
     name: '갈리오',
     key: '3',
+    englishName: 'Galio',
   },
   {
     name: '갱플랭크',
     key: '41',
+    englishName: 'Gangplank',
   },
   {
     name: '가렌',
     key: '86',
+    englishName: 'Garen',
   },
   {
     name: '나르',
     key: '150',
+    englishName: 'Gnar',
   },
   {
     name: '그라가스',
     key: '79',
+    englishName: 'Gragas',
   },
   {
     name: '그레이브즈',
     key: '104',
+    englishName: 'Graves',
   },
   {
     name: '그웬',
     key: '887',
+    englishName: 'Gwen',
   },
   {
     name: '헤카림',
     key: '120',
+    englishName: 'Hecarim',
   },
   {
     name: '하이머딩거',
     key: '74',
+    englishName: 'Heimerdinger',
   },
   {
     name: '일라오이',
     key: '420',
+    englishName: 'Illaoi',
   },
   {
     name: '이렐리아',
     key: '39',
+    englishName: 'Irelia',
   },
   {
     name: '아이번',
     key: '427',
+    englishName: 'Ivern',
   },
   {
     name: '잔나',
     key: '40',
+    englishName: 'Janna',
   },
   {
     name: '자르반 4세',
     key: '59',
+    englishName: 'Jarvan IV',
   },
   {
     name: '잭스',
     key: '24',
+    englishName: 'Jax',
   },
   {
     name: '제이스',
     key: '126',
+    englishName: 'Jayce',
   },
   {
     name: '진',
     key: '202',
+    englishName: 'Jhin',
   },
   {
     name: '징크스',
     key: '222',
+    englishName: 'Jinx',
   },
   {
     name: '카이사',
     key: '145',
+    englishName: "Kai'Sa",
   },
   {
     name: '칼리스타',
     key: '429',
+    englishName: 'Kalista',
   },
   {
     name: '카르마',
     key: '43',
+    englishName: 'Karma',
   },
   {
     name: '카서스',
     key: '30',
+    englishName: 'Karthus',
   },
   {
     name: '카사딘',
     key: '38',
+    englishName: 'Kassadin',
   },
   {
     name: '카타리나',
     key: '55',
+    englishName: 'Katarina',
   },
   {
     name: '케일',
     key: '10',
+    englishName: 'Kayle',
   },
   {
     name: '케인',
     key: '141',
+    englishName: 'Kayn',
   },
   {
     name: '케넨',
     key: '85',
+    englishName: 'Kennen',
   },
   {
     name: '카직스',
     key: '121',
+    englishName: "Kha'Zix",
   },
   {
     name: '킨드레드',
     key: '203',
+    englishName: 'Kindred',
   },
   {
     name: '클레드',
     key: '240',
+    englishName: 'Kled',
   },
   {
     name: '코그모',
     key: '96',
+    englishName: "Kog'Maw",
   },
   {
     name: '르블랑',
     key: '7',
+    englishName: 'LeBlanc',
   },
   {
     name: '리 신',
     key: '64',
+    englishName: 'Lee Sin',
   },
   {
     name: '레오나',
     key: '89',
+    englishName: 'Leona',
   },
   {
     name: '릴리아',
     key: '876',
+    englishName: 'Lillia',
   },
   {
     name: '리산드라',
     key: '127',
+    englishName: 'Lissandra',
   },
   {
     name: '루시안',
     key: '236',
+    englishName: 'Lucian',
   },
   {
     name: '룰루',
     key: '117',
+    englishName: 'Lulu',
   },
   {
     name: '럭스',
     key: '99',
+    englishName: 'Lux',
   },
   {
     name: '말파이트',
     key: '54',
+    englishName: 'Malphite',
   },
   {
     name: '말자하',
     key: '90',
+    englishName: 'Malzahar',
   },
   {
     name: '마오카이',
     key: '57',
+    englishName: 'Maokai',
   },
   {
     name: '마스터 이',
     key: '11',
+    englishName: 'Master Yi',
   },
   {
     name: '미스 포츈',
     key: '21',
+    englishName: 'Miss Fortune',
   },
   {
     name: '오공',
     key: '62',
+    englishName: 'Wukong',
   },
   {
     name: '모데카이저',
     key: '82',
+    englishName: 'Mordekaiser',
   },
   {
     name: '모르가나',
     key: '25',
+    englishName: 'Morgana',
   },
   {
     name: '나미',
     key: '267',
+    englishName: 'Nami',
   },
   {
     name: '나서스',
     key: '75',
+    englishName: 'Nasus',
   },
   {
     name: '노틸러스',
     key: '111',
+    englishName: 'Nautilus',
   },
   {
     name: '니코',
     key: '518',
+    englishName: 'Neeko',
   },
   {
     name: '니달리',
     key: '76',
+    englishName: 'Nidalee',
   },
   {
     name: '녹턴',
     key: '56',
+    englishName: 'Nocturne',
   },
   {
     name: '누누와 윌럼프',
     key: '20',
+    englishName: 'Nunu & Willump',
   },
   {
     name: '올라프',
     key: '2',
+    englishName: 'Olaf',
   },
   {
     name: '오리아나',
     key: '61',
+    englishName: 'Orianna',
   },
   {
     name: '오른',
     key: '516',
+    englishName: 'Ornn',
   },
   {
     name: '판테온',
     key: '80',
+    englishName: 'Pantheon',
   },
   {
     name: '뽀삐',
     key: '78',
+    englishName: 'Poppy',
   },
   {
     name: '파이크',
     key: '555',
+    englishName: 'Pyke',
   },
   {
     name: '키아나',
     key: '246',
+    englishName: 'Qiyana',
   },
   {
     name: '퀸',
     key: '133',
+    englishName: 'Quinn',
   },
   {
     name: '라칸',
     key: '497',
+    englishName: 'Rakan',
   },
   {
     name: '람머스',
     key: '33',
+    englishName: 'Rammus',
   },
   {
     name: '렉사이',
     key: '421',
+    englishName: "Rek'Sai",
   },
   {
     name: '렐',
     key: '526',
+    englishName: 'Rell',
   },
   {
     name: '레넥톤',
     key: '58',
+    englishName: 'Renekton',
   },
   {
     name: '렝가',
     key: '107',
+    englishName: 'Rengar',
   },
   {
     name: '리븐',
     key: '92',
+    englishName: 'Riven',
   },
   {
     name: '럼블',
     key: '68',
+    englishName: 'Rumble',
   },
   {
     name: '라이즈',
     key: '13',
+    englishName: 'Ryze',
   },
   {
     name: '사미라',
     key: '360',
+    englishName: 'Samira',
   },
   {
     name: '세주아니',
     key: '113',
+    englishName: 'Sejuani',
   },
   {
     name: '세나',
     key: '235',
+    englishName: 'Senna',
   },
   {
     name: '세라핀',
     key: '147',
+    englishName: 'Seraphine',
   },
   {
     name: '세트',
     key: '875',
+    englishName: 'Sett',
   },
   {
     name: '샤코',
     key: '35',
+    englishName: 'Shaco',
   },
   {
     name: '쉔',
     key: '98',
+    englishName: 'Shen',
   },
   {
     name: '쉬바나',
     key: '102',
+    englishName: 'Shyvana',
   },
   {
     name: '신지드',
     key: '27',
+    englishName: 'Singed',
   },
   {
     name: '사이온',
     key: '14',
+    englishName: 'Sion',
   },
   {
     name: '시비르',
     key: '15',
+    englishName: 'Sivir',
   },
   {
     name: '스카너',
     key: '72',
+    englishName: 'Skarner',
   },
   {
     name: '소나',
     key: '37',
+    englishName: 'Sona',
   },
   {
     name: '소라카',
     key: '16',
+    englishName: 'Soraka',
   },
   {
     name: '스웨인',
     key: '50',
+    englishName: 'Swain',
   },
   {
     name: '사일러스',
     key: '517',
+    englishName: 'Sylas',
   },
   {
     name: '신드라',
     key: '134',
+    englishName: 'Syndra',
   },
   {
     name: '탐 켄치',
     key: '223',
+    englishName: 'Tahm Kench',
   },
   {
     name: '탈리야',
     key: '163',
+    englishName: 'Taliyah',
   },
   {
     name: '탈론',
     key: '91',
+    englishName: 'Talon',
   },
   {
     name: '타릭',
     key: '44',
+    englishName: 'Taric',
   },
   {
     name: '티모',
     key: '17',
+    englishName: 'Teemo',
   },
   {
     name: '쓰레쉬',
     key: '412',
+    englishName: 'Thresh',
   },
   {
     name: '트리스타나',
     key: '18',
+    englishName: 'Tristana',
   },
   {
     name: '트런들',
     key: '48',
+    englishName: 'Trundle',
   },
   {
     name: '트린다미어',
     key: '23',
+    englishName: 'Tryndamere',
   },
   {
     name: '트위스티드 페이트',
     key: '4',
+    englishName: 'Twisted Fate',
   },
   {
     name: '트위치',
     key: '29',
+    englishName: 'Twitch',
   },
   {
     name: '우디르',
     key: '77',
+    englishName: 'Udyr',
   },
   {
     name: '우르곳',
     key: '6',
+    englishName: 'Urgot',
   },
   {
     name: '바루스',
     key: '110',
+    englishName: 'Varus',
   },
   {
     name: '베인',
     key: '67',
+    englishName: 'Vayne',
   },
   {
     name: '베이가',
     key: '45',
+    englishName: 'Veigar',
   },
   {
     name: '벨코즈',
     key: '161',
+    englishName: "Vel'Koz",
   },
   {
     name: '바이',
     key: '254',
+    englishName: 'Vi',
   },
   {
     name: '비에고',
     key: '234',
+    englishName: 'Viego',
   },
   {
     name: '빅토르',
     key: '112',
+    englishName: 'Viktor',
   },
   {
     name: '블라디미르',
     key: '8',
+    englishName: 'Vladimir',
   },
   {
     name: '볼리베어',
     key: '106',
+    englishName: 'Volibear',
   },
   {
     name: '워윅',
     key: '19',
+    englishName: 'Warwick',
   },
   {
     name: '자야',
     key: '498',
+    englishName: 'Xayah',
   },
   {
     name: '제라스',
     key: '101',
+    englishName: 'Xerath',
   },
   {
     name: '신 짜오',
     key: '5',
+    englishName: 'Xin Zhao',
   },
   {
     name: '야스오',
     key: '157',
+    englishName: 'Yasuo',
   },
   {
     name: '요네',
     key: '777',
+    englishName: 'Yone',
   },
   {
     name: '요릭',
     key: '83',
+    englishName: 'Yorick',
   },
   {
     name: '유미',
     key: '350',
+    englishName: 'Yuumi',
   },
   {
     name: '자크',
     key: '154',
+    englishName: 'Zac',
   },
   {
     name: '제드',
     key: '238',
+    englishName: 'Zed',
   },
   {
     name: '직스',
     key: '115',
+    englishName: 'Ziggs',
   },
   {
     name: '질리언',
     key: '26',
+    englishName: 'Zilean',
   },
   {
     name: '조이',
     key: '142',
+    englishName: 'Zoe',
   },
   {
     name: '자이라',
     key: '143',
+    englishName: 'Zyra',
   },
 ];
+
+export const getSpellNameByLanguage = (name, spellKey) => {
+  console.log('name', name, spellKey);
+  const i18nRoute = spellKey === 'R' ? '' : 'spells.';
+  const spellName = i18n.t(`${i18nRoute}${name}`);
+  console.log('spellName', spellName);
+  if (!spellName) return '';
+  return spellName;
+};
+
+export const getChampionNameByLanguage = (name, languageFromParent) => {
+  const language = languageFromParent || i18n.language;
+  const key = language === 'ko-KR' ? 'name' : 'englishName';
+  const champ = championList.find(n => n.name.replace(/\s/g, '') === name.replace(/\s/g, ''));
+  if (!champ) return '';
+  const champName = champ[key];
+  return champName;
+};
 
 const topData = {
   1: [

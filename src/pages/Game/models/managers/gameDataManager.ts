@@ -2,13 +2,13 @@
 /* eslint-disable no-useless-catch */
 import _ from 'lodash';
 import axios from '@/common/helper/axios';
+import i18n from '@/global/languages/i18n';
+import { guessLane } from '@/common/datas/championLaneData.js';
 
 import {
   ChampData, SpellKey, ServerData, SpellData, ItemData,
 } from '../type';
 import ITEM_LIST from '../../components/ChamptionItemContainer/components/itemList';
-
-import { guessLane } from './championLaneData';
 
 const gameDataManager = {
   async getChampsInitData(matchTeamCode: string): Promise<ChampData[]> {

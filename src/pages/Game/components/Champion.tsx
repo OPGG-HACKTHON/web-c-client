@@ -1,6 +1,8 @@
 import React from 'react';
 import cs from 'classnames';
 
+import { getChampionNameByLanguage } from '@/common/datas/championLaneData';
+
 import './Champion.scss';
 
 import { ChampData } from '../models/type';
@@ -33,7 +35,7 @@ const Champion = ({
       </div>
       { isUsingName && (
         <div className="name-container">
-          <h4 className="champ-name">{champData.champName}</h4>
+          <h4 className="champ-name">{getChampionNameByLanguage(champData.champName)}</h4>
           <span className="summoner-name">{champData.summonerName}</span>
         </div>
       )}

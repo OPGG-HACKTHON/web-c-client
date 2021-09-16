@@ -29,17 +29,14 @@ const ChampionItem = ({
   const initMode: ModeType = isSpellUsed ? 'wait' : 'default';
   const [status, setStatus] = useState<ModeType>(initMode);
   const [showMessage, setShowMessage] = useState<boolean>(false);
-  const curtainTimer = useRef(null);
-  const messageTimer = useRef(null);
+  const timer = useRef({ curtain: null, message: null });
   const { t } = useTranslation();
 
   const {
-    onUseSpell,
-    resetSpell,
-    updateTimeUsed,
-    spellTimeError,
-    setSpellTimeError,
-  } = useContext(GameContext);
+    onUseSpell, resetSpell, updateTimeUsed, spellTimeError,
+  } = useContext(
+    GameContext,
+  );
 
   const { src, time, level } = champData.spells[spellType];
   const { summonerName } = champData;
@@ -49,13 +46,13 @@ const ChampionItem = ({
   };
 
   const createCurtain = () => {
-    if (curtainTimer.current) {
-      clearTimeout(curtainTimer.current);
+    if (timer.current.curtain) {
+      clearTimeout(timer.current.curtain);
     }
 
-    curtainTimer.current = setTimeout(() => {
+    timer.current.curtain = setTimeout(() => {
       setStatus('wait');
-      curtainTimer.current = null;
+      timer.current.curtain = null;
     }, 5000);
   };
 
@@ -80,19 +77,21 @@ const ChampionItem = ({
   };
 
   const openMessage = () => {
-    setShowMessage(true);
-    if (messageTimer.current) {
-      clearTimeout(messageTimer.current);
+    if (timer.current.message) {
+      clearTimeout(timer.current.message);
     }
-    messageTimer.current = setTimeout(() => {
+
+    timer.current.message = setTimeout(() => {
       setShowMessage(false);
-      messageTimer.current = null;
+      timer.current.message = null;
+      spellTimeError.current = false;
     }, 1800);
   };
+
   useEffect(() => {
     if (spellTimeError.current) {
+      setShowMessage(true);
       openMessage();
-      spellTimeError.current = false;
     }
   }, [spellTimeError.current]);
 
@@ -170,7 +169,10 @@ const ChampionItem = ({
   if (status === 'modify') {
     return (
       <div className="ChampionItem" onClick={changeToModifyMode}>
-        <div className="item-left" onClick={handleClickIcon}>
+        <div
+          className={`item-left ${spellType === 'R' && 'item-left-ultimate'}`}
+          onClick={handleClickIcon}
+        >
           <SpellIconInItem
             spellType={spellType}
             src={src}
@@ -204,7 +206,10 @@ const ChampionItem = ({
 
   return (
     <div className="ChampionItem" onClick={changeToModifyMode}>
-      <div className="item-left" onClick={handleClickIcon}>
+      <div
+        className={`item-left ${spellType === 'R' && 'item-left-ultimate'}`}
+        onClick={handleClickIcon}
+      >
         <SpellIconInItem
           spellType={spellType}
           src={src}

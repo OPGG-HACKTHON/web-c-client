@@ -10,7 +10,7 @@ const MiddleBox = () => {
 
   return (
     <div className="MiddleBox">
-      <img src={logo} alt="스우미 로고" className="logo-imgage" />
+      <img src={logo} alt="스우미 로고" className="logo-image" />
       <span dangerouslySetInnerHTML={{ __html: t('mainValueHTML') }} />
     </div>
   );

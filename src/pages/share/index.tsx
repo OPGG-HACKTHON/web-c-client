@@ -30,6 +30,7 @@ const setScreenSize = ({ match }: RouteComponentProps) => {
       <div className="pcWrapper">
         <img src={mainImg} alt="메인 이미지" className="main-image" />
         <img src={logo} alt="logo" className="share_logo" />
+        <span className="main-value" dangerouslySetInnerHTML={{ __html: t('mainValueHTML') }} />
         <button onClick={() => history.push(`/room/${summonerName}`)}>
           {t('share.webView')}
         </button>

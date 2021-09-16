@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+import i18n from '@/global/languages/i18n';
 
-import useSpeechText from '@/common/hooks/useSpeechText.js';
+import { speechTextFunc } from '@/common/hooks/useSpeechText';
+import { getChampionNameByLanguage, getSpellNameByLanguage } from '@/common/datas/championLaneData';
 
 import micOff from '@/common/images/micOff.png';
 import micOn from '@/common/images/micOn.png';
@@ -31,9 +32,6 @@ const SpeechRecognition = () => {
   const { gameData, onUseSpell } = useGameData();
   const [recog, setRecog] = useState<RecognitionInterface>();
   const [isStart, setIsStart] = useState(false);
-
-  const speechText = useSpeechText();
-  const { t } = useTranslation();
 
   const initSpeechRecognition = useCallback(() => {
     const SpeechRecognitionWebApi = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -84,16 +82,12 @@ const SpeechRecognition = () => {
 
       // TODO: 서버에서 스펠 종류 데이터를 내려주면 분류에 추가
       let spellType;
-      let spellText;
       if (result.action === 'R') {
         spellType = 'R';
-        spellText = t('ultimate');
       } else if (result.action === spellDict[result.champion][0]) {
         spellType = 'D';
-        spellText = t(`spells.${result.action}`);
       } else if (result.action === spellDict[result.champion][1]) {
         spellType = 'F';
-        spellText = t(`spells.${result.action}`);
       }
 
       if (!spellType) {
@@ -101,26 +95,17 @@ const SpeechRecognition = () => {
       }
 
       const isSpellOn = summoner.spells[spellType].isOn;
-      if (!isSpellOn) {
+      const isUltimateLevelZero = summoner.spells[spellType].level === 0;
+      if (!isSpellOn && !isUltimateLevelZero) {
         return;
       }
 
+      const spellText = getSpellNameByLanguage(summoner.spells[spellType].name, spellType);
       onUseSpell(summoner.summonerName, spellType);
-      speechText.speak({
-        text: '음성 인식',
-        queue: false,
-        listeners: {
-          onend: () => {
-            setTimeout(
-              () => speechText.speak({
-                text: `${result.champion} ${spellText} 사용`,
-                queue: false,
-              }),
-              300,
-            );
-          },
-        },
-      });
+      speechTextFunc(
+        i18n.t('speech.speechRecognition'),
+        `${getChampionNameByLanguage(result.champion)} ${spellText} ${i18n.t('speech.use')}`,
+      );
     };
 
     recognition.onend = () => {
@@ -130,7 +115,7 @@ const SpeechRecognition = () => {
 
     setRecog(recognition);
     recognition.start();
-  }, [speechText, gameData]);
+  }, [gameData]);
 
   const startRegog = useCallback(() => {
     setIsStart(true);
@@ -141,12 +126,7 @@ const SpeechRecognition = () => {
     }
 
     initSpeechRecognition();
-  }, [speechText, gameData, recog]);
-
-  // useEffect(() => {
-  //   if (!speechText) return;
-  //   initSpeechRecognition();
-  // }, [speechText]);
+  }, [gameData, recog]);
 
   if (!isStart) {
     return (

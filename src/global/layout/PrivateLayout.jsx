@@ -16,7 +16,7 @@ const PrivateLayout = ({ children }) => {
 
   const onClickShareBtn = () => {
     setShowMessage(true);
-    addToClipboard(`https://swoomi.me/share/${summonerName}`);
+    addToClipboard(encodeURI(`https://swoomi.me/share/${summonerName}`));
 
     if (messageTimer.current) {
       clearTimeout(messageTimer.current);

@@ -83,7 +83,8 @@ const Room = () => {
       const { data } = await axios.get(`/v1/match/${summonerName}`);
       if (data.data.matchStatus) {
         const matchTeamCode = await getMatchTeamCode();
-        history.push(`/game/${matchTeamCode}`);
+        localStorage.setItem('summonerName', summonerName);
+        window.location.href = `/game/${matchTeamCode}`;
       }
     } catch (err) {
       console.log('Match Not Started');

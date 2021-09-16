@@ -18,16 +18,18 @@
   }
 
   span {
-    width: 100%;
+    width: 80%;
     height: 14px;
     margin-bottom: r(24px);
     font-weight: 400;
     font-style: normal;
     font-size: r(12px);
     color: #fff;
-    line-height: r(14px);
+    line-height: r(18px);
+    text-align: center;
 
     @include bp-up(md) {
+      width: 120%;
       height: 28px;
       margin-bottom: r(0);
       font-size: r(16px);

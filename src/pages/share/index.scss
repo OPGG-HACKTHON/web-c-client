@@ -27,9 +27,9 @@
       backdrop-filter: blur(4px);
 
       @include bp-up (md) {
-        width: r(240px);
-        height: r(240px);
-        margin: r(30px) 0 0 0;
+        width: r(216px);
+        height: r(216px);
+        margin: 0;
       }
     }
 
@@ -39,7 +39,7 @@
       color: #fff;
 
       @include bp-up(md) {
-        margin-bottom: r(12px);
+        margin-bottom: r(8px);
         font-size: r(32px);
       }
     }
@@ -51,7 +51,8 @@
       text-align: center;
 
       @include bp-up(md) {
-        font-size: r(24px);
+        margin-bottom: r(32px);
+        font-size: r(26px);
       }
     }
   }
@@ -78,8 +79,8 @@
       height: r(127px);
 
       @include bp-up(md) {
-        width: r(340px);
-        height: r(254px);
+        width: r(342px);
+        height: r(255px);
       }
     }
 
@@ -90,10 +91,10 @@
       margin-bottom: r(22px);
 
       @include bp-up(md) {
-        width: r(218px);
-        height: r(38px);
-        margin-top: r(34px);
-        margin-bottom: r(44px);
+        width: r(255px);
+        height: r(40px);
+        margin-top: r(18px);
+        margin-bottom: r(46px);
       }
     }
 
@@ -112,10 +113,9 @@
       font-size: r(16px);
 
       @include bp-up(md) {
-        width: r(260px);
+        width: r(199px);
         height: r(52px);
-        margin-bottom: r(20px);
-        font-size: r(24px);
+        font-size: r(20px);
       }
     }
 

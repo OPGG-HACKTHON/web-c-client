@@ -80,7 +80,6 @@ const ChampionItem = ({
 
   const openMessage = () => {
     if (modalTimer) {
-      console.log('사라짐');
       clearTimeout(modalTimer);
       return;
     }

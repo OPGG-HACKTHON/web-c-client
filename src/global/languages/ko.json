@@ -22,6 +22,11 @@
       "coolTime": "쿨 타임을 넘어선 시간입니다."
     }
   },
+  "share": {
+    "webView": "웹으로 보기",
+    "mobileView": "모바일로 보기",
+    "QRCode": "휴대폰으로 QR코드를 스캔해주세요!"
+  },
   "ChamptionItemContainer": {
     "nothingEquipped": "아직 장착한 아이템이 없어요."
   },

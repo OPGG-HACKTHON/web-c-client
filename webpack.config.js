@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const readline = require('readline');
 const path = require('path');
 
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
@@ -181,6 +182,12 @@ module.exports = async (outSideEnv = {}) => {
     plugins: [
       new webpack.DefinePlugin({
         'process.env': JSON.stringify(env),
+      }),
+
+      new CopyWebpackPlugin({
+        patterns: [
+          { from: 'public/static', to: 'static' },
+        ],
       }),
 
       new HtmlWebpackPlugin({

@@ -19,6 +19,7 @@
   .room-middle {
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin: 0 auto;
 
     span {
@@ -30,7 +31,7 @@
     .main-image {
       width: r(170px);
       height: r(127px);
-      margin-bottom: 28px;
+      margin-bottom: r(20px);
     }
   }
 

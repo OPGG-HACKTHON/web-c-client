@@ -39,7 +39,10 @@
     "completeSelect": "선택완료"
   },
   "ultimate": "궁극기",
+  "ultimateShort": "궁",
+  "궁": "궁",
   "spells": {
+    "강타": "강타",
     "회복": "힐",
     "점화": "점화",
     "정화": "정화",
@@ -48,5 +51,11 @@
     "방어막": "방어막",
     "유체화": "유체화",
     "점멸": "점멸"
+  },
+  "speech": {
+    "speechRecognition": "음성인식",
+    "use": "사용",
+    "on": "온",
+    "tenSecondsLeft": "10초 전"
   }
 }

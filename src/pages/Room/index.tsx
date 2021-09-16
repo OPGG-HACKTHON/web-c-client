@@ -88,7 +88,6 @@ const Room = () => {
       }
     } catch (err) {
       console.log('Match Not Started');
-      // console.error(err);
     }
   };
 
@@ -131,7 +130,7 @@ const Room = () => {
         <div className="room-bottom">
           <input
             ref={urlRef}
-            value={`https://swoomi.me/share/${summonerName}`}
+            value={encodeURI(`https://swoomi.me/share/${summonerName}`)}
             readOnly
           />
           {showShare && (

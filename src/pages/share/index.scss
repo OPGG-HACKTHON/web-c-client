@@ -12,6 +12,29 @@
     flex-direction: row;
   }
 
+  .main-value {
+    width: 80%;
+    height: 14px;
+    margin-bottom: r(32px);
+    font-weight: 400;
+    font-style: normal;
+    font-size: r(12px);
+    color: #fff;
+    line-height: r(18px);
+    text-align: center;
+
+    @include bp-up(md) {
+      width: 120%;
+      height: 28px;
+      font-size: r(16px);
+    }
+
+    strong {
+      font-weight: 800;
+      font-style: normal;
+    }
+  }
+
   .qrWrapper {
     border-right: 1px solid #312e3a;
     background-color: #1f1d24;
@@ -86,15 +109,15 @@
 
     .share_logo {
       width: r(109px);
-      height: r(19px);
+      height: r(21px);
       margin-top: r(17px);
-      margin-bottom: r(22px);
+      margin-bottom: r(12px);
 
       @include bp-up(md) {
-        width: r(255px);
-        height: r(40px);
+        width: r(218px);
+        height: r(42px);
         margin-top: r(18px);
-        margin-bottom: r(46px);
+        margin-bottom: r(24px);
       }
     }
 

@@ -1,7 +1,11 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
-import { speechTextFunc } from '@/common/hooks/useSpeechText.js';
+import i18n from '@/global/languages/i18n';
+import { getSpellNameByLanguage, getChampionNameByLanguage } from '@/common/datas/championLaneData';
+
+import { speechTextFunc } from '@/common/hooks/useSpeechText';
 import gameDataManager from '../managers/gameDataManager';
+
 import {
   ChampData, SocketSpellData, SpellKey,
 } from '../type';
@@ -47,6 +51,12 @@ export const initState: FetchState = {
   champsData: exampleData,
   loading: false,
   error: null,
+};
+
+const getChampAndSpellNameByLanguage = (champData, spellKey) => {
+  const champName = getChampionNameByLanguage(champData.champName);
+  const spellName = getSpellNameByLanguage(champData.spells[spellKey].name, spellKey);
+  return { champName, spellName };
 };
 
 const setFecthState = (champsData: ChampData[], loading: boolean, error: Error): FetchState => {
@@ -102,15 +112,18 @@ export function reducer(state: FetchState, action: IAction) {
         if (champData.summonerName === summonerName) {
           const { time } = champData.spells[spellKey];
           if (time === 11) {
-            const text = `${champData.champName} ${champData.spells[spellKey].name}`;
-            const secondText = '10초 전';
+            const { champName, spellName } = getChampAndSpellNameByLanguage(champData, spellKey);
+            const text = `${champName} ${spellName}`;
+            const secondText = i18n.t('speech.tenSecondsLeft');
             speechTextFunc(text, secondText);
           }
           if (time === 1) {
             champData.spells[spellKey].time = 0;
             champData.spells[spellKey].isOn = true;
-            const text = `${champData.champName}`;
-            const secondText = `${champData.spells[spellKey].name} 온`;
+
+            const { champName, spellName } = getChampAndSpellNameByLanguage(champData, spellKey);
+            const text = `${champName}`;
+            const secondText = `${spellName} ${i18n.t('speech.on')}`;
             speechTextFunc(text, secondText);
           }
           if (!time || time < 0) {

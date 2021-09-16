@@ -20,7 +20,6 @@ const SpellTimeErrorMessage = ({ spellTimeError }) => {
   };
 
   useEffect(() => {
-    console.log('hi');
     setShowMessage(true);
     openMessage();
   }, [spellTimeError.current]);

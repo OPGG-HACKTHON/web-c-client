@@ -22,6 +22,11 @@
       "coolTime": "It exceeds remained cooldown."
     }
   },
+  "share": {
+    "webView": "View as Web",
+    "mobileView": "View as Mobile",
+    "QRCode": "Please scan the QR code with your cell phone!"
+  },
   "ChamptionItemContainer": {
     "nothingEquipped": "Items are not equipped yet."
   },

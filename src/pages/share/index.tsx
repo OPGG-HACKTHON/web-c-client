@@ -1,5 +1,6 @@
 import React from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import './index.scss';
 
@@ -12,9 +13,12 @@ const setScreenSize = ({ match }: RouteComponentProps) => {
   const { summonerName } = match.params;
   const [QRUrl, setQRUrl] = React.useState('');
   const history = useHistory();
+  const { t } = useTranslation();
 
   const getQR = async () => {
-    const { data } = await axios.get(`https://backend.swoomi.me/v1/qr/${summonerName}`);
+    const { data } = await axios.get(
+      `https://backend.swoomi.me/v1/qr/${summonerName}`,
+    );
     setQRUrl(data.data.qrUrl);
   };
   React.useEffect(() => {
@@ -26,12 +30,18 @@ const setScreenSize = ({ match }: RouteComponentProps) => {
       <div className="pcWrapper">
         <img src={mainImg} alt="메인 이미지" className="main-image" />
         <img src={logo} alt="logo" className="share_logo" />
-        <button onClick={() => history.push(`/room/${summonerName}`)}>웹으로 보기</button>
+        <button onClick={() => history.push(`/room/${summonerName}`)}>
+          {t('share.webView')}
+        </button>
       </div>
       <div className="qrWrapper">
-        <p>모바일로 보기</p>
-        <span>휴대폰으로 QR코드를 스캔해주세요!</span>
-        { QRUrl ? <img src={QRUrl} alt="qr코드" className="qr" /> : <img src={defaultQR} alt="qr코드" />}
+        <p>{t('share.mobileView')}</p>
+        <span>{t('share.QRCode')}</span>
+        {QRUrl ? (
+          <img src={QRUrl} alt="qr코드" className="qr" />
+        ) : (
+          <img src={defaultQR} alt="qr코드" />
+        )}
       </div>
     </div>
   );

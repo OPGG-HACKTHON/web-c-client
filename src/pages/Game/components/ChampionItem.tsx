@@ -20,6 +20,8 @@ interface ChampionItemProps {
 
 type ModeType = 'modify' | 'default' | 'wait';
 
+let modalTimer = null;
+
 const ChampionItem = ({
   champData,
   spellType,
@@ -77,19 +79,22 @@ const ChampionItem = ({
   };
 
   const openMessage = () => {
-    if (timer.current.message) {
-      clearTimeout(timer.current.message);
+    if (modalTimer) {
+      console.log('사라짐');
+      clearTimeout(modalTimer);
+      return;
     }
 
-    timer.current.message = setTimeout(() => {
+    modalTimer = setTimeout(() => {
       setShowMessage(false);
-      timer.current.message = null;
+      clearTimeout(modalTimer);
+      modalTimer = null;
       spellTimeError.current = false;
     }, 1800);
   };
 
   useEffect(() => {
-    if (spellTimeError.current) {
+    if (spellTimeError.current && !modalTimer) {
       setShowMessage(true);
       openMessage();
     }

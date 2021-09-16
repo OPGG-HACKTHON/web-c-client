@@ -8,6 +8,10 @@
   width: 100vw;
   height: 100vh;
 
+  @include bp-up(md) {
+    flex-direction: row;
+  }
+
   .qrWrapper {
     border-right: 1px solid #312e3a;
     background-color: #1f1d24;
@@ -18,15 +22,26 @@
       margin: r(24px) 0;
       border: 2px solid #6675ff;
       border-radius: 12px;
-      backdrop-filter: blur(4px);
       background: rgba(102, 117, 255, 0.8);
       color: rgba(102, 117, 255, 0.8);
+      backdrop-filter: blur(4px);
+
+      @include bp-up (md) {
+        width: r(240px);
+        height: r(240px);
+        margin: r(30px) 0 0 0;
+      }
     }
 
     p {
       font-weight: bold;
       font-size: r(18px);
       color: #fff;
+
+      @include bp-up(md) {
+        margin-bottom: r(12px);
+        font-size: r(32px);
+      }
     }
 
     span {
@@ -34,17 +49,10 @@
       font-size: r(14px);
       color: #6675ff;
       text-align: center;
-    }
 
-    .emptyWrapper {
-      width: r(126px);
-      height: r(126px);
-      margin: r(24px) 0;
-      border: 2px solid #6675ff;
-      border-radius: 12px;
-      backdrop-filter: blur(4px);
-      background: rgba(102, 117, 255, 0.8);
-      color: rgba(102, 117, 255, 0.8);
+      @include bp-up(md) {
+        font-size: r(24px);
+      }
     }
   }
 
@@ -61,9 +69,18 @@
   .pcWrapper {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
+    @include bp-up(md) {
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
     .main-image {
       width: r(170px);
       height: r(127px);
+
+      @include bp-up(md) {
+        width: r(340px);
+        height: r(254px);
+      }
     }
 
     .share_logo {
@@ -71,6 +88,13 @@
       height: r(19px);
       margin-top: r(17px);
       margin-bottom: r(22px);
+
+      @include bp-up(md) {
+        width: r(218px);
+        height: r(38px);
+        margin-top: r(34px);
+        margin-bottom: r(44px);
+      }
     }
 
     button {
@@ -86,6 +110,13 @@
       outline: none;
       font-weight: bold;
       font-size: r(16px);
+
+      @include bp-up(md) {
+        width: r(260px);
+        height: r(52px);
+        margin-bottom: r(20px);
+        font-size: r(24px);
+      }
     }
 
     button:hover {
@@ -95,6 +126,10 @@
     p {
       font-weight: bold;
       font-size: r(30px);
+
+      @include bp-up(md) {
+        font-size: r(100px);
+      }
     }
   }
 }

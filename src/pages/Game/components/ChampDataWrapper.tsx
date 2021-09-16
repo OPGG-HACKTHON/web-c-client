@@ -6,29 +6,26 @@ import ChampionContainer from './ChampionContainer';
 import ItemSelector from './ChamptionItemContainer/components/ItemSelector';
 
 import Speech from './SpeechRecognition';
+import SpellTimeErrorMessage from './SpellTimeErrorMessage';
 
 const ChampDataWrapper = () => {
   const { spellTimeError } = useGameData();
-  console.log(spellTimeError);
+  // console.log(spellTimeError);
 
   return (
     <GameContext.Consumer>
-      {({
-        gameData,
-        isItemSelectorVisible,
-      }) => (
+      {({ gameData, isItemSelectorVisible, spellTimeError }) => (
         <>
-          {
-              gameData.map((champData) => (
-                <ChampionContainer
-                  key={champData.summonerName}
-                  champData={champData}
-                />
-              ))
-            }
-          {isItemSelectorVisible && (
-            <ItemSelector />
+          {spellTimeError.current && (
+            <SpellTimeErrorMessage spellTimeError={spellTimeError} />
           )}
+          {gameData.map((champData) => (
+            <ChampionContainer
+              key={champData.summonerName}
+              champData={champData}
+            />
+          ))}
+          {isItemSelectorVisible && <ItemSelector />}
           <Speech />
         </>
       )}

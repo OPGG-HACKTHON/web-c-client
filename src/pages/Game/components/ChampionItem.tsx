@@ -4,7 +4,6 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import RefreshIcon from '@/common/components/RefreshIcon';
 import LockerIcon from '@/common/components/LockerIcon';
-import MessageInGame from '@/common/components/MessageInGame';
 import SpellIconInItem from './SpellIconInItem';
 
 import GameContext from '../models/context/GameContext';
@@ -20,8 +19,6 @@ interface ChampionItemProps {
 
 type ModeType = 'modify' | 'default' | 'wait';
 
-let modalTimer = null;
-
 const ChampionItem = ({
   champData,
   spellType,
@@ -30,7 +27,6 @@ const ChampionItem = ({
   const isSpellUsed = champData.spells[spellType] !== null;
   const initMode: ModeType = isSpellUsed ? 'wait' : 'default';
   const [status, setStatus] = useState<ModeType>(initMode);
-  const [showMessage, setShowMessage] = useState<boolean>(false);
   const timer = useRef({ curtain: null, message: null });
   const { t } = useTranslation();
 
@@ -78,33 +74,11 @@ const ChampionItem = ({
     updateTimeUsed(summonerName, spellType, time + sec >= 0 ? time + sec : 0);
   };
 
-  const openMessage = () => {
-    if (modalTimer) {
-      clearTimeout(modalTimer);
-    }
-
-    modalTimer = setTimeout(() => {
-      modalTimer = null;
-      spellTimeError.current = false;
-      setShowMessage(false);
-    }, 1800);
-  };
-
-  useEffect(() => {
-    if (spellTimeError.current && !modalTimer) {
-      setShowMessage(true);
-      openMessage();
-    }
-  }, [spellTimeError.current]);
-
   if (status === 'default' || time < 1) {
     if (spellType === 'R') {
       return (
         <div className="ChampionItem">
           <div className="panel panel-ultimate">
-            {showMessage && (
-              <MessageInGame content={t('game.championItem.coolTime')} />
-            )}
             <div className="panel-item no-drag" onClick={handleClickIcon}>
               <SpellIconInItem
                 spellType={spellType}
@@ -132,9 +106,6 @@ const ChampionItem = ({
     return (
       <div className="ChampionItem">
         <div className="panel-item no-drag spell" onClick={handleClickIcon}>
-          {showMessage && (
-            <MessageInGame content={t('game.championItem.coolTime')} />
-          )}
           <SpellIconInItem
             spellType={spellType}
             src={src}

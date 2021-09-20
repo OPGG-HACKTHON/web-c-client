@@ -1,5 +1,6 @@
 import React from 'react';
 import cs from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { getChampionNameByLanguage } from '@/common/datas/championLaneData';
 
@@ -19,6 +20,7 @@ const Champion = ({
   isUsingName = false,
 }: ChampionComponentProps) => {
   const { time, isOn } = champData.spells.R;
+  const { i18n } = useTranslation();
 
   return (
     <div className={cs('Champion', { 'has-ultimate': isOn })} onClick={() => onClick()}>
@@ -35,7 +37,9 @@ const Champion = ({
       </div>
       { isUsingName && (
         <div className="name-container">
-          <h4 className="champ-name">{getChampionNameByLanguage(champData.champName)}</h4>
+          <h4 className="champ-name">
+            {getChampionNameByLanguage(champData.champName, i18n.language)}
+          </h4>
           <span className="summoner-name">{champData.summonerName}</span>
         </div>
       )}

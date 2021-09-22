@@ -18,13 +18,22 @@
     display: none;
   }
 
-  & > * {
+  .material-icons {
     font-size: 26px;
   }
 
   img {
-    right: r(43px);
-    width: r(18px);
-    height: r(20px);
+    font-size: 26px;
+
+    &.on {
+      width: r(17px);
+      height: r(22px);
+      margin-left: 1px;
+    }
+
+    &.off {
+      width: r(20px);
+      height: r(22px);
+    }
   }
 }

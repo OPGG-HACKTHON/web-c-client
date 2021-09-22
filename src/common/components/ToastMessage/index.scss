@@ -1,5 +1,6 @@
 .toast-message {
   position: fixed;
+  top: unset;
   bottom: 97px;
   left: calc(50% - 156.5px);
   z-index: 1001;
@@ -7,18 +8,20 @@
   align-items: center;
   justify-content: center;
   width: r(313px);
-  height: r(48px);
+  min-height: r(48px);
+  padding: r(8px);
   border: 1px solid #6675ff;
   border-radius: r(10px);
-  backdrop-filter: blur(20px);
   background: rgba(102, 117, 255, 0.15);
   color: #6675ff;
   text-align: center;
+  backdrop-filter: blur(20px);
 }
 
 .message-ingame {
   top: calc(50% - 42px);
-  height: r(62px);
+  bottom: unset;
+  min-height: r(62px);
   background: rgba(102, 117, 255, 0.3);
   font-weight: 600;
   font-size: 14px;

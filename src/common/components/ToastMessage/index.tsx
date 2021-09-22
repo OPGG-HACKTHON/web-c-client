@@ -8,6 +8,7 @@ interface ToastMessageProps {
   isInGame?: boolean;
 }
 
+// TODO: 왜 time 을 받는데 외부에서 별개로 설정해주어야 하나요?
 const ToastMessage = ({ content, time, isInGame }: ToastMessageProps) => {
   const messageTimer = useRef(null);
   const [showShare, setShowShare] = useState('message-on');
@@ -25,11 +26,13 @@ const ToastMessage = ({ content, time, isInGame }: ToastMessageProps) => {
       className={`toast-message message-ingame ${
         showShare === 'message-on' ? 'message-on-ingame' : 'message-off-ingame'
       }`}
-    >
-      {content}
-    </div>
+      dangerouslySetInnerHTML={{ __html: content }}
+    />
   ) : (
-    <div className={`toast-message ${showShare}`}>{content}</div>
+    <div
+      className={`toast-message ${showShare}`}
+      dangerouslySetInnerHTML={{ __html: content }}
+    />
   );
 };
 

@@ -48,6 +48,7 @@ const SummonaryInfoContainer = () => {
   const [swapTargetIndex, setSwapTargetIndex] = useState();
   const { gameData, loadingState, updateGameData } = useGameData();
 
+  // TODO: SpeechRecognition/index.tsx 과 중복되는 코드 제거
   const findChampElemsPos = useCallback(() => {
     const topbarElem = document.querySelector('#Topbar') as HTMLElement;
     const summonaryInfoContainerElem = document.querySelector('#SummonaryInfoContainer') as HTMLElement;
@@ -58,6 +59,7 @@ const SummonaryInfoContainer = () => {
     return champsScrollPos;
   }, [gameData]);
 
+  // TODO: SpeechRecognition/index.tsx 과 중복되는 코드 제거
   const scrollToChampion = useCallback((order) => {
     const champsScrollPos = findChampElemsPos();
     window.scrollTo({ top: champsScrollPos[order] });

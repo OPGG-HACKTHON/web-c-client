@@ -53,6 +53,7 @@
     "점멸": "Flash"
   },
   "speech": {
+    "infoHTML": "* Currently, only Korean is supported for voice recognition.<br />Voice recognition has begun.<br />You can check by referring to [리 신 노궁] / [레오나 노플] etc.<br />Please note that voice recognition cannot be recognized as an error when using two or more tabs at the same time.",
     "speechRecognition": "Voice recognition",
     "use": "used.",
     "on": "on",

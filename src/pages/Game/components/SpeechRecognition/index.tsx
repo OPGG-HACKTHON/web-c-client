@@ -1,8 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import i18n from '@/global/languages/i18n';
 
 import { speechTextFunc } from '@/common/hooks/useSpeechText';
 import { getChampionNameByLanguage, getSpellNameByLanguage } from '@/common/datas/championLaneData';
+
+import ToastMessage from '@/common/components/ToastMessage';
 
 import micOff from '@/common/images/micOff.png';
 import micOn from '@/common/images/micOn.png';
@@ -31,7 +33,25 @@ const LANGUAGE = 'ko-KR';
 const SpeechRecognition = () => {
   const { gameData, onUseSpell } = useGameData();
   const [recog, setRecog] = useState<RecognitionInterface>();
-  const [isStart, setIsStart] = useState(false);
+  const [isSpeechOn, setIsSpeechOn] = useState(false);
+  const [isInfoVisible, setIsInfoVisible] = useState(false);
+
+  // TODO: SummonaryInfoContainer.tsx 과 중복되는 코드 제거
+  const findChampElemsPos = useCallback(() => {
+    const topbarElem = document.querySelector('#Topbar') as HTMLElement;
+    const summonaryInfoContainerElem = document.querySelector('#SummonaryInfoContainer') as HTMLElement;
+    const dragonElem = document.querySelector('#dragonContainer') as HTMLElement;
+    const defaultHeight = topbarElem.offsetHeight + summonaryInfoContainerElem.offsetHeight + dragonElem.offsetHeight;
+    const champElems = document.querySelectorAll('.ChampionContainer');
+    const champsScrollPos = Array.from(champElems).map((elem: HTMLElement) => elem.offsetTop - defaultHeight);
+    return champsScrollPos;
+  }, [gameData]);
+
+  // TODO: SummonaryInfoContainer.tsx 과 중복되는 코드 제거
+  const scrollToChampion = useCallback((order) => {
+    const champsScrollPos = findChampElemsPos();
+    window.scrollTo({ top: champsScrollPos[order] });
+  }, [gameData]);
 
   const initSpeechRecognition = useCallback(() => {
     const SpeechRecognitionWebApi = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -100,6 +120,8 @@ const SpeechRecognition = () => {
         return;
       }
 
+      const order = gameData.findIndex((s) => s.summonerName === summoner.summonerName);
+      scrollToChampion(order);
       const spellText = getSpellNameByLanguage(summoner.spells[spellType].name, spellType);
       onUseSpell(summoner.summonerName, spellType);
       speechTextFunc(
@@ -109,45 +131,52 @@ const SpeechRecognition = () => {
     };
 
     recognition.onend = () => {
+      if (!isSpeechOn) {
+        console.log('음성 인식 종료');
+        return;
+      }
       console.log('음성 인식 구간 분리');
       recognition.start();
     };
 
     setRecog(recognition);
     recognition.start();
-  }, [gameData]);
+    setIsSpeechOn(true);
+  }, [isSpeechOn, gameData]);
 
   const startRegog = useCallback(() => {
-    setIsStart(true);
-    if (recog) {
-      recog.abort();
-      recog.stop();
+    if (isSpeechOn && recog) {
+      setIsSpeechOn(false);
+      setTimeout(() => recog.abort(), 1000);
       return;
     }
 
     initSpeechRecognition();
-  }, [gameData, recog]);
+  }, [isSpeechOn, gameData, recog]);
 
-  if (!isStart) {
-    return (
-      <div
-        className="SpeechRecognition"
-        onClick={startRegog}
-      >
-        <img src={micOff} alt="마이크 꺼짐" />
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (!isSpeechOn) return;
+    setIsInfoVisible(true);
+    setTimeout(() => setIsInfoVisible(false), 5000);
+  }, [isSpeechOn]);
 
   return (
     <div
       className="SpeechRecognition"
       onClick={startRegog}
     >
-      <img src={micOn} alt="마이크 켜짐" />
-      <span className="material-icons">
-        mic
-      </span>
+      {isSpeechOn ? (
+        <img className="mic on" src={micOn} alt="마이크 켜짐" />
+      ) : (
+        <img className="mic off" src={micOff} alt="마이크 꺼짐" />
+      )}
+      {isInfoVisible && (
+        <ToastMessage
+          content={i18n.t('speech.infoHTML')}
+          time={5000}
+          isInGame
+        />
+      )}
     </div>
   );
 };

@@ -21,7 +21,7 @@ const SummonaryChamp = ({
 
   return (
     <div
-      className={cs('SummonaryChamp', { swapping: order === swapTargetIndex })}
+      className={cs('SummonaryChamp no-drag', { swapping: order === swapTargetIndex })}
     >
       <div className="summonary-top-container">
         <Champion champData={champData} />

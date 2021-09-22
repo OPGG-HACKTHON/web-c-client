@@ -1,9 +1,12 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { polyfill } from 'es6-promise';
 
 import ko from './ko.json';
 import en from './en.json';
+
+polyfill();
 
 const resources = {
   'ko-KR': {

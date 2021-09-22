@@ -41,6 +41,7 @@
     "core-js": "3.17.2",
     "detect-browser": "^4.8.0",
     "diff": "^5.0.0",
+    "es6-promise": "^4.2.8",
     "history": "4.10.1",
     "html-react-parser": "0.13.0",
     "i18next": "^20.2.1",

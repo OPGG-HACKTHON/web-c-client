@@ -87,7 +87,21 @@ module.exports = async (outSideEnv = {}) => {
       rules: [
         {
           test: /\.(js|jsx|ts|tsx)$/,
-          exclude: /node_modules/,
+          include: [
+            path.resolve('src/'),
+            path.resolve('node_modules/'),
+            // path.resolve('node_modules/@ant-design/'),
+            // path.resolve('node_modules/react/'),
+            // path.resolve('node_modules/react-dom/'),
+            // path.resolve('node_modules/scheduler/'),
+            // path.resolve('node_modules/'),
+          ],
+          // exclude: /node_modules\/(?!@ant-design).+/,
+          exclude: [
+            // \\ for Windows, / for macOS and Linux
+            /node_modules[\\/]core-js/,
+            /node_modules[\\/]webpack[\\/]buildin/,
+          ],
           use: 'babel-loader',
         },
 

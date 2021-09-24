@@ -50,9 +50,9 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       if (!userName.current) history.push('/');
       else history.push(`/room/${userName.current}`);
     } else {
-      const { data } = await axios.get(`https://backend.swoomi.me/v1/match/status/${userName.current}`);
+      const { data } = await axios.get(`/v1/match/status/${userName.current}`);
       const { matchTeamCode: newCode } = data.data;
-      if (matchTeamCode === newCode) {
+      if (!newCode || matchTeamCode === newCode) {
         alert('게임을 찾을 수 없습니다.');// 서버 쪽의 알 수 없는 에러 대응, 사실 라이엇에서 게임 데이터를 안보내주는 것
         history.push('/');
         localStorage.removeItem('summonerName');

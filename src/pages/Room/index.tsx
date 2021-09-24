@@ -20,6 +20,7 @@ const Room = () => {
   const [profile, setProfile] = useState<string>('');
   const messageTimer = useRef(null);
   const urlRef = useRef();
+  const checkTimer = useRef(null)
   const { t } = useTranslation();
 
   const location = useLocation();
@@ -50,6 +51,7 @@ const Room = () => {
       const { data } = await axios.get(`/v1/match/status/${summonerName}`);
       const { matchTeamCode } = data.data;
       localStorage.setItem('summonerName', summonerName);
+      if(!matchTeamCode) return 
       window.location.href = `/game/${matchTeamCode}`;
     } catch (err) {
       console.log(err);
@@ -83,6 +85,8 @@ const Room = () => {
       const { data } = await axios.get(`/v1/match/${summonerName}`);
       if (data.data.matchStatus) {
         const matchTeamCode = await getMatchTeamCode();
+        if(!matchTeamCode) return  // 방번호가 null이 오는 경우
+        if(checkTimer.current) clearInterval(checkTimer.current)
         localStorage.setItem('summonerName', summonerName);
         window.location.href = `/game/${matchTeamCode}`;
       }
@@ -91,7 +95,9 @@ const Room = () => {
     }
   };
 
-  useInterval(isMatchStarted, 5000);
+  useEffect(() => {
+    checkTimer.current = setInterval(() => isMatchStarted(),5000)
+  },[])
 
   const handleClickShare = (e) => {
     e.preventDefault();

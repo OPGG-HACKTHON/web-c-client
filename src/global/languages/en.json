@@ -1,7 +1,8 @@
 {
   "mainValueHTML": "Conveniently, try to raise your tier by checking the <strong>exact spell cooltime.</strong>",
   "error": {
-    "riotError": "Currently, there is a problem with summoner search due to a failure in the official API server of League of Legends."
+    "riotError": "Currently, there is a problem with summoner search due to a failure in the official API server of League of Legends.",
+    "matchcodeErr": "We can't check whether you're playing the game."
   },
   "search": {
     "writeNickname": "Your Summoner Name",

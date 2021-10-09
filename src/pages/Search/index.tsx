@@ -25,6 +25,7 @@ const Search = () => {
   const [searchValue, setValue] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [showShare, setShowShare] = useState<boolean>(false);
+  const [searchErrMsg, setSearchErrMsg] = useState<string>('');
   const [hasRiotError, setRiotError] = useState<boolean>(false);
 
   const browser = detect();
@@ -46,7 +47,8 @@ const Search = () => {
     }
   };
 
-  const showMessage = () => {
+  const showMessage = (msg) => {
+    setSearchErrMsg(msg);
     setShowShare(true);
     if (messageTimer.current) {
       clearTimeout(messageTimer.current);
@@ -78,7 +80,10 @@ const Search = () => {
       }
     } catch (err) {
       setLoading(false);
-      showMessage();
+
+      const serverType = err.response.config.url.split('/')[2];
+      if (serverType === 'summoner')showMessage(t('search.checkNickname'));
+      else showMessage(t('error.matchcodeErr'));
     }
   };
 
@@ -131,7 +136,7 @@ const Search = () => {
         setIsFocusInput={setIsFocusInput}
       />
       {showShare && (
-        <ToastMessage content={t('search.checkNickname')} time={1800} />
+        <ToastMessage content={searchErrMsg} time={1800} />
       )}
       {isSearchButtonVisible && (
         <SearchButton

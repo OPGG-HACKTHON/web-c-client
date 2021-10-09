@@ -18,4 +18,29 @@
     font-size: 10px;
     color: rgba(255, 255, 255, 0.1);
   }
+
+  .langBox {
+    position: absolute;
+    top: 1rem;
+    right: 56vw;
+    width: fit-content;
+    font-size: 0.4rem;
+    color: #919191;
+
+    @include bp-down(md) {
+      left: 1rem;
+    }
+
+    .checked {
+      color: #e5e5e5;
+    }
+
+    span {
+      margin-right: 1em;
+    }
+
+    span:hover {
+      cursor: pointer;
+    }
+  }
 }

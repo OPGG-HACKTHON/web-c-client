@@ -1,5 +1,8 @@
 {
   "mainValueHTML": "편리하게, 정확한 <strong>스펠체크</strong>로 티어를 상승 시켜보세요",
+  "error": {
+    "riotError": "현재 리그오브레전드 공식 API 서버의 장애로 인해 소환사 검색에 문제가 발생하고 있습니다."
+  },
   "search": {
     "writeNickname": "닉네임을 입력해주세요",
     "checkNickname": "닉네임을 확인해주세요.",

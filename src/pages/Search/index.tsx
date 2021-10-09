@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState, useEffect, useRef, useCallback,
+} from 'react';
 import { useHistory } from 'react-router-dom';
 import { detect } from 'detect-browser';
 import { useTranslation } from 'react-i18next';
@@ -6,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import axios from '@/common/helper/axios';
 import setRealVh from '@/common/helper/setRealVh';
 import ToastMessage from '@/common/components/ToastMessage';
+import Notice from '@/common/components/Notice';
 
 import MainIcon from './components/MainIcon';
 import MiddleBox from './components/MiddleBox';
@@ -16,21 +19,26 @@ import './index.scss';
 
 const Search = () => {
   const history = useHistory();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const messageTimer = useRef(null);
   const [isFocusInput, setIsFocusInput] = useState(false);
   const [searchValue, setValue] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [showShare, setShowShare] = useState<boolean>(false);
+  const [hasRiotError, setRiotError] = useState<boolean>(false);
 
   const browser = detect();
   const isSafari = browser.name === 'ios';
   const isPossibleSearch = searchValue !== '';
   const isSearchButtonVisible = !isSafari && (isFocusInput || isPossibleSearch);
 
+  const onChangeLanguage = useCallback((value) => {
+    i18n.changeLanguage(value);
+  }, [i18n]);
+
   const getMatchTeamCode = async (summonerName: string) => {
     try {
-      const { data } = await axios.get(`/v1/match/status/${summonerName}`);
+      const { data } = await axios.get(`/v1/match/code/${summonerName}`);
       const { matchTeamCode } = data.data;
       return matchTeamCode;
     } catch (err) {
@@ -60,7 +68,7 @@ const Search = () => {
       localStorage.setItem('summonerName', summonerName);
       if (!nameData.success) throw new Error('not find');
 
-      const { data } = await axios.get(`/v1/match/${summonerName}`);
+      const { data } = await axios.get(`/v1/match/status/${summonerName}`);
       setLoading(false);
       if (data.data.matchStatus === false) {
         history.push(`/room/${summonerName}`);
@@ -92,6 +100,13 @@ const Search = () => {
   }, [isFocusInput]);
 
   useEffect(() => {
+    if (hasRiotError) return;
+    axios.get('/v1/common/ping').catch((err) => {
+      if (err.response.status === 500) setRiotError(true);
+    });
+  }, []);
+
+  useEffect(() => {
     const findUser = (e) => {
       if (e.key === 'Enter' && !loading) {
         onClickSearchBtn();
@@ -103,6 +118,10 @@ const Search = () => {
 
   return (
     <div className="SearchPage">
+      <div className="langBox">
+        <span onClick={() => onChangeLanguage('ko-KR')} className={i18n.language === 'ko-KR' ? 'checked' : null}>한국어</span>
+        <span onClick={() => onChangeLanguage('en-US')} className={i18n.language === 'en-US' ? 'checked' : null}>English</span>
+      </div>
       <MainIcon />
       <MiddleBox />
       <SearchBar
@@ -120,7 +139,8 @@ const Search = () => {
           isPossibleSearch={isPossibleSearch}
         />
       )}
-      <p className="version">v2109150140</p>
+      { hasRiotError ? <Notice content={t('error.riotError')} /> : null}
+      <p className="version">v2110091650</p>
     </div>
   );
 };

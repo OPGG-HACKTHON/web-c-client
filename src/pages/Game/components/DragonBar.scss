@@ -17,9 +17,8 @@
     width: 100%;
     max-width: $app-max-width;
     height: 64px;
-    padding: 0 14px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
     background-color: #1a181e;
     font-weight: 400;
     font-size: r(12px);
@@ -67,9 +66,9 @@
         align-items: center;
         justify-content: center;
         width: 48px;
-        height: 25px;
+        height: 28px;
         margin-left: 7px;
-        border-radius: 5px;
+        border-radius: 6px;
         cursor: pointer;
         background: #6675ff;
 
@@ -90,7 +89,7 @@
       }
 
       .disabled {
-        background-color: #302e39;
+        background-color: #312e3a;
       }
     }
   }

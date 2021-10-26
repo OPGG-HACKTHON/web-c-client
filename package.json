@@ -10,7 +10,7 @@
     "invalidate-cloudfront:test": "aws cloudfront create-invalidation --distribution-id ID --paths /*",
     "invalidate-cloudfront:prod": "aws cloudfront create-invalidation --distribution-id E2L3H2Z180VOIS --paths /* --profile opg",
     "invalidate-cloudfront:test:linux": "aws cloudfront create-invalidation --distribution-id ID --paths '/*'",
-    "invalidate-cloudfront:prod:linux": "aws cloudfront create-invalidation --distribution-id E2L3H2Z180VOIS --paths '/* --profile opg",
+    "invalidate-cloudfront:prod:linux": "aws cloudfront create-invalidation --distribution-id E2L3H2Z180VOIS --paths '/*' --profile opg",
     "deploy:test": "set SERVICE_MODE=test&&npm-run-all build upload-to-s3:test invalidate-cloudfront:test",
     "deploy:prod": "set SERVICE_MODE=prod&&npm-run-all build upload-to-s3:prod invalidate-cloudfront:prod",
     "deploy:test:linux": "SERVICE_MODE=test npm-run-all build upload-to-s3:test invalidate-cloudfront:test:linux",

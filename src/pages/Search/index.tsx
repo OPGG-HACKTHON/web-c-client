@@ -39,7 +39,7 @@ const Search = () => {
 
   const getMatchTeamCode = async (summonerName: string) => {
     try {
-      const { data } = await axios.get(`/v1/match/code/${summonerName}`);
+      const { data } = await axios.get(`https://backend.swoomi.me/v1/match/get-match-team-code/${summonerName}`);
       const { matchTeamCode } = data.data;
       return matchTeamCode;
     } catch (err) {
@@ -64,13 +64,13 @@ const Search = () => {
     try {
       setLoading(true);
       const { data: nameData } = await axios.get(
-        `/v1/summoner/${String(searchValue).split('').join(' ')}`,
+        `https://backend.swoomi.me/v1/summoner/${String(searchValue).split('').join(' ')}`,
       );
       const { summonerName } = nameData.data;
       localStorage.setItem('summonerName', summonerName);
       if (!nameData.success) throw new Error('not find');
 
-      const { data } = await axios.get(`/v1/match/status/${summonerName}`);
+      const { data } = await axios.get(`https://backend.swoomi.me/v1/match/status/${summonerName}`);
       setLoading(false);
       if (data.data.matchStatus === false) {
         history.push(`/room/${summonerName}`);
@@ -104,11 +104,12 @@ const Search = () => {
     }
   }, [isFocusInput]);
 
-  useEffect(() => {
-    if (hasRiotError) return;
-    axios.get('/v1/common/ping').catch((err) => {
-      if (err.response.status === 500) setRiotError(true);
-    });
+  useEffect(() => { /// 라이엇 에러
+    // if (hasRiotError) return;
+    // axios.get('/v1/common/ping').catch((err) => {
+    //   console.log(err);
+    //   if (err.response.status === 500) setRiotError(true);
+    // });
   }, []);
 
   useEffect(() => {
@@ -145,7 +146,7 @@ const Search = () => {
         />
       )}
       { hasRiotError ? <Notice content={t('error.riotError')} /> : null}
-      <p className="version">v2110091650</p>
+      <p className="version">v2110231717</p>
     </div>
   );
 };

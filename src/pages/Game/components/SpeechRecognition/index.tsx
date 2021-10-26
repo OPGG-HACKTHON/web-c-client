@@ -164,6 +164,7 @@ const SpeechRecognition = () => {
     <div
       className="SpeechRecognition"
       onClick={startRegog}
+      style={{ display: 'none' }}
     >
       {isSpeechOn ? (
         <img className="mic on" src={micOn} alt="마이크 켜짐" />

@@ -19,12 +19,14 @@
 
     .language-select {
       position: absolute;
-      left: r(8px);
+      right: r(92px);
       min-width: r(72px);
+      opacity: 50%;
 
       &.ant-select,
       .ant-select-selector {
         border: none !important;
+        opacity: 80%;
         background-color: transparent;
         box-shadow: none !important;
         outline: none;
@@ -42,8 +44,10 @@
     }
 
     .logo-image {
-      width: 109px;
-      height: 21px;
+      position: absolute;
+      left: r(20px);
+      width: 98px;
+      height: 36px;
       cursor: pointer;
     }
 
@@ -51,17 +55,21 @@
     .share-image {
       position: absolute;
       right: 0;
-      width: 22px;
-      height: 22px;
       cursor: pointer;
     }
 
     .info-image {
       right: r(54px);
+      width: 24px;
+      height: 24px;
+      cursor: default;
+      // 임시
     }
 
     .share-image {
       right: r(16px);
+      width: 19px;
+      height: 19px;
     }
   }
 }

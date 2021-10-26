@@ -5,8 +5,8 @@ import { Select } from 'antd';
 
 import './Topbar.scss';
 
-import logo from '@/common/images/logo.png';
-// import info from '@/common/images/info.png';
+import logo from '@/common/images/logo2.png';
+import info from '@/common/images/info.png';
 import share from '@/common/images/share.png';
 
 const { Option } = Select;
@@ -30,6 +30,12 @@ const Topbar = ({ onClickInfoBtn, onClickShareBtn }: TopbarComponentProps) => {
       className="Topbar"
     >
       <div className="topbar-container">
+        <img
+          src={logo}
+          alt="스우미 로고"
+          className="logo-image"
+          onClick={() => history.push('/')}
+        />
         <Select
           className="language-select"
           value={i18n.language}
@@ -40,17 +46,11 @@ const Topbar = ({ onClickInfoBtn, onClickShareBtn }: TopbarComponentProps) => {
           <Option value="en-US">English</Option>
         </Select>
         <img
-          src={logo}
-          alt="스우미 로고"
-          className="logo-image"
-          onClick={() => history.push('/')}
-        />
-        {/* <img
           src={info}
           alt="스우미 정보 버튼"
           className="info-image"
           onClick={() => onClickInfoBtn()}
-        /> */}
+        />
         <img
           src={share}
           alt="링크 공유 버튼"

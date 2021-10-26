@@ -20,7 +20,7 @@ const Room = () => {
   const [profile, setProfile] = useState<string>('');
   const messageTimer = useRef(null);
   const urlRef = useRef();
-  const checkTimer = useRef(null)
+  const checkTimer = useRef(null);
   const { t } = useTranslation();
 
   const location = useLocation();
@@ -30,7 +30,7 @@ const Room = () => {
   const summonerName = location.pathname.split('/room/')[nameIndex];
   const getMatchTeamCode = async () => {
     try {
-      const { data } = await axios.get(`/v1/match/status/${summonerName}`);
+      const { data } = await axios.get(`https://backend.swoomi.me/v1/match/get-match-team-code/${summonerName}`);
       const { matchTeamCode } = data.data;
       return matchTeamCode;
     } catch (err) {
@@ -40,7 +40,7 @@ const Room = () => {
   };
 
   const isGameStart = async () => {
-    const { data } = await axios.get(`/v1/match/${summonerName}`);
+    const { data } = await axios.get(`https://backend.swoomi.me/v1/match/status/${summonerName}`);
     return data.data.matchStatus;
   };
 
@@ -48,10 +48,10 @@ const Room = () => {
     try {
       const isValidAction = await isGameStart();
       if (!isValidAction) return;
-      const { data } = await axios.get(`/v1/match/status/${summonerName}`);
+      const { data } = await axios.get(`https://backend.swoomi.me/v1/match/get-match-team-code/${summonerName}`);
       const { matchTeamCode } = data.data;
       localStorage.setItem('summonerName', summonerName);
-      if(!matchTeamCode) return 
+      if (!matchTeamCode) return;
       window.location.href = `/game/${matchTeamCode}`;
     } catch (err) {
       console.log(err);
@@ -60,7 +60,7 @@ const Room = () => {
 
   const isValidUser = async () => {
     try {
-      const { data } = await axios.get(`/v1/summoner/${summonerName}`);
+      const { data } = await axios.get(`https://backend.swoomi.me/v1/summoner/${summonerName}`);
       if (data) {
         const { data: img } = await axios.get(
           `v1/profileImgURL?summonerName=${summonerName}`,
@@ -82,11 +82,11 @@ const Room = () => {
 
   const isMatchStarted = async () => {
     try {
-      const { data } = await axios.get(`/v1/match/${summonerName}`);
+      const { data } = await axios.get(`https://backend.swoomi.me/match/status/${summonerName}`);
       if (data.data.matchStatus) {
         const matchTeamCode = await getMatchTeamCode();
-        if(!matchTeamCode) return  // 방번호가 null이 오는 경우
-        if(checkTimer.current) clearInterval(checkTimer.current)
+        if (!matchTeamCode) return; // 방번호가 null이 오는 경우
+        if (checkTimer.current) clearInterval(checkTimer.current);
         localStorage.setItem('summonerName', summonerName);
         window.location.href = `/game/${matchTeamCode}`;
       }
@@ -96,8 +96,8 @@ const Room = () => {
   };
 
   useEffect(() => {
-    checkTimer.current = setInterval(() => isMatchStarted(),5000)
-  },[])
+    checkTimer.current = setInterval(() => isMatchStarted(), 5000);
+  }, []);
 
   const handleClickShare = (e) => {
     e.preventDefault();

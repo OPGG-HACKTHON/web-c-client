@@ -800,10 +800,8 @@ export const championList = [
 ];
 
 export const getSpellNameByLanguage = (name, spellKey) => {
-  console.log('name', name, spellKey);
   const i18nRoute = spellKey === 'R' ? '' : 'spells.';
   const spellName = i18n.t(`${i18nRoute}${name}`);
-  console.log('spellName', spellName);
   if (!spellName) return '';
   return spellName;
 };

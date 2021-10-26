@@ -82,7 +82,7 @@ const Room = () => {
 
   const isMatchStarted = async () => {
     try {
-      const { data } = await axios.get(`https://backend.swoomi.me/match/status/${summonerName}`);
+      const { data } = await axios.get(`https://backend.swoomi.me/v1/match/status/${summonerName}`);
       if (data.data.matchStatus) {
         const matchTeamCode = await getMatchTeamCode();
         if (!matchTeamCode) return; // 방번호가 null이 오는 경우

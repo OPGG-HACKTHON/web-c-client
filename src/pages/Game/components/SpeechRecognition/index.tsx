@@ -30,6 +30,8 @@ interface RecognitionInterface {
 
 const LANGUAGE = 'ko-KR';
 
+let forceEnd = false;
+
 const SpeechRecognition = () => {
   const { gameData, onUseSpell } = useGameData();
   const [recog, setRecog] = useState<RecognitionInterface>();
@@ -131,7 +133,7 @@ const SpeechRecognition = () => {
     };
 
     recognition.onend = () => {
-      if (!isSpeechOn) {
+      if (!isSpeechOn && forceEnd) {
         console.log('음성 인식 종료');
         return;
       }
@@ -145,8 +147,17 @@ const SpeechRecognition = () => {
   }, [isSpeechOn, gameData]);
 
   const startRegog = useCallback(() => {
+    if (isSpeechOn) {
+      setIsSpeechOn(false);
+      forceEnd = true;
+    } else {
+      setIsSpeechOn(true);
+      forceEnd = false;
+    }
+
     if (isSpeechOn && recog) {
       setIsSpeechOn(false);
+      forceEnd = true;
       setTimeout(() => recog.abort(), 1000);
       return;
     }
@@ -164,7 +175,6 @@ const SpeechRecognition = () => {
     <div
       className="SpeechRecognition"
       onClick={startRegog}
-      style={{ display: 'none' }}
     >
       {isSpeechOn ? (
         <img className="mic on" src={micOn} alt="마이크 켜짐" />

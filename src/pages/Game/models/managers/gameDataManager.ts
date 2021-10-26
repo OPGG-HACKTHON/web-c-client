@@ -13,7 +13,7 @@ import ITEM_LIST from '../../components/ChamptionItemContainer/components/itemLi
 const gameDataManager = {
   async getChampsInitData(matchTeamCode: string): Promise<ChampData[]> {
     try {
-      const { data } = await axios.get(`/v1/match/opponents/by-match-team-code/${matchTeamCode}`);
+      const { data } = await axios.get(`https://backend.swoomi.me/v1/match/opponents/by-match-team-code/${matchTeamCode}`);
       const serverChampsData: ServerData[] = data.data;
       const laneSortedServerChampsData: ServerData[] = guessLane(serverChampsData);
       const champsData = gameDataManager.createChampsData(laneSortedServerChampsData);

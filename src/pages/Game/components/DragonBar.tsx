@@ -30,11 +30,11 @@ function DragonBar() {
           <p>{t('game.dragonBar.infoAfterCount')}</p>
         </span>
         <div className="control-contianer">
-          <div className={cs('arrowBox no-drag', { disabled: isMaxCnt })} onClick={upDragonCnt}>
-            <img src={upArrow} alt="바람용 횟수 화살표" />
-          </div>
           <div className={cs('arrowBox no-drag', { disabled: isMinCnt })} onClick={downDragonCnt}>
             <img src={downArrow} alt="바람용 횟수 화살표" />
+          </div>
+          <div className={cs('arrowBox no-drag', { disabled: isMaxCnt })} onClick={upDragonCnt}>
+            <img src={upArrow} alt="바람용 횟수 화살표" />
           </div>
         </div>
       </div>

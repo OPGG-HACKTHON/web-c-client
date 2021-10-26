@@ -146,7 +146,7 @@ const Search = () => {
         />
       )}
       { hasRiotError ? <Notice content={t('error.riotError')} /> : null}
-      <p className="version">v2110231717</p>
+      <p className="version">v2110262330</p>
     </div>
   );
 };

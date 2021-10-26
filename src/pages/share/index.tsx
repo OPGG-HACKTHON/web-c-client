@@ -16,10 +16,14 @@ const setScreenSize = ({ match }: RouteComponentProps) => {
   const { t } = useTranslation();
 
   const getQR = async () => {
-    const { data } = await axios.get(
-      `https://backend.swoomi.me/v1/qr/${summonerName}`,
-    );
-    setQRUrl(data.data.qrUrl);
+    try {
+      const { data } = await axios.get(
+        `https://backend.swoomi.me/v1/qr/${summonerName}`,
+      );
+      setQRUrl(data.data.qrUrl);
+    } catch (err) {
+      console.log(err);
+    }
   };
   React.useEffect(() => {
     getQR();

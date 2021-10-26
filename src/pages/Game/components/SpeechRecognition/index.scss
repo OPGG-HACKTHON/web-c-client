@@ -1,13 +1,9 @@
 .SpeechRecognition {
   position: fixed;
-  top: 20px;
-  right: r(45px);
-  left: unset;
+  right: 10px;
+  bottom: 36px;
   z-index: 1500;
-  width: 26px;
-  height: 26px;
   cursor: pointer;
-  color: #6675ff;
 
   @include bp-up(ss) {
     right: unset;
@@ -23,17 +19,17 @@
   }
 
   img {
-    font-size: 26px;
+    position: relative;
+    z-index: 1501;
 
     &.on {
-      width: r(17px);
-      height: r(22px);
-      margin-left: 1px;
+      width: 90px;
+      height: 90px;
     }
 
     &.off {
-      width: r(20px);
-      height: r(22px);
+      width: 90px;
+      height: 90px;
     }
   }
 }

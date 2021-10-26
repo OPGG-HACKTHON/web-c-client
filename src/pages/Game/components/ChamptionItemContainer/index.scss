@@ -7,7 +7,7 @@ $scrollbar-margin: r(10px);
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  height: r(80px);
+  height: r(89px);
   padding-left: r(8px);
 
   // TODO-web
@@ -95,6 +95,7 @@ $scrollbar-margin: r(10px);
     display: flex;
     flex-direction: row;
     overflow: visible;
+    height: calc(36px + #{$scrollbar-margin} - 2px);
 
     .search-btn {
       display: flex;

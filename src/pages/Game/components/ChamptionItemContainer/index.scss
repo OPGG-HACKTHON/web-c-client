@@ -1,109 +1,116 @@
-$search-btn-width: r(45px);
-$search-btn-left-margin: r(16px);
+$search-btn-width: r(36px);
+$search-btn-left-margin: r(10px);
 $scrollbar-margin: r(10px);
 
 .ChamptionItemContainer {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
   height: r(80px);
+  padding-left: r(8px);
 
   // TODO-web
   // @include bp-up(md) {
   //   width: unset;
   // }
 
-  .left-container {
-    position: relative;
-    display: inline-block;
-    overflow: visible;
-    width: auto;
+  .item-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
     max-width: calc(100% - #{$search-btn-left-margin} - #{$search-btn-width});
-    height: r(80px);
     margin-right: $search-btn-left-margin;
+    margin-bottom: -$scrollbar-margin;
 
-    // TODO-web
-    // @include bp-up(md) {
-    //   width: r(320px);
-    //   max-width: unset;
-    // }
+    &:first-child {
+      margin-bottom: calc(8px - #{$scrollbar-margin});
+    }
 
-    .item-container {
-      display: flex;
-      overflow-x: auto;
-      overflow-y: hidden;
-      width: 100%;
-      height: calc(36px + #{$scrollbar-margin});
-      margin-bottom: -$scrollbar-margin;
+    & > * {
+      flex: 1 0;
 
-      &:first-child {
-        margin-bottom: calc(8px - #{$scrollbar-margin});
+      &:not(:last-child) {
+        margin-right: r(8px);
+      }
+    }
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: #312e3a;
+    }
+
+    &::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
+    }
+
+    .info-empty {
+      position: relative;
+      font-size: r(12px);
+      color: rgba(255, 255, 255, 0.5);
+      line-height: r(36px);
+
+      .icon-content {
+        position: absolute;
+        top: r(12px);
+        left: r(5px);
+        width: r(3.5px);
       }
 
-      & > * {
-        flex: 1 0;
-
-        &:not(:last-child) {
-          margin-right: r(8px);
-        }
-      }
-
-      &::-webkit-scrollbar {
-        height: 6px;
-      }
-
-      &::-webkit-scrollbar-track {
-        background-color: transparent;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        border-radius: 3px;
-        background-color: #312e3a;
-      }
-
-      &::-webkit-scrollbar-button {
-        width: 0;
-        height: 0;
-      }
-
-      .info-empty {
-        position: relative;
-        font-size: r(12px);
-        color: rgba(255, 255, 255, 0.5);
-        line-height: r(36px);
-
-        .icon-content {
-          position: absolute;
-          top: r(12px);
-          left: r(5px);
-          width: r(3.5px);
-        }
-
-        .icon-background {
-          width: r(13px);
-          height: r(13px);
-          margin-right: r(5px);
-          margin-bottom: r(2px);
-        }
+      .icon-background {
+        width: r(13px);
+        height: r(13px);
+        margin-right: r(5px);
+        margin-bottom: r(2px);
       }
     }
   }
 
-  .search-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: $search-btn-width;
-    min-width: $search-btn-width;
-    height: r(80px);
-    border: none;
-    border-radius: r(10px);
-    cursor: pointer;
-    background-color: #312e3a;
+  // .left-container {
+  //   position: relative;
+  //   display: inline-block;
+  //   overflow: visible;
+  //   width: auto;
+  //   max-width: calc(100% - #{$search-btn-left-margin} - #{$search-btn-width});
+  //   height: r(80px);
+  //   margin-right: $search-btn-left-margin;
 
-    & > * {
-      width: r(20px);
-      height: r(20px);
+  // TODO-web
+  // @include bp-up(md) {
+  //   width: r(320px);
+  //   max-width: unset;
+  // }
+  // }
+
+  .bottom-item-container {
+    display: flex;
+    flex-direction: row;
+    overflow: visible;
+
+    .search-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: $search-btn-width;
+      height: $search-btn-width;
+      border: none;
+      border-radius: r(6px);
+      cursor: pointer;
+      background-color: #6675ff;
+
+      & > * {
+        width: r(12px);
+        height: r(12px);
+      }
     }
   }
 }

@@ -3,9 +3,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
+
+  @include bp-up(md) {
+    justify-content: center;
+  }
 
   .toast-message {
     bottom: 67px;
@@ -21,14 +24,15 @@
 
   .langBox {
     position: absolute;
-    top: 1rem;
-    right: 56vw;
+    top: 2rem;
+    right: r(32px);
     width: fit-content;
     font-size: 0.4rem;
     color: #919191;
 
-    @include bp-down(md) {
-      left: 1rem;
+    @include bp-up(md) {
+      left: 50vw;
+      font-size: r(16px);
     }
 
     .checked {

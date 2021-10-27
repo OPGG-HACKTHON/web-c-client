@@ -84,11 +84,24 @@
         }
       }
 
+      .downArrow {
+        img {
+          margin-top: 2px;
+        }
+      }
+
+      .upArrow {
+        img {
+          margin-bottom: 1px;
+        }
+      }
+
       .arrowBox:not(.disabled):hover {
         opacity: 90%;
       }
 
       .disabled {
+        cursor: default;
         background-color: #312e3a;
       }
     }

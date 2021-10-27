@@ -128,8 +128,8 @@ const Search = () => {
         <span onClick={() => onChangeLanguage('ko-KR')} className={i18n.language === 'ko-KR' ? 'checked' : null}>한국어</span>
         <span onClick={() => onChangeLanguage('en-US')} className={i18n.language === 'en-US' ? 'checked' : null}>English</span>
       </div>
-      <MainIcon />
       <MiddleBox />
+      <MainIcon />
       <SearchBar
         loading={loading}
         value={searchValue}
@@ -146,7 +146,7 @@ const Search = () => {
         />
       )}
       { hasRiotError ? <Notice content={t('error.riotError')} /> : null}
-      <p className="version">v2110262330</p>
+      <p className="version">v2110270116</p>
     </div>
   );
 };

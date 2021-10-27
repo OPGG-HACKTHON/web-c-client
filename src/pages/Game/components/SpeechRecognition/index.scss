@@ -1,13 +1,13 @@
 .SpeechRecognition {
   position: fixed;
-  right: 10px;
-  bottom: 36px;
+  right: 6px;
+  bottom: 30px;
   z-index: 1500;
   cursor: pointer;
 
   @include bp-up(ss) {
     right: unset;
-    left: calc(50% + 148px);
+    left: calc(50% + 126px);
   }
 
   span {

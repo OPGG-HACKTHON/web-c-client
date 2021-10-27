@@ -31,6 +31,8 @@ interface RecognitionInterface {
 const LANGUAGE = 'ko-KR';
 
 let forceEnd = false;
+let debounceTimer = null;
+let show;
 
 const SpeechRecognition = () => {
   const { gameData, onUseSpell } = useGameData();
@@ -137,8 +139,13 @@ const SpeechRecognition = () => {
         console.log('음성 인식 종료');
         return;
       }
-      console.log('음성 인식 구간 분리');
-      recognition.start();
+
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        console.log('음성 인식 구간 분리');
+        recognition.start();
+        debounceTimer = null;
+      }, 100);
     };
 
     setRecog(recognition);
@@ -161,7 +168,7 @@ const SpeechRecognition = () => {
       setTimeout(() => recog.abort(), 1000);
       return;
     }
-
+    if (debounceTimer) return;
     initSpeechRecognition();
   }, [isSpeechOn, gameData, recog]);
 

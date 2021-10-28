@@ -97,6 +97,10 @@ const Room = () => {
 
   useEffect(() => {
     checkTimer.current = setInterval(() => isMatchStarted(), 5000);
+    return () => {
+      checkTimer.current = null;
+      clearTimeout(checkTimer.current);
+    };
   }, []);
 
   const handleClickShare = (e) => {

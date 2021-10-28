@@ -86,7 +86,10 @@ const Room = () => {
       if (data.data.matchStatus) {
         const matchTeamCode = await getMatchTeamCode();
         if (!matchTeamCode) return; // 방번호가 null이 오는 경우
-        if (checkTimer.current) clearInterval(checkTimer.current);
+        if (checkTimer.current) {
+          clearInterval(checkTimer.current);
+          checkTimer.current = null;
+        }
         localStorage.setItem('summonerName', summonerName);
         window.location.href = `/game/${matchTeamCode}`;
       }
@@ -96,10 +99,11 @@ const Room = () => {
   };
 
   useEffect(() => {
+    if (checkTimer.current) clearInterval(checkTimer.current);
     checkTimer.current = setInterval(() => isMatchStarted(), 5000);
     return () => {
+      clearInterval(checkTimer.current);
       checkTimer.current = null;
-      clearTimeout(checkTimer.current);
     };
   }, []);
 

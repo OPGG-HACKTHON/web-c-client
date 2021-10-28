@@ -8,7 +8,8 @@
   "search": {
     "writeNickname": "닉네임을 입력해주세요",
     "checkNickname": "닉네임을 확인해주세요.",
-    "doSearch": "검색하기"
+    "doSearch": "검색하기",
+    "examplePage":  "체험하기"
   },
   "room": {
     "gameNotStarted": "아직 게임이 시작되지 않았어요.",

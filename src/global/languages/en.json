@@ -8,7 +8,8 @@
   "search": {
     "writeNickname": "Your Summoner Name",
     "checkNickname": "Please check your Summoner Name is correct.",
-    "doSearch": "Search"
+    "doSearch": "Search",
+    "examplePage":  "tutorial"
   },
   "room": {
     "gameNotStarted": "The game hasn't started yet.",

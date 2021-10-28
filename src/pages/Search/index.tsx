@@ -10,6 +10,8 @@ import setRealVh from '@/common/helper/setRealVh';
 import ToastMessage from '@/common/components/ToastMessage';
 import Notice from '@/common/components/Notice';
 
+import { AiOutlineArrowRight } from 'react-icons/ai';
+import { v4 as uuidv4 } from 'uuid';
 import MainIcon from './components/MainIcon';
 import MiddleBox from './components/MiddleBox';
 import SearchBar from './components/SearchBar';
@@ -124,6 +126,10 @@ const Search = () => {
 
   return (
     <div className="SearchPage">
+      <div className="examplePage" onClick={() => window.location.href = `/game/examplePage${uuidv4()}`}>
+        {t('search.examplePage')}
+        <AiOutlineArrowRight />
+      </div>
       <div className="langBox">
         <span onClick={() => onChangeLanguage('ko-KR')} className={i18n.language === 'ko-KR' ? 'checked' : null}>한국어</span>
         <span onClick={() => onChangeLanguage('en-US')} className={i18n.language === 'en-US' ? 'checked' : null}>English</span>

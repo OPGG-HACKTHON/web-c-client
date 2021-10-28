@@ -18,6 +18,7 @@ import {
   ChampData, SocketDragonData, SocketItemData, SocketSpellData, SocketUltData, SpellData, SpellKey,
 } from '../type';
 import { dragonData } from './dragonData';
+import tutorialData from './tutorialData';
 
 interface GameProviderProps {
   matchTeamCode: string;
@@ -39,12 +40,14 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
   const isUpdatedData = useRef(false);
   const userName = useRef(localStorage.getItem('summonerName'));
   const [itemSelectingSummonerName, setItemSelectingSummonerName] = useState();
+  const isExamplePage = useRef(false);
 
   React.useEffect(() => {
     dragonData.dragonCnt = dragonCnt;
   }, [dragonCnt]);
 
   const handelError = async (err) => {
+    if (isExamplePage.current) return;
     const isGameOver = await gameDataManager.isGameOver(userName.current, history);
     if (isGameOver) {
       if (!userName.current) history.push('/');
@@ -73,8 +76,16 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     }
   };
 
+  const setExampleData = async () => {
+    dispatcher.loading();
+    dispatcher.success(tutorialData);
+  };
+
   React.useEffect(() => {
-    getChampsInitData();
+    isExamplePage.current = window.location.href.includes('examplePage');
+    if (isExamplePage.current) setExampleData();
+    else getChampsInitData();
+
     const noSleep = new NoSleep();
     document.addEventListener('click', function enableNoSleep() {
       document.removeEventListener('click', enableNoSleep, false);
@@ -226,7 +237,8 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     timeGap: number = 0,
   ) => {
     try {
-      const totalSpellTime = await getTotalSpellTime(summonerName, spellType, timeGap);
+      let totalSpellTime = 100;
+      if (!isExamplePage.current) totalSpellTime = await getTotalSpellTime(summonerName, spellType, timeGap);
       const userData = getData(summonerName);
       gameDataManager.useSpell(userData, spellType, totalSpellTime);
       dispatcher.render();

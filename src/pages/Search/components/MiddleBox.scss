@@ -24,11 +24,11 @@
   }
 
   span {
-    width: 225px;
+    width: 100%;
     font-weight: bold;
     font-size: r(20px);
     color: #fff;
-    line-height: r(24px);
+    line-height: r(30px);
 
     @include bp-up(md) {
       width: 200%;

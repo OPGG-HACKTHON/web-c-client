@@ -44,12 +44,12 @@
 
   .searchSpinner {
     position: absolute;
-    top: 8.5px;
+    top: 20.5px;
     right: 8.5px;
     color: #746e84;
 
     @include bp-up(md) {
-      top: 15px;
+      top: 20px;
       right: 17px;
       font-size: r(16px);
     }

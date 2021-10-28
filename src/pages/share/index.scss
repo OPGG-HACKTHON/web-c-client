@@ -15,7 +15,7 @@
   .main-value {
     width: 80%;
     height: 14px;
-    margin-bottom: r(32px);
+    margin-bottom: r(40px);
     font-weight: 400;
     font-style: normal;
     font-size: r(12px);
@@ -98,8 +98,8 @@
     }
 
     .main-image {
-      width: r(170px);
-      height: r(127px);
+      width: r(143px);
+      height: r(142px);
 
       @include bp-up(md) {
         width: r(342px);
@@ -110,8 +110,7 @@
     .share_logo {
       width: r(112px);
       height: r(41px);
-      margin-top: r(17px);
-      margin-bottom: r(12px);
+      margin-top: r(10px);
 
       @include bp-up(md) {
         width: r(218px);

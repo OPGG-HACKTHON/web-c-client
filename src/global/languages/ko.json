@@ -1,5 +1,6 @@
 {
-  "mainValueHTML": "편리하고, 정확한 <strong>스펠체크</strong>로 티어를 상승 시켜보세요.",
+  "mainValueHTML": "편리하고, 정확한 <strong>스펠체크</strong>로<br />티어를 상승 시켜보세요.",
+  "mainValueHTMLWeb": "편리하고, 정확한 <strong>스펠체크</strong>로 티어를 상승 시켜보세요.",
   "error": {
     "riotError": "현재 리그오브레전드 공식 API 서버의 장애로 인해 소환사 검색에 문제가 발생하고 있습니다.",
     "matchcodeErr": "게임 중 여부를 확인할 수 없습니다."

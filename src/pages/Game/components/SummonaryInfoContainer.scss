@@ -39,9 +39,9 @@
       flex: 0 1;
       flex-basis: r(54px);
 
-      @include bp-up(md) {
-        flex-basis: r(120px);
-      }
+      // @include bp-up(md) {
+      //   flex-basis: r(120px);
+      // }
     }
   }
 }

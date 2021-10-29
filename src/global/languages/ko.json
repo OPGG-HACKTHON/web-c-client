@@ -1,13 +1,16 @@
 {
-  "mainValueHTML": "편리하게, 정확한 <strong>스펠체크</strong>로 티어를 상승 시켜보세요",
+  "mainValueHTML": "편리하고, 정확한 <strong>스펠체크</strong>로<br />티어를 상승 시켜보세요.",
+  "mainValueHTMLWeb": "편리하고, 정확한 <strong>스펠체크</strong>로 티어를 상승 시켜보세요.",
   "error": {
     "riotError": "현재 리그오브레전드 공식 API 서버의 장애로 인해 소환사 검색에 문제가 발생하고 있습니다.",
-    "matchcodeErr": "게임 중 여부를 확인할 수 없습니다."
+    "matchcodeErr": "게임 중 여부를 확인할 수 없습니다.",
+    "tooManyUser" : "현재 사용자가 급격하게 많아져 서비스 이용이 비정상적입니다. 베타 버전 점검 후, 빠른 시일 내에 정식 서비스 오픈하겠습니다."
   },
   "search": {
     "writeNickname": "닉네임을 입력해주세요",
     "checkNickname": "닉네임을 확인해주세요.",
-    "doSearch": "검색하기"
+    "doSearch": "검색하기",
+    "examplePage":  "체험하기"
   },
   "room": {
     "gameNotStarted": "아직 게임이 시작되지 않았어요.",
@@ -57,7 +60,7 @@
     "점멸": "점멸"
   },
   "speech": {
-    "infoHTML": "음성인식이 시작되었습니다.<br />[리 신 노궁] / [레오나 노플] 등을 말하여 체크가 가능합니다.<br />동시에 2개 이상의 탭에서 음성 인식을 사용할 경우 오류로 인식이 불가능한 점 유의해 주세요.",
+    "infoHTML": "음성인식이 시작되었습니다.<br />[리 신 노궁] / [레오나 노플] 등을 말하여 <br />체크가 가능합니다.<br />동시에 2개 이상의 탭에서 음성 인식을 사용할 경우<br />오류로 인식이 불가능한 점 유의해 주세요.",
     "speechRecognition": "음성인식",
     "use": "사용",
     "on": "온",

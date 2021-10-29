@@ -49,7 +49,7 @@ const Topbar = ({ onClickInfoBtn, onClickShareBtn }: TopbarComponentProps) => {
           src={info}
           alt="스우미 정보 버튼"
           className="info-image"
-          onClick={() => onClickInfoBtn()}
+          // onClick={() => onClickInfoBtn()}
         />
         <img
           src={share}

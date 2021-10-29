@@ -1,11 +1,12 @@
 .MainIcon {
-  width: r(170px);
-  height: r(127px);
+  width: r(313px);
+  height: r(205px);
+  margin-bottom: r(48px);
   border-radius: 0;
 
   @include bp-up(md) {
-    width: r(340px);
-    height: r(254px);
+    width: r(600px);
+    height: r(394px);
   }
 
   @media (max-height: 400px) {

@@ -3,9 +3,33 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
+
+  @include bp-up(md) {
+    justify-content: center;
+  }
+
+  .examplePage {
+    position: absolute;
+    top: 2rem;
+    left: r(20px);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #e5e5e5;
+
+    @include bp-up(md) {
+      right: 53vw;
+      left: unset;
+      width: fit-content;
+      font-size: r(16px);
+    }
+
+    svg {
+      margin: 0 0 0 3px;
+    }
+  }
 
   .toast-message {
     bottom: 67px;
@@ -21,14 +45,15 @@
 
   .langBox {
     position: absolute;
-    top: 1rem;
-    right: 56vw;
+    top: 2rem;
+    right: r(32px);
     width: fit-content;
-    font-size: 0.4rem;
+    font-size: 0.6rem;
     color: #919191;
 
-    @include bp-down(md) {
-      left: 1rem;
+    @include bp-up(md) {
+      left: 50vw;
+      font-size: r(16px);
     }
 
     .checked {

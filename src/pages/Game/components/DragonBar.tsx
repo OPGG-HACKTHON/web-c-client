@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import dragon from '@/common/images/dragon.png';
 import downArrow from '@/common/images/downArrow.png';
 import upArrow from '@/common/images/upArrow.png';
+import grayDownArrow from '@/common/images/grayDownArrow.png';
+import grayUpArrow from '@/common/images/grayUpArrow.png';
 
 import './DragonBar.scss';
 import useGameData from '../hooks/useGameData';
@@ -30,11 +32,11 @@ function DragonBar() {
           <p>{t('game.dragonBar.infoAfterCount')}</p>
         </span>
         <div className="control-contianer">
-          <div className={cs('arrowBox no-drag', { disabled: isMinCnt })} onClick={downDragonCnt}>
-            <img src={downArrow} alt="바람용 횟수 화살표" />
+          <div className={cs('arrowBox no-drag downArrow', { disabled: isMinCnt })} onClick={downDragonCnt}>
+            {isMinCnt ? <img src={grayDownArrow} alt="바람용 횟수 화살표" /> : <img src={downArrow} alt="바람용 횟수 화살표" /> }
           </div>
-          <div className={cs('arrowBox no-drag', { disabled: isMaxCnt })} onClick={upDragonCnt}>
-            <img src={upArrow} alt="바람용 횟수 화살표" />
+          <div className={cs('arrowBox no-drag upArrow', { disabled: isMaxCnt })} onClick={upDragonCnt}>
+            {isMaxCnt ? <img src={grayUpArrow} alt="바람용 횟수 화살표" /> : <img src={upArrow} alt="바람용 횟수 화살표" />}
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import './index.scss';
 
 import axios from 'axios';
-import mainImg from '@/common/images/mainImg.png';
+import mainImg from '@/common/images/waitPage.png';
 import logo from '@/common/images/logo.png';
 import defaultQR from '@/common/images/defaultQR.png';
 

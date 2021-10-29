@@ -13,7 +13,7 @@ const Game = ({ match }: RouteComponentProps) => {
 
   return (
     <GameProvider matchTeamCode={matchTeamCode}>
-      <div className="Game">
+      <div className="Game" style={{ position: 'relative' }}>
         <SummonaryInfoContainer />
         <DragonBar />
         <ChampDataWrapper />

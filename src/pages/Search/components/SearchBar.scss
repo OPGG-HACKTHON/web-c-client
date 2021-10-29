@@ -3,27 +3,23 @@
   margin-bottom: r(16px);
 
   input {
-    width: 300px;
-    height: 31px;
+    width: 313px;
+    height: 45px;
     padding: r(8px) r(20px);
     border: none;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
-    border-radius: 5px;
+    border-radius: 10px;
     background: #312e3a;
     font-weight: normal;
     font-style: normal;
-    font-size: r(12px);
+    font-size: r(14px);
     color: #e5e5e5;
     line-height: 14px;
     caret-color: #88878a;
 
     @include bp-up(md) {
-      width: 500px;
-      height: 45px;
-      font-size: r(16px);
+      width: 662px;
+      height: 58px;
+      font-size: r(22px);
     }
   }
 
@@ -35,12 +31,12 @@
 
   svg {
     position: absolute;
-    top: 8.5px;
+    top: 14.5px;
     right: 8.5px;
     color: #746e84;
 
     @include bp-up(md) {
-      top: 15px;
+      top: 20px;
       right: 17px;
       font-size: r(16px);
     }
@@ -48,12 +44,12 @@
 
   .searchSpinner {
     position: absolute;
-    top: 8.5px;
+    top: 20.5px;
     right: 8.5px;
     color: #746e84;
 
     @include bp-up(md) {
-      top: 15px;
+      top: 20px;
       right: 17px;
       font-size: r(16px);
     }

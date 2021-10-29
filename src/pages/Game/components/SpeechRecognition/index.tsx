@@ -31,6 +31,8 @@ interface RecognitionInterface {
 const LANGUAGE = 'ko-KR';
 
 let forceEnd = false;
+let debounceTimer = null;
+let show;
 
 const SpeechRecognition = () => {
   const { gameData, onUseSpell } = useGameData();
@@ -60,6 +62,8 @@ const SpeechRecognition = () => {
     const SpeechGrammarListWebApi = window.SpeechGrammarList || window.webkitSpeechGrammarList;
     if (!SpeechRecognitionWebApi || !SpeechGrammarListWebApi) {
       alert('음성 인식이 지원되지 않는 환경입니다. 아이폰을 제외한 기기에서 Chrome 브라우저를 사용해 주세요.');
+      setIsInfoVisible(false);
+      setIsSpeechOn(false);
       return;
     }
 
@@ -137,8 +141,13 @@ const SpeechRecognition = () => {
         console.log('음성 인식 종료');
         return;
       }
-      console.log('음성 인식 구간 분리');
-      recognition.start();
+
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        console.log('음성 인식 구간 분리');
+        recognition.start();
+        debounceTimer = null;
+      }, 100);
     };
 
     setRecog(recognition);
@@ -161,7 +170,7 @@ const SpeechRecognition = () => {
       setTimeout(() => recog.abort(), 1000);
       return;
     }
-
+    if (debounceTimer) return;
     initSpeechRecognition();
   }, [isSpeechOn, gameData, recog]);
 
@@ -181,7 +190,7 @@ const SpeechRecognition = () => {
       ) : (
         <img className="mic off" src={micOff} alt="마이크 꺼짐" />
       )}
-      {isInfoVisible && (
+      {isInfoVisible && isSpeechOn && (
         <ToastMessage
           content={i18n.t('speech.infoHTML')}
           time={5000}

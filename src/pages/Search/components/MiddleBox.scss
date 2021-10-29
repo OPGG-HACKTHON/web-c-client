@@ -1,40 +1,40 @@
 .MiddleBox {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-self: center;
+  justify-content: center;
   width: 100%;
-  margin: r(20px) 0;
+  margin: 82px 0 72px 20px;
   padding: 0 8px;
 
+  @include bp-up(md) {
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 61px;
+  }
+
   img {
-    width: 109px;
-    height: 21px;
-    margin-bottom: r(11px);
+    width: 112px;
+    height: 41px;
+    margin-bottom: r(5px);
 
     @include bp-up(md) {
-      width: r(218px);
-      height: r(42px);
-      margin-bottom: r(24px);
+      width: r(224px);
+      height: r(82px);
     }
   }
 
   span {
     width: 100%;
-    height: 14px;
-    margin-bottom: r(16px);
-    font-weight: 400;
-    font-style: normal;
-    font-size: r(12px);
+    font-weight: bold;
+    font-size: r(20px);
     color: #fff;
-    line-height: r(18px);
-    text-align: center;
+    line-height: r(30px);
 
     @include bp-up(md) {
-      width: 120%;
-      height: 28px;
-      margin-bottom: r(20px);
-      font-size: r(16px);
+      width: 200%;
+      font-size: r(34px);
+      line-height: r(40px);
+      text-align: center;
     }
 
     strong {

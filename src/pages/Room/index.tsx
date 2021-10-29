@@ -7,7 +7,7 @@ import setRealVh from '@/common/helper/setRealVh';
 import axios from '@/common/helper/axios';
 import useInterval from '@/common/hooks/useInterval';
 import ToastMessage from '@/common/components/ToastMessage';
-import mainImg from '@/common/images/mainImg.png';
+import mainImg from '@/common/images/waitPage.png';
 
 import RoomHeader from './components/RoomHeader';
 import ShareButton from './components/ShareButton';
@@ -86,7 +86,10 @@ const Room = () => {
       if (data.data.matchStatus) {
         const matchTeamCode = await getMatchTeamCode();
         if (!matchTeamCode) return; // 방번호가 null이 오는 경우
-        if (checkTimer.current) clearInterval(checkTimer.current);
+        if (checkTimer.current) {
+          clearInterval(checkTimer.current);
+          checkTimer.current = null;
+        }
         localStorage.setItem('summonerName', summonerName);
         window.location.href = `/game/${matchTeamCode}`;
       }
@@ -96,7 +99,12 @@ const Room = () => {
   };
 
   useEffect(() => {
+    if (checkTimer.current) clearInterval(checkTimer.current);
     checkTimer.current = setInterval(() => isMatchStarted(), 5000);
+    return () => {
+      clearInterval(checkTimer.current);
+      checkTimer.current = null;
+    };
   }, []);
 
   const handleClickShare = (e) => {

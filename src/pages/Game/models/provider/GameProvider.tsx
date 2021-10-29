@@ -112,14 +112,19 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
         method: 'BUY',
       };
 
-      stomp.current.send(
-        `/pub/comm/item/${matchTeamCode}`,
-        {},
-        JSON.stringify(socketData),
-      );
+      if (isExamplePage) {
+        dispatcher.updateItem(summonerName, items, 'BUY');
+      } else {
+        stomp.current.send(
+          `/pub/comm/item/${matchTeamCode}`,
+          {},
+          JSON.stringify(socketData),
+        );
+      }
 
       dispatcher.render();
     } catch (err) {
+      console.log(err);
       handelError(err);
     }
   };
@@ -138,11 +143,15 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
         method: 'DELETE',
       };
 
-      stomp.current.send(
-        `/pub/comm/item/${matchTeamCode}`,
-        {},
-        JSON.stringify(socketData),
-      );
+      if (isExamplePage) {
+        dispatcher.updateItem(summonerName, [itemName], 'DELETE');
+      } else {
+        stomp.current.send(
+          `/pub/comm/item/${matchTeamCode}`,
+          {},
+          JSON.stringify(socketData),
+        );
+      }
 
       dispatcher.render();
     } catch (err) {

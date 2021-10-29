@@ -151,7 +151,7 @@ const Search = () => {
           isPossibleSearch={isPossibleSearch}
         />
       )}
-      { hasRiotError ? <Notice content={t('error.riotError')} /> : null}
+      <Notice content={t('error.tooManyUser')} />
       <p className="version">v2110270116</p>
     </div>
   );

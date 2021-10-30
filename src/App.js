@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-filename-extension */
 import { hot } from 'react-hot-loader/root';
+import axios from 'axios';
 
 import React from 'react';
 import {
@@ -23,6 +24,14 @@ const Room = React.lazy(() => import('@/pages/Room'));
 const Game = React.lazy(() => import('@/pages/Game'));
 
 const App = () => {
+  React.useEffect(() => {
+    try {
+      axios.get('https://backend.swoomi.me:9000/champion/visitor/plus');
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   return (
     <ConfigProvider locale={koKR}>
       <Router history={history}>

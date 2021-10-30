@@ -24,13 +24,13 @@ const Room = React.lazy(() => import('@/pages/Room'));
 const Game = React.lazy(() => import('@/pages/Game'));
 
 const App = () => {
-  React.useEffect(() => {
-    try {
-      axios.get('http://3.34.111.116:9000/champion/visitor/plus');
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   try {
+  //     axios.get('https://backend.swoomi.me/champion/visitor/plus');
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }, []);
 
   return (
     <ConfigProvider locale={koKR}>

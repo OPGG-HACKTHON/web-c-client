@@ -10,27 +10,6 @@
     justify-content: center;
   }
 
-  .examplePage {
-    position: absolute;
-    top: 2rem;
-    left: r(20px);
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: #e5e5e5;
-
-    @include bp-up(md) {
-      right: 53vw;
-      left: unset;
-      width: fit-content;
-      font-size: r(16px);
-    }
-
-    svg {
-      margin: 0 0 0 3px;
-    }
-  }
-
   .toast-message {
     bottom: 67px;
   }

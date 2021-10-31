@@ -12,7 +12,7 @@
     margin-bottom: 61px;
   }
 
-  img {
+  img:not(.tutorial) {
     width: 112px;
     height: 41px;
     margin-bottom: r(5px);
@@ -20,6 +20,19 @@
     @include bp-up(md) {
       width: r(224px);
       height: r(82px);
+    }
+  }
+
+  .tutorial {
+    width: r(142px);
+    height: r(49px);
+    margin-top: r(24px);
+    cursor: pointer;
+
+    @include bp-down(md) {
+      width: r(102px);
+      height: r(35px);
+      margin-top: r(16px);
     }
   }
 

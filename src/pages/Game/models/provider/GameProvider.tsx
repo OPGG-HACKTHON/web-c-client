@@ -48,6 +48,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
   const handelError = async (err) => {
     if (isExamplePage.current) return;
+    console.log(err);
     const isGameOver = await gameDataManager.isGameOver(userName.current, history);
     if (isGameOver) {
       if (!userName.current) history.push('/');
@@ -56,6 +57,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       const { data } = await axios.get(`https://backend.swoomi.me/v1/match/get-match-team-code/${userName.current}`);
       const { matchTeamCode: newCode } = data.data;
       if (!newCode || matchTeamCode === newCode) {
+        console.log(newCode, matchTeamCode, newCode);
         alert('게임을 찾을 수 없습니다.');// 서버 쪽의 알 수 없는 에러 대응, 사실 라이엇에서 게임 데이터를 안보내주는 것
         history.push('/');
         localStorage.removeItem('summonerName');
@@ -68,7 +70,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     try {
       dispatcher.loading();
       const isGameOver = await gameDataManager.isGameOver(userName.current, history);
-      if (isGameOver) throw new Error();
+      if (isGameOver) throw new Error('게임중이 아님');
       const champsData = await gameDataManager.getChampsInitData(matchTeamCode);
       dispatcher.success(champsData);
     } catch (err) {
@@ -83,8 +85,10 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
   React.useEffect(() => {
     isExamplePage.current = window.location.href.includes('examplePage');
-    if (isExamplePage.current) setExampleData();
-    else getChampsInitData();
+    if (isExamplePage.current) {
+      axios.get('https://backend.swoomi.me:9000/champion/visitor/examplePage');
+      setExampleData();
+    } else getChampsInitData();
 
     const noSleep = new NoSleep();
     document.addEventListener('click', function enableNoSleep() {

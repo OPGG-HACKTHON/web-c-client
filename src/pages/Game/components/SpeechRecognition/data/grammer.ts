@@ -600,9 +600,9 @@ export const interpret = (transcriptList: Array<string>, championList: Array<str
       let second;
 
       if (transcript.includes('초')) {
-        second = parseInt(/[0-9]{1,2}초/g.exec(transcript)?.[0], 10);
+        second = parseInt(/[0-9]{1,3}/g.exec(transcript)?.[0], 10);
       } else if (transcript.includes('분')) {
-        second = parseInt(/[0-9]{1,2}분/g.exec(transcript)?.[0], 10);
+        second = parseInt(/[0-9]{1}/g.exec(transcript)?.[0], 10);
         if (second) second *= 60;
       }
 

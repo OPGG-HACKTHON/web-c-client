@@ -43,7 +43,7 @@ export interface ContextType {
   };
   buyItems: (summonerName: string, items: string[])=> Promise<void>;
   cancelItem: (summonerName: string, itemName: string)=> Promise<void>;
-  onUseSpell: (summonerName: string, spellType: SpellKey)=> Promise<void>;
+  onUseSpell: (summonerName: string, spellType: SpellKey, timeGap?: number)=> Promise<void>;
   resetSpell: (summonerName: string, spellType: SpellKey)=> Promise<void>;
   updateGameData: (gameData: ChampData[])=> Promise<void>;
   dragonCnt: number,

@@ -597,6 +597,14 @@ export const interpret = (transcriptList: Array<string>, championList: Array<str
 
       let action;
       let champion;
+      let second;
+
+      if (transcript.includes('초')) {
+        second = parseInt(/[0-9]{1,2}초/g.exec(transcript)?.[0], 10);
+      } else if (transcript.includes('분')) {
+        second = parseInt(/[0-9]{1,2}분/g.exec(transcript)?.[0], 10);
+        if (second) second *= 60;
+      }
 
       for (let i = 1; i < 5; i += 1) {
         if (!wordList[i]) return null;
@@ -617,7 +625,7 @@ export const interpret = (transcriptList: Array<string>, championList: Array<str
         action = findKey(wordList[i], koActionDict, [...spellDict[champion], 'R']);
 
         if (champion && action) {
-          return { champion, action };
+          return { champion, action, second };
         }
       }
 

@@ -129,7 +129,7 @@ const SpeechRecognition = () => {
       const order = gameData.findIndex((s) => s.summonerName === summoner.summonerName);
       scrollToChampion(order);
       const spellText = getSpellNameByLanguage(summoner.spells[spellType].name, spellType);
-      onUseSpell(summoner.summonerName, spellType);
+      onUseSpell(summoner.summonerName, spellType, result.second);
       speechTextFunc(
         i18n.t('speech.speechRecognition'),
         `${getChampionNameByLanguage(result.champion)} ${spellText} ${i18n.t('speech.use')}`,

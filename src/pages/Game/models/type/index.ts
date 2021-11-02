@@ -48,6 +48,7 @@ export interface ContextType {
   updateGameData: (gameData: ChampData[])=> Promise<void>;
   dragonCnt: number,
   updateDragonCnt: (cnt: number)=> void;
+  updateTimeUsed: (summonerName: string, spellType: SpellKey, changedTime: number)=> void;
   itemSelectingSummonerName: string | null,
   setItemSelectingSummonerName: Function,
   spellTimeError: React.MutableRefObject<boolean>,

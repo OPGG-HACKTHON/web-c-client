@@ -1,11 +1,10 @@
 import React, {
   useState, useRef, useEffect, useLayoutEffect,
 } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import setRealVh from '@/common/helper/setRealVh';
 import axios from '@/common/helper/axios';
-import useInterval from '@/common/hooks/useInterval';
 import ToastMessage from '@/common/components/ToastMessage';
 import mainImg from '@/common/images/waitPage.png';
 
@@ -23,11 +22,10 @@ const Room = () => {
   const checkTimer = useRef(null);
   const { t } = useTranslation();
 
-  const location = useLocation();
   const history = useHistory();
 
-  const nameIndex = 1;
-  const summonerName = location.pathname.split('/room/')[nameIndex];
+  const { summonerName } = window.localStorage;
+
   const getMatchTeamCode = async () => {
     try {
       const { data } = await axios.get(`https://backend.swoomi.me/v1/match/get-match-team-code/${summonerName}`);

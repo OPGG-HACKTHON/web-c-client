@@ -1,19 +1,19 @@
 import React, {
-  useState, useContext, useRef, useEffect,
+  useState, useRef,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import RefreshIcon from '@/common/components/RefreshIcon';
 import LockerIcon from '@/common/components/LockerIcon';
 import SpellIconInItem from './SpellIconInItem';
 
-import GameContext from '../models/context/GameContext';
-import { ChampData } from '../models/type';
+import useGameData from '../hooks/useGameData';
+import { ChampData, SpellKey } from '../models/type';
 
 import './ChampionItem.scss';
 
 interface ChampionItemProps {
   champData: ChampData;
-  spellType: string;
+  spellType: SpellKey;
   handleClickUltimate: Function;
 }
 
@@ -30,11 +30,7 @@ const ChampionItem = ({
   const timer = useRef({ curtain: null, message: null });
   const { t } = useTranslation();
 
-  const {
-    onUseSpell, resetSpell, updateTimeUsed, spellTimeError,
-  } = useContext(
-    GameContext,
-  );
+  const { onUseSpell, resetSpell, updateTimeUsed } = useGameData();
 
   const { src, time, level } = champData.spells[spellType];
   const { summonerName } = champData;

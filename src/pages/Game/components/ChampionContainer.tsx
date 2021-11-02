@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 import resizeHook from '@/common/hooks/resize';
 import Breakpoints from '@/global/styles/breakPoints';
 
-import { ChampData } from '../models/type';
+import { ChampData, SpellKey } from '../models/type';
 
 import Champion from './Champion';
 import ChamptionItemContainer from './ChamptionItemContainer';
@@ -43,7 +43,7 @@ const ChampionContainer = ({
         </div>
         <div className="bottom-container">
           {isMobile && <ChamptionItemContainer champData={champData} />}
-          {['R', 'D', 'F'].map((spell) => {
+          {['R', 'D', 'F'].map((spell: SpellKey) => {
             return (
               <ChampionItem
                 key={spell}

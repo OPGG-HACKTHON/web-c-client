@@ -1,0 +1,36 @@
+.RankItem {
+  display: flex;
+  align-items: center;
+  width: 105px;
+  height: 105px;
+  margin-right: 10px;
+  border-radius: 20px;
+
+  img {
+    width: r(69px);
+    height: r(79px);
+    margin: 0 auto;
+  }
+}
+
+.RankItem:last-of-type {
+  margin: 0;
+}
+
+.rank-line-1 {
+  opacity: 70%;
+  background: linear-gradient(180deg, #232128 0%, rgba(35, 33, 40, 0.2) 100%);
+}
+
+.rank-line-2 {
+  opacity: 20%;
+  background: linear-gradient(180deg, #232128 0%, rgba(35, 33, 40, 0) 100%);
+}
+
+.rank-null {
+  opacity: 40%;
+
+  @media (max-width: 375px) {
+    opacity: 0;
+  }
+}

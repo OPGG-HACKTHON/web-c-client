@@ -8,12 +8,13 @@ import { useTranslation } from 'react-i18next';
 import axios from '@/common/helper/axios';
 import setRealVh from '@/common/helper/setRealVh';
 import ToastMessage from '@/common/components/ToastMessage';
-import Notice from '@/common/components/Notice';
+// import Notice from '@/common/components/Notice';
 
-import MainIcon from './components/MainIcon';
 import MiddleBox from './components/MiddleBox';
 import SearchBar from './components/SearchBar';
 import SearchButton from './components/SearchButton';
+import TopBox from './components/TopBox';
+import RankContainer from './components/RankContainer';
 
 import './index.scss';
 
@@ -125,18 +126,15 @@ const Search = () => {
 
   return (
     <div className="SearchPage">
-      <div className="langBox">
-        <span onClick={() => onChangeLanguage('ko-KR')} className={i18n.language === 'ko-KR' ? 'checked' : null}>한국어</span>
-        <span onClick={() => onChangeLanguage('en-US')} className={i18n.language === 'en-US' ? 'checked' : null}>English</span>
-      </div>
+      <TopBox />
       <MiddleBox />
-      <MainIcon />
       <SearchBar
         loading={loading}
         value={searchValue}
         setValue={setValue}
         setIsFocusInput={setIsFocusInput}
       />
+      <RankContainer />
       {showShare && (
         <ToastMessage content={searchErrMsg} time={1800} />
       )}

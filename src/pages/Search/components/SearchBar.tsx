@@ -5,6 +5,7 @@ import Breakpoints from '@/global/styles/breakPoints';
 
 import './SearchBar.scss';
 import Spinner from '@/common/components/spinner';
+import SearchIcon from './SearchIcon';
 
 const SearchBar = ({
   value, setValue, setIsFocusInput, loading,
@@ -21,6 +22,7 @@ const SearchBar = ({
 
   return (
     <div className="SearchBar">
+      <SearchIcon />
       <input
         autoFocus={isDesktop}
         placeholder={t('search.writeNickname')}
@@ -38,7 +40,7 @@ const SearchBar = ({
         }}
         autoComplete="off"
       />
-      {loading ? <Spinner className="searchSpinner" /> : <IoMdClose onClick={deleteText} />}
+      {value && (loading ? <Spinner className="searchSpinner" /> : <IoMdClose onClick={deleteText} />)}
     </div>
   );
 };

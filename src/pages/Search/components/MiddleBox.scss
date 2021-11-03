@@ -3,55 +3,29 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  margin: 82px 0 72px 20px;
-  padding: 0 8px;
+  margin: 0 82px 61px;
 
   @include bp-up(md) {
     align-items: center;
-    margin-top: 0;
-    margin-bottom: 61px;
-  }
-
-  img:not(.tutorial) {
-    width: 112px;
-    height: 41px;
-    margin-bottom: r(5px);
-
-    @include bp-up(md) {
-      width: r(224px);
-      height: r(82px);
-    }
-  }
-
-  .tutorial {
-    width: r(142px);
-    height: r(49px);
-    margin-top: r(24px);
-    cursor: pointer;
-
-    @include bp-down(md) {
-      width: r(102px);
-      height: r(35px);
-      margin-top: r(16px);
-    }
+    margin: 0 auto 43px;
   }
 
   span {
     width: 100%;
-    font-weight: bold;
-    font-size: r(20px);
+    font-weight: 400;
+    font-size: r(23px);
     color: #fff;
     line-height: r(30px);
+    text-align: center;
 
     @include bp-up(md) {
       width: 200%;
-      font-size: r(34px);
-      line-height: r(40px);
-      text-align: center;
+      font-size: r(30px);
+      line-height: r(36px);
     }
 
     strong {
-      font-weight: 800;
+      font-weight: 700;
       font-style: normal;
     }
   }

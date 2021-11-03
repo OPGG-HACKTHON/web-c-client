@@ -1,13 +1,17 @@
 .SearchBar {
   position: relative;
-  margin-bottom: r(16px);
+  margin-bottom: r(64px);
+
+  @include bp-up(md) {
+    margin-bottom: r(52px);
+  }
 
   input {
-    width: 313px;
+    width: 335px;
     height: 45px;
-    padding: r(8px) r(20px);
+    padding: r(8px) r(45px);
     border: none;
-    border-radius: 10px;
+    border-radius: 100px;
     background: #312e3a;
     font-weight: normal;
     font-style: normal;
@@ -17,9 +21,11 @@
     caret-color: #88878a;
 
     @include bp-up(md) {
-      width: 662px;
-      height: 58px;
-      font-size: r(22px);
+      width: 482px;
+    }
+
+    @include bp-up(xl) {
+      width: r(524px);
     }
   }
 
@@ -36,7 +42,6 @@
     color: #746e84;
 
     @include bp-up(md) {
-      top: 20px;
       right: 17px;
       font-size: r(16px);
     }
@@ -53,6 +58,13 @@
       right: 17px;
       font-size: r(16px);
     }
+  }
+
+  .SearchIcon {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    margin-right: 14px;
   }
 
   svg:hover {

@@ -2,7 +2,21 @@
   font-weight: normal;
   font-style: normal;
   font-family: 'Pretendard Variable';
-  src: url('../../fonts/PretendardVariable.woff2') format('woff2'),;
+  src: url('../../fonts/Pretendard-Regular.woff2') format('woff2'),;
+}
+
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'Pretendard Thin';
+  src: url('../../fonts/Pretendard-Thin.woff2') format('woff2'),;
+}
+
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'Pretendard Bold';
+  src: url('../../fonts/Pretendard-Bold.woff2') format('woff2'),;
 }
 
 html,

@@ -10,6 +10,11 @@ import setRealVh from '@/common/helper/setRealVh';
 import ToastMessage from '@/common/components/ToastMessage';
 // import Notice from '@/common/components/Notice';
 
+import rank375 from '@/common/images/rank375.png';
+import rank500 from '@/common/images/rank500.png';
+import rank720 from '@/common/images/rank720.png';
+import rank1440 from '@/common/images/rank1440.png';
+
 import MiddleBox from './components/MiddleBox';
 import SearchBar from './components/SearchBar';
 import SearchButton from './components/SearchButton';
@@ -28,6 +33,8 @@ const Search = () => {
   const [showShare, setShowShare] = useState<boolean>(false);
   const [searchErrMsg, setSearchErrMsg] = useState<string>('');
   const [hasRiotError, setRiotError] = useState<boolean>(false);
+  const [rankImg, setRankImg] = useState(rank375);
+  const innerWidth = useRef(375);
 
   const browser = detect();
   const isSafari = browser.name === 'ios';
@@ -89,11 +96,25 @@ const Search = () => {
     }
   };
 
-  useEffect(() => {
-    setRealVh();
+  const setCurrentRankImg = () => {
+    const { innerWidth: currentWidth } = window;
+    innerWidth.current = currentWidth;
+    if (currentWidth < 500) setRankImg(rank375);
+    else if (currentWidth < 720)setRankImg(rank500);
+    else if (currentWidth < 1440)setRankImg(rank720);
+    else setRankImg(rank1440);
+  };
 
-    window.addEventListener('resize', setRealVh);
-    return () => window.removeEventListener('resize', setRealVh);
+  const onResizeHandler = () => {
+    setRealVh();
+    setCurrentRankImg();
+  };
+
+  useEffect(() => {
+    onResizeHandler();
+
+    window.addEventListener('resize', onResizeHandler);
+    return () => window.removeEventListener('resize', onResizeHandler);
   }, []);
 
   useEffect(() => {
@@ -126,7 +147,7 @@ const Search = () => {
 
   return (
     <div className="SearchPage">
-      <TopBox />
+      <TopBox innerWidth={innerWidth} />
       <MiddleBox />
       <SearchBar
         loading={loading}
@@ -134,7 +155,8 @@ const Search = () => {
         setValue={setValue}
         setIsFocusInput={setIsFocusInput}
       />
-      <RankContainer />
+      <img src={rankImg} alt="랭크 이미지" className="rankImg" />
+      {/* <RankContainer /> */}
       {showShare && (
         <ToastMessage content={searchErrMsg} time={1800} />
       )}
@@ -145,7 +167,7 @@ const Search = () => {
         />
       )}
       {/* <Notice content={t('error.tooManyUser')} /> */}
-      <p className="version">v_211031_BETA</p>
+      <p className="version">v_211031_BETA_1</p>
     </div>
   );
 };

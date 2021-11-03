@@ -4,6 +4,7 @@
   justify-content: center;
   width: 100%;
   margin: 0 82px 61px;
+  line-height: 40px;
 
   @include bp-up(md) {
     align-items: center;
@@ -13,20 +14,23 @@
   span {
     width: 100%;
     font-weight: 400;
+    font-weight: 100;
     font-size: r(23px);
+    font-family: 'Pretendard Thin', sans-serif;
     color: #fff;
-    line-height: r(30px);
+    line-height: r(32px);
     text-align: center;
 
     @include bp-up(md) {
       width: 200%;
       font-size: r(30px);
-      line-height: r(36px);
+      line-height: r(40px);
     }
 
     strong {
       font-weight: 700;
       font-style: normal;
+      font-family: 'Pretendard Bold', sans-serif;
     }
   }
 }

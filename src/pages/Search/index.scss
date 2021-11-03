@@ -22,29 +22,18 @@
     color: rgba(255, 255, 255, 0.1);
   }
 
-  .langBox {
-    position: absolute;
-    top: 2rem;
-    right: r(32px);
-    width: fit-content;
-    font-size: 0.6rem;
-    color: #919191;
+  .rankImg {
+    width: r(450px);
+    height: r(335px);
 
-    @include bp-up(md) {
-      left: 50vw;
-      font-size: r(16px);
+    @include bp-up(500px) {
+      width: r(659px);
+      height: r(231px);
     }
 
-    .checked {
-      color: #e5e5e5;
-    }
-
-    span {
-      margin-right: 1em;
-    }
-
-    span:hover {
-      cursor: pointer;
+    @include bp-up(1440px) {
+      width: r(730px);
+      height: r(231px);
     }
   }
 }

@@ -37,8 +37,10 @@
 
   svg {
     position: absolute;
-    top: 14.5px;
-    right: 8.5px;
+    top: 13.5px;
+    right: 16.5px;
+    width: 16px;
+    height: 16px;
     color: #746e84;
 
     @include bp-up(md) {
@@ -49,12 +51,12 @@
 
   .searchSpinner {
     position: absolute;
-    top: 20.5px;
-    right: 8.5px;
+    top: 16.5px;
+    right: 16.5px;
     color: #746e84;
 
     @include bp-up(md) {
-      top: 20px;
+      top: 16px;
       right: 17px;
       font-size: r(16px);
     }

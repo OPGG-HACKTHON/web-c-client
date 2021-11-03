@@ -18,8 +18,34 @@
     width: 720px;
   }
 
-  span {
-    color: white;
+  div {
+    @include bp-up(md) {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .langBox {
+    // position: absolute;
+    // top: 2rem;
+    // right: r(32px);
+    width: fit-content;
+    margin-right: r(28px);
+    font-size: 0.6rem;
+    font-size: r(15px);
+    color: #7a7685;
+
+    .checked {
+      color: #fff;
+    }
+
+    span {
+      margin-right: 1em;
+    }
+
+    span:hover {
+      cursor: pointer;
+    }
   }
 
   .logo-image {
@@ -29,9 +55,9 @@
   }
 
   .language-select {
+    width: fit-content;
     // position: absolute;
-    min-width: r(72px);
-    opacity: 50%;
+    color: #fff;
 
     span {
       opacity: 100%;
@@ -40,17 +66,23 @@
 
     &.ant-select,
     .ant-select-selector {
+      padding: 0;
       border: none !important;
-      opacity: 80%;
       background-color: transparent;
       box-shadow: none !important;
       outline: none;
-      font-size: r(15px);
+      font-size: r(13px);
       color: rgba(255, 255, 255);
 
       .ant-select-selection-item {
         margin-top: r(1px);
+        margin-right: 16px;
+        padding: 0 !important;
       }
+    }
+
+    .ant-select-arrow {
+      right: 45px;
     }
 
     .ant-select-arrow svg {

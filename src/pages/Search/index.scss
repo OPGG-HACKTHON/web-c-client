@@ -6,9 +6,9 @@
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
 
-  @include bp-up(md) {
-    justify-content: center;
-  }
+  // @include bp-up(md) {
+  //   justify-content: center;
+  // }
 
   .toast-message {
     bottom: 67px;

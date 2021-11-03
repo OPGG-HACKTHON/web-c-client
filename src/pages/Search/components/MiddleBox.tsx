@@ -17,6 +17,7 @@ const MiddleBox = () => {
   }, []);
   return (
     <div className="MiddleBox">
+      <p dangerouslySetInnerHTML={{ __html: t('serviceOpen') }} />
       {currentWidth > Breakpoints.md ? <span dangerouslySetInnerHTML={{ __html: t('mainValueHTMLWeb') }} /> : <span dangerouslySetInnerHTML={{ __html: t('mainValueHTML') }} />}
 
     </div>

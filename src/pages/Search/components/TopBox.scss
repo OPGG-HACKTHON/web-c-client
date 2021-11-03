@@ -1,0 +1,60 @@
+.TopBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  padding: 45px 20px 85px;
+
+  @include bp-up(sm) {
+    padding: 45px 24px 85px;
+  }
+
+  @include bp-up(md) {
+    padding: 45px 24px 72px;
+  }
+
+  @include bp-up(md) {
+    width: 720px;
+  }
+
+  span {
+    color: white;
+  }
+
+  .logo-image {
+    width: 98px;
+    height: 36px;
+    margin-bottom: r(5px);
+  }
+
+  .language-select {
+    // position: absolute;
+    min-width: r(72px);
+    opacity: 50%;
+
+    span {
+      opacity: 100%;
+      color: white;
+    }
+
+    &.ant-select,
+    .ant-select-selector {
+      border: none !important;
+      opacity: 80%;
+      background-color: transparent;
+      box-shadow: none !important;
+      outline: none;
+      font-size: r(15px);
+      color: rgba(255, 255, 255);
+
+      .ant-select-selection-item {
+        margin-top: r(1px);
+      }
+    }
+
+    .ant-select-arrow svg {
+      color: rgba(255, 255, 255,);
+    }
+  }
+}

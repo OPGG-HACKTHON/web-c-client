@@ -1,6 +1,6 @@
 {
-  "mainValueHTML": "Conveniently, try to raise your tier by checking<br />the <strong>exact spell cooltime.</strong>",
-  "mainValueHTMLWeb": "Conveniently, try to raise your tier by checking the <strong>exact spell cooltime.</strong>",
+  "mainValueHTML": "Conveniently, try to raise your tier<br />by checking<br />the <strong>exact spell cooltime.</strong>",
+  "mainValueHTMLWeb": "Conveniently, try to raise your tier<br />by checking the <strong>exact spell cooltime.</strong>",
   "error": {
     "riotError": "Currently, there is a problem with summoner search due to a failure in the official API server of League of Legends.",
     "matchcodeErr": "We can't check whether you're playing the game.",
@@ -10,7 +10,7 @@
     "writeNickname": "Your Summoner Name",
     "checkNickname": "Please check your Summoner Name is correct.",
     "doSearch": "Search",
-    "examplePage":  "tutorial"
+    "tutorial":  "Tutorial"
   },
   "room": {
     "gameNotStarted": "The game hasn't started yet.",

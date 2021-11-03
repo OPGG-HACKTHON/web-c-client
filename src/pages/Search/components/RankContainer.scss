@@ -1,0 +1,31 @@
+.RankContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+
+  .rank-container {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto auto 35px;
+
+    @include bp-down(sm) {
+      margin: 0 auto;
+    }
+  }
+
+  .rank-container-1 {
+    margin-bottom: 10px;
+
+    @include bp-up(sm) {
+      padding-right: 85px;
+    }
+  }
+
+  .rank-container-2 {
+    padding-left: 110px;
+
+    @include bp-up(md) {
+      padding-left: 75px;
+    }
+  }
+}

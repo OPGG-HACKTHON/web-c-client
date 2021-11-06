@@ -19,7 +19,7 @@ $scrollbar-margin: r(10px);
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
-    max-width: calc(100% - #{$search-btn-left-margin} - #{$search-btn-width});
+    max-width: calc(100% - #{$search-btn-left-margin});
     margin-right: $search-btn-left-margin;
     margin-bottom: -$scrollbar-margin;
 
@@ -94,8 +94,11 @@ $scrollbar-margin: r(10px);
   .bottom-item-container {
     display: flex;
     flex-direction: row;
-    overflow: visible;
     height: calc(36px + #{$scrollbar-margin} - 2px);
+
+    .item-container {
+      max-width: calc(100% - #{$search-btn-left-margin} - #{$search-btn-width});
+    }
 
     .search-btn {
       display: flex;

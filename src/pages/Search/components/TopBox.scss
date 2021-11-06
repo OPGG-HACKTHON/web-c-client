@@ -4,14 +4,14 @@
   align-items: center;
   justify-content: space-between;
   width: 100vw;
-  padding: 45px 20px 85px;
+  padding: 30px 20px 64px;
 
-  @include bp-up(sm) {
-    padding: 45px 24px 85px;
+  @include bp-up(500) {
+    padding: 30px 20px 51px;
   }
 
-  @include bp-up(md) {
-    padding: 45px 24px 72px;
+  @include bp-up(720) {
+    padding: 30px 24px 41px;
   }
 
   @include bp-up(md) {
@@ -19,7 +19,10 @@
   }
 
   div {
-    @include bp-up(md) {
+    display: flex;
+    align-items: center;
+
+    @include bp-up(720px) {
       display: flex;
       align-items: center;
     }

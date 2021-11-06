@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
+  // height: calc(var(--vh, 1vh) * 100);
 
   // @include bp-up(md) {
   //   justify-content: center;
@@ -22,18 +22,25 @@
     color: rgba(255, 255, 255, 0.1);
   }
 
-  .rankImg {
-    width: r(450px);
-    height: r(335px);
+  .rankBox {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 100vw;
 
-    @include bp-up(500px) {
-      width: r(659px);
-      height: r(231px);
-    }
+    .rankImg {
+      width: r(450px);
+      height: r(335px);
 
-    @include bp-up(1440px) {
-      width: r(730px);
-      height: r(231px);
+      @include bp-up(500px) {
+        width: r(659px);
+        height: r(231px);
+      }
+
+      @include bp-up(1440px) {
+        width: r(730px);
+        height: r(231px);
+      }
     }
   }
 }

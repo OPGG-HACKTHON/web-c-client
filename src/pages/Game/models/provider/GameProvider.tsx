@@ -46,9 +46,18 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     dragonData.dragonCnt = dragonCnt;
   }, [dragonCnt]);
 
-  const handelError = async (err) => {
+  const handelError = async (err, num) => {
     if (isExamplePage.current) return;
-    console.log(err);
+    console.log(err, err.response?.data, 'line:', num);
+    const summoner = localStorage.getItem('summonerName');
+    const errorData = {
+      ...err.response?.data,
+      err,
+      line: num,
+      matchTeamCode,
+      summoner,
+    };
+    axios.post('https://backend.swoomi.me:9000/champion/error/logging', { errorData });
     const isGameOver = await gameDataManager.isGameOver(userName.current, history);
     if (isGameOver) {
       if (!userName.current) history.push('/');
@@ -56,8 +65,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     } else {
       const { data } = await axios.get(`https://backend.swoomi.me/v1/match/get-match-team-code/${userName.current}`);
       const { matchTeamCode: newCode } = data.data;
-      if (!newCode || matchTeamCode === newCode) {
-        console.log(newCode, matchTeamCode, newCode);
+      if (!newCode) { // || matchTeamCode === newCode
         alert('게임을 찾을 수 없습니다.');// 서버 쪽의 알 수 없는 에러 대응, 사실 라이엇에서 게임 데이터를 안보내주는 것
         history.push('/');
         localStorage.removeItem('summonerName');
@@ -71,10 +79,12 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       dispatcher.loading();
       const isGameOver = await gameDataManager.isGameOver(userName.current, history);
       if (isGameOver) throw new Error('게임중이 아님');
+      if (isUpdatedData.current) return;
       const champsData = await gameDataManager.getChampsInitData(matchTeamCode);
       dispatcher.success(champsData);
+      isUpdatedData.current = true;
     } catch (err) {
-      handelError(err);
+      handelError(err, 76);
     }
   };
 
@@ -115,10 +125,11 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
         type: 'ITEM',
         method: 'BUY',
       };
-
-      if (isExamplePage) {
-        dispatcher.updateItem(summonerName, items, 'BUY');
+      // dispatcher.updateItem(summonerName, items, 'BUY');
+      if (isExamplePage.current) {
+        // dispatcher.updateItem(summonerName, items, 'BUY');
       } else {
+        console.log('보냄');
         stomp.current.send(
           `/pub/comm/item/${matchTeamCode}`,
           {},
@@ -128,8 +139,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       dispatcher.render();
     } catch (err) {
-      console.log(err);
-      handelError(err);
+      handelError(err, 139);
     }
   };
 
@@ -146,9 +156,9 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
         type: 'ITEM',
         method: 'DELETE',
       };
-
-      if (isExamplePage) {
-        dispatcher.updateItem(summonerName, [itemName], 'DELETE');
+      // dispatcher.updateItem(summonerName, [itemName], 'DELETE');
+      if (isExamplePage.current) {
+        // dispatcher.updateItem(summonerName, [itemName], 'DELETE');
       } else {
         stomp.current.send(
           `/pub/comm/item/${matchTeamCode}`,
@@ -159,7 +169,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       dispatcher.render();
     } catch (err) {
-      handelError(err);
+      handelError(err, 178);
     }
   };
 
@@ -192,7 +202,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       dispatcher.render();
     } catch (err) {
-      handelError(err);
+      handelError(err, 211);
       gameDataManager.updateUltLevel(userData, preData);
     }
   };
@@ -240,7 +250,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       }
       return spellTimeUpdated;
     } catch (err) {
-      handelError(err);
+      handelError(err, 259);
     }
   };
 
@@ -273,7 +283,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       countSpellTime(summonerName, spellType);
     } catch (err) {
-      handelError(err);
+      handelError(err, 292);
     }
   };
 
@@ -301,7 +311,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
 
       dispatcher.render();
     } catch (err) {
-      handelError(err);
+      handelError(err, 320);
     }
   };
 
@@ -334,7 +344,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       countSpellTime(summonerName, spellType);
       dispatcher.render();
     } catch (err) {
-      handelError(err);
+      handelError(err, 353);
     }
   };
 
@@ -394,7 +404,6 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
           const data = JSON.parse(msg.body);
           const { data: initData, newUser, dragonCnt: dragonInitCnt } = data.initData;
           setDragonCnt(dragonInitCnt);
-
           if (newUser === userId.current) {
             initData.forEach((champData: ChampData) => {
               Object.keys(champData.spells).forEach((spellKey: SpellKey) => {

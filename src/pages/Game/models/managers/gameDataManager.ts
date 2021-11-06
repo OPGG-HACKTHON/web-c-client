@@ -125,7 +125,7 @@ const gameDataManager = {
     purchaserData.originalFrequentItems = purchaserData.originalFrequentItems || purchaserData.frequentItems;
     purchaserData.frequentItems = _.sortBy(
       [...purchaserData.frequentItems, itemToCancel],
-      (item) => purchaserData.originalFrequentItems.findIndex((i) => i.name === item.name),
+      (item) => item && purchaserData.originalFrequentItems.findIndex((i) => i.name === item.name),
     );
   },
 

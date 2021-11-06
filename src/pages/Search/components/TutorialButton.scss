@@ -1,5 +1,8 @@
 .TutorialButton {
-  width: r(86px);
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  min-width: r(86px);
   height: r(27px);
   padding-left: 11px;
   border: none;
@@ -16,6 +19,7 @@
   .arrow {
     width: r(9px);
     height: r(4.5px);
+    margin-top: 2px;
     margin-right: 4px;
     margin-bottom: 2.5px;
     -webkit-transform: rotate(-90deg);

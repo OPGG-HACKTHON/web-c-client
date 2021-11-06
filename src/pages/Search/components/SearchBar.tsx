@@ -18,13 +18,13 @@ const SearchBar = ({
     searchElem.focus();
   };
 
-  const isDesktop = window.innerWidth > Breakpoints.md;
+  // const isDesktop = window.innerWidth > Breakpoints.md;
 
   return (
     <div className="SearchBar">
       <SearchIcon />
       <input
-        autoFocus={isDesktop}
+        // autoFocus={isDesktop}
         placeholder={t('search.writeNickname')}
         spellCheck="false"
         id="search-bar"

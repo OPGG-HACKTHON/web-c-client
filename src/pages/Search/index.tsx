@@ -117,15 +117,15 @@ const Search = () => {
     return () => window.removeEventListener('resize', onResizeHandler);
   }, []);
 
-  useEffect(() => {
-    if (isFocusInput) {
-      setTimeout(() => {
-        const scrollElem = document.querySelector('.SearchPage');
-        const scrollTop = scrollElem.scrollHeight - window.innerWidth + 64;
-        window.scrollTo({ top: scrollTop });
-      }, 200);
-    }
-  }, [isFocusInput]);
+  // useEffect(() => { // 검색 인풋 포커스 시 스크롤 맞춰주기
+  //   if (isFocusInput) {
+  //     setTimeout(() => {
+  //       const scrollElem = document.querySelector('.SearchPage');
+  //       const scrollTop = scrollElem.scrollHeight - window.innerWidth + 64;
+  //       window.scrollTo({ top: scrollTop });
+  //     }, 200);
+  //   }
+  // }, [isFocusInput]);
 
   useEffect(() => { /// 라이엇 에러
     // if (hasRiotError) return;
@@ -155,19 +155,15 @@ const Search = () => {
         setValue={setValue}
         setIsFocusInput={setIsFocusInput}
       />
-      <img src={rankImg} alt="랭크 이미지" className="rankImg" />
+      <div className="rankBox">
+        <img src={rankImg} alt="랭크 이미지" className="rankImg" />
+      </div>
       {/* <RankContainer /> */}
       {showShare && (
         <ToastMessage content={searchErrMsg} time={1800} />
       )}
-      {isSearchButtonVisible && (
-        <SearchButton
-          onClick={onClickSearchBtn}
-          isPossibleSearch={isPossibleSearch}
-        />
-      )}
       {/* <Notice content={t('error.tooManyUser')} /> */}
-      <p className="version">v_211031_BETA_1</p>
+      <p className="version">v_211031_BETA_3</p>
     </div>
   );
 };

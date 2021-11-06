@@ -46,18 +46,34 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
     dragonData.dragonCnt = dragonCnt;
   }, [dragonCnt]);
 
+  const checkMatchTeamCode = () => {
+    if (matchTeamCode === 'null') {
+      const summoner = localStorage.getItem('summonerName');
+      const errorData = {
+        err: 'null match code',
+        summoner,
+        errorMsg: '',
+      };
+      axios.post('https://backend.swoomi.me/v1/common/client/error', { errorMessage: `${JSON.stringify(errorData)}@@@@@@@@@@@@@@@` });
+      if (summoner) history.push(`/room/${summoner}`);
+      else history.push('/');
+    }
+  };
+
+  checkMatchTeamCode();
+
   const handelError = async (err, num) => {
     if (isExamplePage.current) return;
     console.log(err, err.response?.data, 'line:', num);
     const summoner = localStorage.getItem('summonerName');
     const errorData = {
-      ...err.response?.data,
-      err,
+      err: JSON.stringify(err),
       line: num,
       matchTeamCode,
       summoner,
+      errorMsg: '',
     };
-    axios.post('https://backend.swoomi.me:9000/champion/error/logging', { errorData });
+    axios.post('https://backend.swoomi.me/v1/common/client/error', { errorMessage: `${JSON.stringify(errorData)}@@@@@@@@@@@@@@@` });
     const isGameOver = await gameDataManager.isGameOver(userName.current, history);
     if (isGameOver) {
       if (!userName.current) history.push('/');
@@ -69,7 +85,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
         alert('게임을 찾을 수 없습니다.');// 서버 쪽의 알 수 없는 에러 대응, 사실 라이엇에서 게임 데이터를 안보내주는 것
         history.push('/');
         localStorage.removeItem('summonerName');
-      } else window.location.href = `/game/${newCode}`; // history 시 현재 게임 데이터로 최신화가 안됨( 매치 데이터는 최산 맞음)
+      } else history.push(`/game/${newCode}`); // history 시 현재 게임 데이터로 최신화가 안됨( 매치 데이터는 최산 맞음)
     }
     dispatcher.error(err);
   };
@@ -127,9 +143,8 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       };
       // dispatcher.updateItem(summonerName, items, 'BUY');
       if (isExamplePage.current) {
-        // dispatcher.updateItem(summonerName, items, 'BUY');
+        dispatcher.updateItem(summonerName, items, 'BUY');
       } else {
-        console.log('보냄');
         stomp.current.send(
           `/pub/comm/item/${matchTeamCode}`,
           {},
@@ -158,7 +173,7 @@ function GameProvider({ matchTeamCode, children }: GameProviderProps) {
       };
       // dispatcher.updateItem(summonerName, [itemName], 'DELETE');
       if (isExamplePage.current) {
-        // dispatcher.updateItem(summonerName, [itemName], 'DELETE');
+        dispatcher.updateItem(summonerName, [itemName], 'DELETE');
       } else {
         stomp.current.send(
           `/pub/comm/item/${matchTeamCode}`,
